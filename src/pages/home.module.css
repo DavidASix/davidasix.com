@@ -1,0 +1,86 @@
+.page {
+  min-height: calc(100vh - var(--nav-height) - 120px);
+  padding: 0px;
+  z-index: 1;
+}
+
+.section {
+  height: calc(100vh);
+  padding-top: var(--nav-height);
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background-color: var(--background);
+}
+
+.lastSection {
+  height: calc(100vh - 120px);
+}
+
+.navSpacer {
+  height: var(--nav-height);
+  width: 100%;
+}
+
+.sectionContent {
+  width: 90%;
+}
+
+/** Hero Section **/ 
+
+.heroSection {
+  background: var(--hero-bg);
+  background: var(--hero-bg-grad);
+  z-index: 5;
+}
+
+.headshotContainer {
+  position: relative;
+  width: 90%;
+  aspect-ratio: 3/4;
+  max-width: 500px;
+}
+
+.headshot {
+  position: absolute;
+  object-fit: contain;
+  width: 100%;
+}
+
+.socialRow {
+  position: absolute;
+  bottom: calc(-75px / 2);
+  width: 100%;
+  height: 75px
+}
+
+.socialContainer {
+  height: 75px;
+  aspect-ratio: 1;
+}
+
+.githubWave {
+  position: absolute;
+  z-index: 20;
+  width: 100%;
+  height: 80px;
+  bottom: -10px;
+  fill: var(--gh-background)
+}
+/** Github Section **/
+
+.githubSection {
+  z-index: 10;
+  background: var(--gh-background);
+}
+
+.githubHeadshotContainer {
+  position: relative;
+  width: 90%;
+  aspect-ratio: 1;
+}
+
+.githubHeadshot {
+  object-fit: contain;
+  height: 100%;
+}

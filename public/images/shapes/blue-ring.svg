@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1080" height="1080" viewBox="0 0 1080 1080">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke-width: 65px;
+        stroke: url(#linear-gradient);
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="540" y1="1080" x2="540" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#209cff"/>
+      <stop offset="1" stop-color="#68e0cf"/>
+    </linearGradient>
+  </defs>
+  <circle class="cls-1" cx="540" cy="540" r="540"/>
+</svg>

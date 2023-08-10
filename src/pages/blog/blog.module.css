@@ -1,0 +1,10 @@
+
+.pageIndicator {
+  text-decoration: none;
+  color: var(--fg);
+}
+
+.selectedPage {
+  color: var(--primary);
+}
+

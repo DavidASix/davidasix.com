@@ -1,0 +1,21 @@
+<svg id="visual" viewBox="0 0 960 540" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" stroke-width='3' stroke='#FF0000'>
+    <g fill="inherit" stroke="inherit" stroke-width="inherit">
+        <circle r="52" cx="244" cy="226"></circle>
+        <circle r="8" cx="612" cy="436"></circle>
+        <circle r="21" cx="784" cy="411"></circle>
+        <circle r="11" cx="500" cy="323"></circle>
+        <circle r="18" cx="127" cy="145"></circle>
+        <circle r="19" cx="606" cy="265"></circle>
+        <circle r="25" cx="440" cy="169"></circle>
+        <circle r="35" cx="616" cy="86"></circle>
+        <circle r="43" cx="777" cy="129"></circle>
+        <circle r="38" cx="302" cy="103"></circle>
+        <circle r="21" cx="508" cy="67"></circle>
+        <circle r="11" cx="402" cy="278"></circle>
+        <circle r="49" cx="733" cy="298"></circle>
+        <circle r="47" cx="369" cy="468"></circle>
+        <circle r="9" cx="250" cy="450"></circle>
+        <circle r="7" cx="99" cy="347"></circle>
+    </g>
+</svg>

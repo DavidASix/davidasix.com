@@ -1,0 +1,8 @@
+.navSize {
+    height: var(--nav-height);
+    width: 100%;
+}
+
+.navItem {
+    color: var(--text);
+}
