@@ -10,6 +10,7 @@ import {
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import querystring from "querystring";
 import Link from "next/link";
+import Head from 'next/head';
 import NavigationLayout from "src/components/NavigationLayout/";
 
 import s from "./blog.module.css";
@@ -89,41 +90,46 @@ export default function Blog({ numberOfPages, currentPage, posts }) {
   const pages = [...Array(numberOfPages)].map((_, i) => i + 1);
   const blogPosts = JSON.parse(posts);
   return (
-    <NavigationLayout>
-      <section className={`${cs.header}`} />
+    <>
+      <Head>
+        <title>Blog | DavidASix</title>
+      </Head>
+      <NavigationLayout>
+        <section className={`${cs.header}`} />
 
-      <section
-        className={`row d-flex justify-content-center align-items-start align-content-start ${cs.maxSection} ${cs.heroSection} p-0`}
-      >
-        <div
-          className={`col-12 p-0 ${cs.center} flex-column`}
-          style={{ zIndex: 30 }}
+        <section
+          className={`row d-flex justify-content-center align-items-start align-content-start ${cs.maxSection} ${cs.heroSection} p-0`}
         >
-          <h2 className={`mb-3 headerFont display-1`}>Blog</h2>
-          <p style={{ textAlign: "center" }}></p>
-        </div>
-        <div className={`row col-lg-10 col-sm-12 align-items-stretch`}>
-          {blogPosts.map((post, i) => (
-            <BlogListItem key={i} post={post} />
-          ))}
-        </div>
-        <div
-          className={`${cs.center} ${s.indicatorContainer} row pt-3 col-lg-4 col-sm-10 mb-3 border-top`}
-        >
-          {pages.map((num) => (
-            <Link
-              key={num}
-              href={`/blog?${querystring.stringify({ page: num })}`}
-              className={`col-2 h3 ${cs.center} ${s.pageIndicator} ${
-                num === currentPage && s.selectedPage
-              }`}
-            >
-              {num}
-            </Link>
-          ))}
-        </div>
-        <CurveHeader style={{ zIndex: 10 }} />
-      </section>
-    </NavigationLayout>
+          <div
+            className={`col-12 p-0 ${cs.center} flex-column`}
+            style={{ zIndex: 30 }}
+          >
+            <h2 className={`mb-3 headerFont display-1`}>Blog</h2>
+            <p style={{ textAlign: "center" }}></p>
+          </div>
+          <div className={`row col-lg-10 col-sm-12 align-items-stretch`}>
+            {blogPosts.map((post, i) => (
+              <BlogListItem key={i} post={post} />
+            ))}
+          </div>
+          <div
+            className={`${cs.center} ${s.indicatorContainer} row pt-3 col-lg-4 col-sm-10 mb-3 border-top`}
+          >
+            {pages.map((num) => (
+              <Link
+                key={num}
+                href={`/blog?${querystring.stringify({ page: num })}`}
+                className={`col-2 h3 ${cs.center} ${s.pageIndicator} ${
+                  num === currentPage && s.selectedPage
+                }`}
+              >
+                {num}
+              </Link>
+            ))}
+          </div>
+          <CurveHeader style={{ zIndex: 10 }} />
+        </section>
+      </NavigationLayout>
+    </>
   );
 }

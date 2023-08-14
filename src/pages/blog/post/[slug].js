@@ -8,7 +8,7 @@ import {
 } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import Link from "next/link";
-import { useRouter } from 'next/router'
+import Head from 'next/head';
 
 import NavigationLayout from 'src/components/NavigationLayout/';
 import CurveHeader from "src/components/CurveHeader";
@@ -82,106 +82,111 @@ return { props: { post: JSON.stringify(post), minutesToRead } }
 export default function BlogPost({ params, post, minutesToRead }) {
   const blog = JSON.parse(post);
   return (
-    <NavigationLayout>
-      <section className={`${cs.header}`} />
+    <>
+      <Head>
+        <title>{blog.title} | DavidASix</title>
+      </Head>
+      <NavigationLayout>
+        <section className={`${cs.header}`} />
 
-      <section
-        className={`row d-flex justify-content-center align-items-start py-3 ${cs.maxSection} ${cs.heroSection} position-relative`}
-      >
-        <div className="col-lg-8 col-sm-12 row" style={{ zIndex: 30 }}>
-          <div className={`rounded-3 ${cs.frosted} p-3`}>
-            <div
-              className={`rounded-3 position-relative overflow-hidden ${cs.center} ${s.headerImageContainer}`}
-            >
-              <img
-                src={blog.header_image}
-                className={s.headerImageBg}
-                alt="Header image"
-              />
+        <section
+          className={`row d-flex justify-content-center align-items-start py-3 ${cs.maxSection} ${cs.heroSection} position-relative`}
+        >
+          <div className="col-lg-8 col-sm-12 row" style={{ zIndex: 30 }}>
+            <div className={`rounded-3 ${cs.frosted} p-3`}>
               <div
-                className={`position-absolute p-2 overflow-hidden`}
-                style={{ top: 0, bottom: 0, left: 0, right: 0 }}
+                className={`rounded-3 position-relative overflow-hidden ${cs.center} ${s.headerImageContainer}`}
               >
                 <img
                   src={blog.header_image}
-                  className={`w-100 h-100`}
-                  style={{ objectFit: "contain" }}
+                  className={s.headerImageBg}
                   alt="Header image"
                 />
+                <div
+                  className={`position-absolute p-2 overflow-hidden`}
+                  style={{ top: 0, bottom: 0, left: 0, right: 0 }}
+                >
+                  <img
+                    src={blog.header_image}
+                    className={`w-100 h-100`}
+                    style={{ objectFit: "contain" }}
+                    alt="Header image"
+                  />
+                </div>
               </div>
+              <article className="d-flex flex-column justify-content-start align-items-start align-content-start">
+                <h4 className="headerFont display-2">{blog.title}</h4>
+                <h5 className="h1">{blog.sub_title}</h5>
+                <small className="text-end">
+                  Published: {" "}
+                  {blog.publish_date?.seconds && new Date(blog.publish_date?.seconds * 1000).toISOString().split('T')[0]}
+                </small>
+                {blog.author && (
+                  <small className="text-end">By: {blog.author}</small>
+                )}
+                <br />
+                {blog.content.map((block, i) => {
+                  switch (block.type) {
+                    case "text":
+                      return (
+                        <p key={i} className="card-text">
+                          {block.value}
+                        </p>
+                      );
+                    case "images":
+                      return (
+                        <div className={`${cs.center} row w-100 mb-3`}>
+                          {block.value.map((img, j) => (
+                            <div
+                              className={`${cs.center} col-lg-4 col-sm-10 my-2`}
+                              style={{ maxHeight: "30vh" }}
+                              key={`${i}-${j}`}
+                            >
+                              <img
+                                src={img}
+                                className={`rounded-3`}
+                                style={{ maxWidth: "100%", maxHeight: "100%" }}
+                                alt="blog content image"
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      );
+                    case "quote":
+                      return (
+                        <div key={i} className={`w-100 ${cs.center}`}>
+                          <blockquote className={'w-75 text-center h4 border-top border-bottom mb-3 p-3'}>
+                            {block.value}
+                          </blockquote>
+                        </div>
+                      );
+                    default:
+                      return null;
+                  }
+                })}
+              </article>
             </div>
-            <article className="d-flex flex-column justify-content-start align-items-start align-content-start">
-              <h4 className="headerFont display-2">{blog.title}</h4>
-              <h5 className="h1">{blog.sub_title}</h5>
-              <small className="text-end">
-                Published: {" "}
+          </div>
+
+          <div
+            className={`d-lg-flex  d-none col-lg-2 ms-3 row sticky-top`}
+            style={{ zIndex: 30, top: 40 + 8 + 8 + 16 + 16 }}
+          >
+            <div className={`${cs.frosted} col-12 rounded-3 d-flex flex-column p-3`}>
+              <Link href={`/blog`}>Blog Home</Link>
+              <span className="h5 m-0 mt-3">{blog.title}</span>
+              {blog.author && <span>By: {blog.author}</span>}
+              <small>
+                Published:{" "}
                 {blog.publish_date?.seconds && new Date(blog.publish_date?.seconds * 1000).toISOString().split('T')[0]}
               </small>
-              {blog.author && (
-                <small className="text-end">By: {blog.author}</small>
-              )}
-              <br />
-              {blog.content.map((block, i) => {
-                switch (block.type) {
-                  case "text":
-                    return (
-                      <p key={i} className="card-text">
-                        {block.value}
-                      </p>
-                    );
-                  case "images":
-                    return (
-                      <div className={`${cs.center} row w-100 mb-3`}>
-                        {block.value.map((img, j) => (
-                          <div
-                            className={`${cs.center} col-lg-4 col-sm-10 my-2`}
-                            style={{ maxHeight: "30vh" }}
-                            key={`${i}-${j}`}
-                          >
-                            <img
-                              src={img}
-                              className={`rounded-3`}
-                              style={{ maxWidth: "100%", maxHeight: "100%" }}
-                              alt="blog content image"
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    );
-                  case "quote":
-                    return (
-                      <div key={i} className={`w-100 ${cs.center}`}>
-                        <blockquote className={'w-75 text-center h4 border-top border-bottom mb-3 p-3'}>
-                          {block.value}
-                        </blockquote>
-                      </div>
-                    );
-                  default:
-                    return null;
-                }
-              })}
-            </article>
+              <small>{minutesToRead} min read</small>
+            </div>
           </div>
-        </div>
 
-        <div
-          className={`d-lg-flex  d-none col-lg-2 ms-3 row sticky-top`}
-          style={{ zIndex: 30, top: 40 + 8 + 8 + 16 + 16 }}
-        >
-          <div className={`${cs.frosted} col-12 rounded-3 d-flex flex-column p-3`}>
-            <Link href={`/blog`}>Blog Home</Link>
-            <span className="h5 m-0 mt-3">{blog.title}</span>
-            {blog.author && <span>By: {blog.author}</span>}
-            <small>
-              Published:{" "}
-              {blog.publish_date?.seconds && new Date(blog.publish_date?.seconds * 1000).toISOString().split('T')[0]}
-            </small>
-            <small>{minutesToRead} min read</small>
-          </div>
-        </div>
-
-        <CurveHeader style={{ zIndex: 10 }} />
-      </section>
-    </NavigationLayout>
+          <CurveHeader style={{ zIndex: 10 }} />
+        </section>
+      </NavigationLayout>
+    </>
   );
 }
