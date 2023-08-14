@@ -13,6 +13,7 @@ import {
 import { getStorage, ref, getDownloadURL  } from "firebase/storage";
 import querystring from "querystring";
 import Link from "next/link";
+import NavigationLayout from 'src/components/NavigationLayout/';
 
 
 import s from "./blog.module.css";
@@ -86,7 +87,7 @@ export default function Blog({ searchParams, params, numberOfPages, currentPage,
   const pages = [...Array(numberOfPages)].map((_, i) => i + 1);
   const blogPosts = JSON.parse(posts);
   return (
-    <>
+    <NavigationLayout>
       <section className={`${cs.header}`} />
 
       <section className={`row d-flex justify-content-center align-items-start align-content-start ${cs.maxSection} ${cs.heroSection} p-0`}>
@@ -113,6 +114,6 @@ export default function Blog({ searchParams, params, numberOfPages, currentPage,
         </div>
         <CurveHeader style={{zIndex: 10}}/>
       </section>
-    </>
+    </NavigationLayout>
   );
 }

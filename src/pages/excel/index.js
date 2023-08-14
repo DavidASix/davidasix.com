@@ -3,6 +3,7 @@ import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import React from 'react'
 import cs from "src/styles/common.module.css";
 
+import NavigationLayout from 'src/components/NavigationLayout/';
 import CurveHeader from 'src/components/CurveHeader';
 
 // Initialize Firebase
@@ -43,7 +44,7 @@ export const getServerSideProps = async ({ searchParams }) => {
 export default function Excel({formulas_str}) {
   const formulas = JSON.parse(formulas_str);
   return (
-    <>
+    <NavigationLayout>
       <section className={`${cs.header}`} />
 
       <section className={`row d-flex justify-content-center align-items-start ${cs.maxSection} ${cs.heroSection} p-0`}>
@@ -77,6 +78,6 @@ export default function Excel({formulas_str}) {
         <CurveHeader style={{zIndex: 10}}/>
       </section>
 
-    </>
+    </NavigationLayout>
   );
 }

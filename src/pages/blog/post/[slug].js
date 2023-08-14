@@ -10,6 +10,7 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import Link from "next/link";
 import { useRouter } from 'next/router'
 
+import NavigationLayout from 'src/components/NavigationLayout/';
 import CurveHeader from "src/components/CurveHeader";
 
 import cs from "src/styles/common.module.css";
@@ -81,7 +82,7 @@ return { props: { post: JSON.stringify(post), minutesToRead } }
 export default function BlogPost({ params, post, minutesToRead }) {
   const blog = JSON.parse(post);
   return (
-    <>
+    <NavigationLayout>
       <section className={`${cs.header}`} />
 
       <section
@@ -181,6 +182,6 @@ export default function BlogPost({ params, post, minutesToRead }) {
 
         <CurveHeader style={{ zIndex: 10 }} />
       </section>
-    </>
+    </NavigationLayout>
   );
 }
