@@ -1,5 +1,6 @@
 import s from "src/pages/home.module.css";
 import cs from "src/styles/common.module.css";
+import NavigationLayout from 'src/components/NavigationLayout/';
 
 import Github from "public/images/icons/github.svg";
 import Instagram from "public/images/icons/instagram.svg";
@@ -74,9 +75,8 @@ export const getServerSideProps = async () => {
 }
  
 export default function Home({projects}) {
-  console.log(projects)
   return (
-    <>
+    <NavigationLayout>
       <section className={`${cs.center} ${s.section} ${s.heroSection}`}>
         <div className={`row flex-md-row-reverse h-100 ${s.sectionContent}`}>
           <div className={`col-12 col-md-6 ${cs.center}`} style={{zIndex: 50}}>
@@ -158,6 +158,8 @@ export default function Home({projects}) {
           </div>
         </div>
       </section>
-    </>
+    </NavigationLayout>
   );
 }
+
+    

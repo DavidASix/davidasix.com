@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 
@@ -26,7 +27,7 @@ export default function Navigation() {
   }
 
   const oppTheme = theme === 'dark' ? 'light' : 'dark';
-
+  console.log('Nav Loaded')
   return (
       <div
         className={`container-fluid fixed-top pt-3 align-items-center ${s.navSize} `}

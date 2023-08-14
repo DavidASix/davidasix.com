@@ -1,4 +1,5 @@
 :root {
+  --nav-height: 70px;
   --hero-bg: hsla(262, 29%, 58%, 1);
   --hero-bg-grad: linear-gradient(140deg, 
     hsl(262, 65%, 80%) 0%,
@@ -6,23 +7,33 @@
     hsl(358, 65%, 80%) 100%);
 }
 
-[data-theme="light"] {
-    --hero-bg: hsla(262, 29%, 58%, 1);
-    --hero-bg-grad: linear-gradient(140deg, 
-      hsl(262, 65%, 80%) 0%,
-      hsl(205, 65%, 80%) 43%, 
-      hsl(358, 65%, 80%) 100%);
-    --gh-background: #fff;
-    --gh-accent: #2f81f7;
-  }
-  
-  [data-theme="dark"] {
+[data-theme="dark"] {
+    --primary: #cb7373;
+    --fg: #fff;
+    --fg-muted: #abafb4;
+    --background: #333;
+    --modal-bg: #444;
     --hero-bg: hsla(262, 29%, 58%, 1);
     --hero-bg-grad: linear-gradient(140deg, 
       hsl(262, 30%, 45%) 0%,
       hsl(205, 30%, 45%) 43%, 
       hsl(358, 30%, 45%) 100%);
-    --gh-background: #0d1117;
+      --gh-background: #0d1117;
     --gh-accent: #2f81f7;
   }
   
+  [data-theme="light"] {
+      --primary: #cb5858;
+      --secondary: #6c757d;
+      --fg: #333;
+      --fg-muted: #8b9097;
+      --background: #fff;
+      --modal-bg: #eee;
+      --hero-bg: hsla(262, 29%, 58%, 1);
+      --hero-bg-grad: linear-gradient(140deg, 
+        hsl(262, 65%, 80%) 0%,
+        hsl(205, 65%, 80%) 43%, 
+        hsl(358, 65%, 80%) 100%);
+      --gh-background: #fff;
+      --gh-accent: #2f81f7;
+    }

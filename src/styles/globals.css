@@ -1,39 +1,3 @@
-
-:root, [data-theme="light"] {
-  --primary: #cb5858;
-  --secondary: #6c757d;
-  --fg: #333;
-  --fg-muted: #8b9097;
-  --background: #fff;
-  --modal-bg: #eee;
-}
-
-:root, [data-theme="dark"] {
-  --primary: #cb7373;
-  --fg: #fff;
-  --fg-muted: #abafb4;
-  --background: #333;
-  --modal-bg: #444;
-}
-
-:root {
-  --nav-height: 70px;
-  /* Cycberpunk Palette */
-  --cp-pink: #E652E6ff;
-  --cp-blue: #1E86C9ff;
-  --cp-purple: #8B74B3ff;
-  --cp-dark-blue: #052F4Dff;
-  --cp-salmon: #FA969Bff;
-  --cp-orange: #FE8D37ff;
-
-  --cp-pink: hsla(300, 75%, 61%, 1);
-  --cp-blue: hsla(204, 74%, 45%, 1);
-  --cp-purple: hsla(262, 29%, 58%, 1);
-  --cp-dark-blue: hsla(205, 88%, 16%, 1);
-  --cp-salmon: hsla(357, 91%, 78%, 1);
-  --cp-orange: hsla(26, 99%, 61%, 1);
-}
-
 * {
   font-weight: 400;
   font-size: inherit;

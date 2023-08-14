@@ -1,5 +1,4 @@
 import { Html, Head, Main, NextScript } from 'next/document'
-import NavigationLayout from 'src/components/NavigationLayout/';
 
 export default function Document() {
   return (
@@ -16,10 +15,8 @@ export default function Document() {
         <link href="https://fonts.cdnfonts.com/css/baron-neue" rel="stylesheet" />
       </Head>
       <body>
-        <NavigationLayout>
-          <Main />
-        </NavigationLayout>
-          <NextScript />
+        <Main />
+        <NextScript />
       </body>
     </Html>
   )
