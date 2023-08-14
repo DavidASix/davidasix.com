@@ -40,7 +40,7 @@ const BlogListItem = ({ post }) => {
             {post.publish_date?.seconds && new Date(post.publish_date?.seconds * 1000).toISOString().split('T')[0]}
           </small>
         </p>
-        <Link href={`/blog/${post.slug}`} className="btn btn-primary">
+        <Link href={`/blog/post/${post.slug}`} className="btn btn-primary">
           Read More
         </Link>
       </div>
@@ -49,19 +49,21 @@ const BlogListItem = ({ post }) => {
 }
 
 
-export const getServerSideProps = async ({ searchParams }) => {
+export const getServerSideProps = async (props) => {
+  const urlQuery = props.query;
+    console.log({urlQuery})
     // Get Blog snapshot
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const storage = getStorage();
-    const postsPerPage = 9;
+    const postsPerPage = 3;
 
     const blogCollection = collection(db, "blog");
     const q = query(blogCollection, orderBy("created_on", "desc"))
     const blogSnapshot = await getDocs(q);
     // Organize pagenation information
     const numberOfPages = (Math.ceil(blogSnapshot.size / postsPerPage));
-    const currentPage = (searchParams?.page || 1) * 1;
+    const currentPage = (urlQuery?.page || 1) * 1;
     
     // Get current page of posts
     let posts = blogSnapshot.docs.slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage);
