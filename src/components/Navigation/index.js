@@ -39,9 +39,9 @@ export default function Navigation() {
             rounded-4 shadow 
             ${cs.frosted}`}
         >
-          <a className={`navbar-brand ${s.navItem}`} href="/">
+          <Link className={`navbar-brand ${s.navItem}`} href="/">
             Dave 6
-          </a>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"

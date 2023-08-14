@@ -22,27 +22,24 @@ import CurveHeader from 'src/components/CurveHeader';
 // Initialize Firebase
 import firebaseConfig from "src/assets/firebase-config.json";
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const postsPerPage = 9;
 
 
-function BlogListItem({ blog }) {
+const BlogListItem = ({ post }) => {
   // Extract first text block for preview
-  const firstTextBlock = blog.content.find((block) => block.type === "text");
+  const firstTextBlock = post.content.find((block) => block.type === "text");
   return (
     <div className={`col-lg-4 col-md-12 p-3 d-flex`}>
       <div className={`p-3 rounded-3 ${cs.frosted}`}>
-      <img src={header_image} className={`rounded-3`} style={{width:'100%', height:150, objectFit: 'cover' }} />
-        <h4 className={`headerFont pb-3`}>{blog.name}</h4>
+      <img src={post.header_image} className={`rounded-3`} style={{width:'100%', height:150, objectFit: 'cover' }} />
+        <h4 className={`headerFont pb-3`}>{post.name}</h4>
         <p>{firstTextBlock.value.substring(0, 128)}...</p>
         <p>
           <small>
             Published on{" "}
-            {new Date(blog.publish_date.seconds * 1000).toLocaleDateString()}
+            {post.publish_date?.seconds && new Date(post.publish_date?.seconds * 1000).toISOString().split('T')[0]}
           </small>
         </p>
-        <Link href={`/blog/${blog.slug}`} className="btn btn-primary">
+        <Link href={`/blog/${post.slug}`} className="btn btn-primary">
           Read More
         </Link>
       </div>
@@ -50,34 +47,44 @@ function BlogListItem({ blog }) {
   );
 }
 
-export default async function Blog({ searchParams }) {
-  const [numberOfPages, setNumberOfPages] = useState(null);
-  const [currentPage, setCurrentPage] = useState(null);
-  const [blogPosts, setPosts] = useState(null);
-  useEffect(() => {
-    async function pageSetup() {
-      // Get Blog snapshot
-      const blogCollection = collection(db, "blog");
-      const query = query(blogCollection, orderBy("created_on", "desc"))
-      const blogSnapshot = await getDocs(blogCollection);
-      // Organize pagenation information
-      setNumberOfPages(Math.ceil(blogSnapshot.size / postsPerPage));
-      const currentPageNumber = (searchParams?.page || 1) * 1;
-      setCurrentPage(currentPage);
-      // Get current page of posts
-      let posts = posts.slice((currentPageNumber - 1) * postsPerPage, currentPageNumber * postsPerPage);
-      posts = posts.docs.map(async (doc) => {
-        let header_image = await getDownloadURL(ref(storage, doc.header_image));
-        return { ...doc.data(), id: doc.id, header_image };
-      });
-      posts = await Promise.all(posts)
-      setPosts(posts)
-    }
-    pageSetup();
-  })
-  
-  const pages = [...Array(numberOfPages)].map((_, i) => i + 1);
 
+export const getServerSideProps = async ({ searchParams }) => {
+    // Get Blog snapshot
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const storage = getStorage();
+    const postsPerPage = 9;
+
+    const blogCollection = collection(db, "blog");
+    const q = query(blogCollection, orderBy("created_on", "desc"))
+    const blogSnapshot = await getDocs(q);
+    // Organize pagenation information
+    const numberOfPages = (Math.ceil(blogSnapshot.size / postsPerPage));
+    const currentPage = (searchParams?.page || 1) * 1;
+    
+    // Get current page of posts
+    let posts = blogSnapshot.docs.slice((currentPage - 1) * postsPerPage, currentPage * postsPerPage);
+    posts = posts.map(async (doc, i) => {
+      console.log(`Document${i}`)
+      const docData = doc.data();
+      let header_image = await getDownloadURL(ref(storage, docData.header_image));
+      return { 
+          ...docData, 
+          id: doc.id, 
+          header_image,
+        };
+    });
+
+    posts = await Promise.all(posts)
+    posts = JSON.stringify(posts)
+    console.log("--------------getServerSideProps Complete------------------")
+  return { props: { numberOfPages, currentPage, posts } }
+}
+ 
+
+export default function Blog({ searchParams, params, numberOfPages, currentPage, posts}) {
+  const pages = [...Array(numberOfPages)].map((_, i) => i + 1);
+  const blogPosts = JSON.parse(posts);
   return (
     <>
       <section className={`${cs.header}`} />
@@ -90,7 +97,7 @@ export default async function Blog({ searchParams }) {
         </div>
         <div className={`row col-lg-10 col-sm-12 align-items-stretch`}>
           {blogPosts.map((post, i) => (
-            <BlogListItem key={i} blog={post} />
+            <BlogListItem key={i} post={post} />
           ))}
         </div>
         <div className={`${cs.center} ${s.indicatorContainer} row pt-3 col-lg-4 col-sm-10 mb-3 border-top`}>

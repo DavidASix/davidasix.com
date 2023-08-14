@@ -1,6 +1,3 @@
-import Layout from 'src/components/Layout/';
-import GithubCard from "src/pages/GithubCard";
-
 import s from "src/pages/home.module.css";
 import cs from "src/styles/common.module.css";
 
@@ -11,6 +8,7 @@ import Email from "public/images/icons/email.svg";
 
 import Circles from "public/images/shapes/circle-scatter.svg";
 import GithubWave from "public/images/shapes/wave-seperator-1.svg";
+
 
 const socials = {
   github: {
@@ -78,7 +76,7 @@ export const getServerSideProps = async () => {
 export default function Home({projects}) {
   console.log(projects)
   return (
-    <Layout>
+    <>
       <section className={`${cs.center} ${s.section} ${s.heroSection}`}>
         <div className={`row flex-md-row-reverse h-100 ${s.sectionContent}`}>
           <div className={`col-12 col-md-6 ${cs.center}`} style={{zIndex: 50}}>
@@ -155,12 +153,11 @@ export default function Home({projects}) {
                 <h2 className={`${cs.githubText}`}>Programming Projects</h2>
               </div>
               <div className={`row m-3 justify-content-start`}>
-                {Object.keys(projects).map((p, i) => <GithubCard key={i} project={p} data={projects[p]} />)}
               </div>
             </div>
           </div>
         </div>
       </section>
-    </Layout>
+    </>
   );
 }

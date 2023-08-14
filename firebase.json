@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "davidasix",
+    "site": "next12davidasix",
     "source": ".",
     "ignore": [
       "firebase.json",

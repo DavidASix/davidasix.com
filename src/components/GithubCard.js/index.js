@@ -2,7 +2,6 @@ import { BsStoplightsFill, BsFileEarmarkCodeFill, BsFillMouse2Fill } from "react
 import { RiHealthBookFill } from "react-icons/ri";
 
 import cs from "src/styles/common.module.css";
-import c from "src/assets/constants";
 
 const p = {
   slug: "stoplight",
@@ -12,6 +11,7 @@ const p = {
     "Dignissim proin volutpat praesent, adipisci potenti, veritatis quae, ut, lacus hymenaeos lacus platea vulputate habitasse rem expedita ac.",
   language: "C++, React-Native",
 };
+
 const Icon = (props) => {
   switch (props.slug) {
     case "stoplight":
@@ -24,7 +24,17 @@ const Icon = (props) => {
       return <BsFileEarmarkCodeFill {...props} />;
   }
 };
-const GithubCard = ({ project, data }) => {
+
+const s = {
+  cardContainer: {
+    minHeight: 150
+  },
+  card: {
+    borderWidth: 1
+  }
+}
+
+export default function GithubCard({ project, data }) {
   return (
     <div className={`col-6 p-1 ${s.cardContainer}`}>
       <div className={`rounded-2 h-100 w-100 d-flex flex-column p-3 ${cs.muted} ${s.card}`}>
@@ -42,14 +52,3 @@ const GithubCard = ({ project, data }) => {
   );
 };
 
-const s = {
-  cardContainer: {
-    minHeight: 150
-  },
-  card: {
-    borderWidth: 1
-  }
-}
-
-
-export default GithubCard;

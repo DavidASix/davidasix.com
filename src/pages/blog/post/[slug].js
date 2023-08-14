@@ -8,14 +8,15 @@ import {
 } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import Link from "next/link";
-import CurveHeader from "@/components/CurveHeader";
+import { useRouter } from 'next/router'
 
-import "@/styles/theme.css";
-import cs from "@/styles/common.module.css";
+import CurveHeader from "src/components/CurveHeader";
+
+import cs from "src/styles/common.module.css";
 import s from "./post.module.css";
 
 // Initialize Firebase
-import firebaseConfig from "@/assets/firebase-config.json";
+import firebaseConfig from "src/assets/firebase-config.json";
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -30,6 +31,7 @@ async function getPost(slug) {
   // querySnapshot contains a QuerySnapshot object, which has a method named forEach.
   // This use of forEach is not the method available on arrays
   querySnapshot.forEach((doc) => posts.push(doc.data()));
+
   if (!posts.length) {
     // Blog post not found
     console.log("Post not found");
@@ -39,6 +41,7 @@ async function getPost(slug) {
   }
   // Single post has been found, now retrieve the extra data around it
   let post = posts[0];
+  console.log({ post })
   post.header_image = await getDownloadURL(ref(storage, post.header_image));
   // Get URLs for Image Content
   for (let contentItem of post.content) {
@@ -56,11 +59,13 @@ async function getPost(slug) {
   return post;
 }
 
-export default async function BlogPost({ params, searchParams }) {
-  const blog = await getPost(params.id);
+
+export const getServerSideProps = async ({ params }) => {
+  console.log({params})
+  const post = await getPost(params.slug);
   let minutesToRead = 0;
   const wpm = 265;
-  blog.content.forEach((block, i) => {
+  post.content.forEach((block, i) => {
     let increase = 0;
     if (["text", "quote"].includes(block.type))
       increase = block.value.split(" ").length / wpm;
@@ -69,6 +74,12 @@ export default async function BlogPost({ params, searchParams }) {
     minutesToRead += increase;
   });
   minutesToRead = Math.ceil(minutesToRead);
+  console.log("--------------getServerSideProps Complete------------------")
+return { props: { post: JSON.stringify(post), minutesToRead } }
+}
+
+export default function BlogPost({ params, post, minutesToRead }) {
+  const blog = JSON.parse(post);
   return (
     <>
       <section className={`${cs.header}`} />
@@ -103,9 +114,7 @@ export default async function BlogPost({ params, searchParams }) {
               <h5 className="h1">{blog.sub_title}</h5>
               <small className="text-end">
                 Published: {" "}
-                {new Date(
-                  blog.publish_date.seconds * 1000
-                ).toLocaleDateString()}
+                {blog.publish_date?.seconds && new Date(blog.publish_date?.seconds * 1000).toISOString().split('T')[0]}
               </small>
               {blog.author && (
                 <small className="text-end">By: {blog.author}</small>
@@ -164,7 +173,7 @@ export default async function BlogPost({ params, searchParams }) {
             {blog.author && <span>By: {blog.author}</span>}
             <small>
               Published:{" "}
-              {new Date(blog.publish_date.seconds * 1000).toLocaleDateString()}
+              {blog.publish_date?.seconds && new Date(blog.publish_date?.seconds * 1000).toISOString().split('T')[0]}
             </small>
             <small>{minutesToRead} min read</small>
           </div>

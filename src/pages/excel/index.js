@@ -1,12 +1,12 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import React from 'react'
-import cs from "@/styles/common.module.css";
+import cs from "src/styles/common.module.css";
 
-import CurveHeader from '@/components/CurveHeader';
+import CurveHeader from 'src/components/CurveHeader';
 
 // Initialize Firebase
-import firebaseConfig from '@/assets/firebase-config.json';
+import firebaseConfig from 'src/assets/firebase-config.json';
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -33,8 +33,15 @@ const ExcelFormula = ({title, description, formula_with_whitespace}) => (
   </div>
 );
 
-export default async function Excel() {
-  let formulas = await getExcelFormulas();
+export const getServerSideProps = async ({ searchParams }) => {
+  // Get Blog snapshot
+  let formulas_str = await getExcelFormulas();
+  formulas_str = JSON.stringify(formulas_str);
+  return { props: { formulas_str } }
+}
+
+export default function Excel({formulas_str}) {
+  const formulas = JSON.parse(formulas_str);
   return (
     <>
       <section className={`${cs.header}`} />
