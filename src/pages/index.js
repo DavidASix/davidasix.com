@@ -2,6 +2,7 @@ import Head from 'next/head';
 import s from "src/pages/home.module.css";
 import cs from "src/styles/common.module.css";
 import NavigationLayout from 'src/components/NavigationLayout/';
+import GithubCard from "src/components/GithubCard/"
 
 import Github from "public/images/icons/github.svg";
 import Instagram from "public/images/icons/instagram.svg";
@@ -47,26 +48,29 @@ const SocialLink = ({social}) => {
 }
 
 async function getProgrammingProjects() {
-  return {
-    stoplight: {
+  return  [
+    {
+      slug: "stoplight",
       icon: "123",
       title: "BLE Stop Light",
       description: "Dignissim proin volutpat praesent, adipisci potenti, veritatis quae, ut, lacus hymenaeos lacus platea vulputate habitasse rem expedita ac.",
       language: "C++, React-Native"
     },
-    midwife: {
+    {
+      slug: "midwife",
       icon: "123",
       title: "Midwife Mobile",
       description: "Dignissim proin volutpat praesent, platea vulputate habitasse rem expedita ac.",
       language: "React-Native"
     },
-    automouse: {
+    {
+      slug: "automouse",
       icon: "123",
       title: "Arduino Automouse",
       description: "Lacus hymenaeos lacus platea vulputate habitasse rem expedita ac.",
       language: "C++"
     }
-  };
+  ];
 }
 
 export const getServerSideProps = async () => {
@@ -121,7 +125,7 @@ export default function Home({projects}) {
           <GithubWave preserveAspectRatio="none" className={`position-absolute ${s.githubWave}`} />
         </section>
 
-        <section className={`d-flex justify-content-center align-items-start ${s.section} ${s.lastSection} ${s.githubSection}`}>
+        <section className={`d-flex justify-content-center align-items-start ${cs.maxSection} ${s.githubSection}`}>
           <div className={`row ${s.sectionContent}`}>
 
             <div className={`row border-bottom ${cs.center} position-relative`} style={{minHeight: 50}}>
@@ -135,8 +139,8 @@ export default function Home({projects}) {
             </div>
 
             <div className={`row`}>
-              <div className={`col-3`} style={{marginTop: -30}}>
-                <div className={`${s.githubHeadshotContainer}`}>
+              <div className={`col-md-3 col-12`} style={{marginTop: -30}}>
+                <div className={` ${s.githubHeadshotContainer} d-md-none d-block`}>
                   <img
                     src="/images/headshot.png"
                     alt="A headshot of David wearing a white collared shirt and a red tie."
@@ -152,11 +156,12 @@ export default function Home({projects}) {
                   Welcome to the GitHub of David Anderson the sixth! I am a full stack developer with a focus on mobile apps developed with React Native.
                 </span>
               </div>
-              <div className={`col-9 align-items-center justify-content-start`}>
+              <div className={`col-md-9 col-12 align-items-center justify-content-start`}>
                 <div className={`row`}>
                   <h2 className={`${cs.githubText}`}>Programming Projects</h2>
                 </div>
                 <div className={`row m-3 justify-content-start`}>
+                  {projects.map((project, i) => <GithubCard project={project} />)}
                 </div>
               </div>
             </div>
