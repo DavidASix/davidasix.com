@@ -1,7 +1,7 @@
 import Head from 'next/head';
+import 'src/styles/bootstrap.css';
 import 'src/styles/theme.css';
 import 'src/styles/globals.css';
-import 'src/styles/bootstrap.css';
 
 export default function App({ Component, pageProps }) {
   return (
