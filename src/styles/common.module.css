@@ -71,21 +71,27 @@
 }
 
 .section {
+  background-color: var(--background);
   height: calc(100vh);
   padding-top: var(--nav-height);
   width: 100%;
   overflow: hidden;
   position: relative;
-  background-color: var(--background);
 }
+
 
 .maxSection {
-  min-height: calc(100vh - var(--nav-height) - 120px);
-  width: 100%;
-  position: relative;
   background-color: var(--background);
+  min-height: calc(100vh - 120px);
+  padding-top: var(--nav-height);
+  width: 100%;
+  overflow: hidden;
+  position: relative;
 }
 
+.lastSection {
+  height: calc(100vh - 120px);
+}
 .heroSection {
   background: var(--hero-bg);
   background: var(--hero-bg-grad);

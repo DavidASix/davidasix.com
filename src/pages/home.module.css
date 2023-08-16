@@ -22,9 +22,6 @@
   width: 100%;
 }
 
-.sectionContent {
-  width: 90%;
-}
 
 /** Hero Section **/ 
 
@@ -36,9 +33,9 @@
 
 .headshotContainer {
   position: relative;
-  width: 90%;
-  aspect-ratio: 3/4;
+  width: 80%;
   max-width: 500px;
+  aspect-ratio: 3/4;
 }
 
 .headshot {
@@ -47,11 +44,17 @@
   width: 100%;
 }
 
+
 .socialRow {
   position: absolute;
-  bottom: calc(-75px / 2);
+  bottom: 0; /*calc(-75px / 2);*/
   width: 100%;
   height: 75px
+}
+
+.socialSpacer {
+  width: 100%;
+  height: calc(75px / 2);
 }
 
 .socialContainer {
@@ -61,11 +64,11 @@
 
 .githubWave {
   position: absolute;
-  z-index: 20;
+  z-index: 50;
   width: 100%;
-  height: 80px;
-  bottom: -10px;
-  fill: var(--gh-background)
+  height: 60px;
+  bottom: 0px;
+  fill: var(--background)
 }
 /** Github Section **/
 

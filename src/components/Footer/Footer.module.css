@@ -1,3 +1,4 @@
 .footer {
-    min-height: 120px;
+    height: 120px;
+    background-color: var(--background);
 }

@@ -2,7 +2,6 @@ import Head from 'next/head';
 import s from "src/pages/home.module.css";
 import cs from "src/styles/common.module.css";
 import NavigationLayout from 'src/components/NavigationLayout/';
-import GithubCard from "src/components/GithubCard/"
 
 import Github from "public/images/icons/github.svg";
 import Instagram from "public/images/icons/instagram.svg";
@@ -10,7 +9,6 @@ import YouTube from "public/images/icons/youtube.svg";
 import Email from "public/images/icons/email.svg";
 
 import Circles from "public/images/shapes/circle-scatter.svg";
-import GithubWave from "public/images/shapes/wave-seperator-1.svg";
 
 
 const socials = {
@@ -85,85 +83,40 @@ export default function Home({projects}) {
       <Head>
       </Head>
       <NavigationLayout>
-        <section className={`${cs.center} ${s.section} ${s.heroSection}`}>
-          <div className={`row flex-md-row-reverse h-100 ${s.sectionContent}`}>
-            <div className={`col-12 col-md-6 ${cs.center}`} style={{zIndex: 50}}>
-              <div className={`${s.headshotContainer}`}>
-                <img
-                  src="/images/headshot_bg.svg"
-                  alt="An orange circle behind image of David"
-                  className={s.headshot}
-                />
-                <img
-                  src="/images/headshot.png"
-                  alt="A headshot of David wearing a white collared shirt and a red tie."
-                  className={s.headshot}
-                />
-                <div className={`d-flex ${cs.center} ${s.socialRow}`}>
-                  {Object.keys(socials).map((s, i) => <SocialLink key={i} social={s} />)}
-                </div>
-              </div>
+        <section className={`${cs.center} ${cs.maxSection} ${cs.heroSection} row flex-md-row-reverse px-2`}>
+          <div className={`col-12 col-md-6 position-relative flex-column ${cs.center}`} style={{zIndex: 20}}>
+            <div className={`${s.headshotContainer}`}>
+              <img
+                src="/images/headshot_bg.svg"
+                alt="An orange circle behind image of David"
+                className={s.headshot}
+              />
+              <img
+                src="/images/headshot.png"
+                alt="A headshot of David wearing a white collared shirt and a red tie."
+                className={s.headshot}
+              />
             </div>
-
-            <div className={`col-12 col-md-6 position-relative ${cs.center}`} style={{zIndex: 30}}>
-                <Circles fill="#FFFFFF25" stroke="#FFFFFF80" strokeWidth={1} style={{ width: "125%", minWidth: 750}} className={`position-absolute`} />
-              <div
-                className={`d-flex flex-column justify-content-center rounded-4 p-3 ${cs.frosted}`}
-                style={{position: "relative", zIndex: 20 }}
-              >
-                <h2>Hi there, I’m</h2>
-                <h1>David A Six</h1>
-                <br />
-                <span>I’m a developer, maker, and tech enthusiast.</span>
-                <span>
-                  Why the six? I’m the sixth David Anderson in my family tree!
-                </span>
-                
-              </div>
+            <div className={`${s.socialSpacer}`} />
+            <div className={`d-flex ${cs.center} ${s.socialRow}`}>
+              {Object.keys(socials).map((s, i) => <SocialLink key={i} social={s} />)}
             </div>
           </div>
-          <GithubWave preserveAspectRatio="none" className={`position-absolute ${s.githubWave}`} />
-        </section>
 
-        <section className={`d-flex justify-content-center align-items-start ${cs.maxSection} ${s.githubSection}`}>
-          <div className={`row ${s.sectionContent}`}>
-
-            <div className={`row border-bottom ${cs.center} position-relative`} style={{minHeight: 50}}>
-              <div className={`col-3`} />
-              <div className={`col-9 align-items-center justify-content-start`}>
-                <span className={`px-2`}>Projects</span>
-                <span className={`px-2`}>Education</span>
-                <span className={`px-2`}>Ideaology</span>
-              </div>
-              <div className={`border`} style={{position: "absolute", height: "100%", width: "100vw"}} />
-            </div>
-
-            <div className={`row`}>
-              <div className={`col-12 col-md-3`} style={{marginTop: -30}}>
-                <div className={` ${s.githubHeadshotContainer} d-none d-md-block`}>
-                  <img
-                    src="/images/headshot.png"
-                    alt="A headshot of David wearing a white collared shirt and a red tie."
-                    className={s.githubHeadshot}
-                  />
-                </div>
-                <h2 className={`${cs.githubText}`} style={{fontWeight: 600}}>David Anderson 6</h2>
-                <h3 className={`${cs.githubText} ${cs.muted}`} style={{fontWeight: 100}}>DavidASix</h3>
-                <a href="http://www.github.com/DavidASix" className={`btn btn-secondary w-100 m-3`}>
-                  Github Page
-                </a>
-                <span className={`${cs.githubText}`}>
-                  Welcome to the GitHub of David Anderson the sixth! I am a full stack developer with a focus on mobile apps developed with React Native.
-                </span>
-              </div>
-              <div className={`col-md-9 col-12 align-items-center justify-content-start`}>
-                <div className={`row`}>
-                  <h2 className={`${cs.githubText}`}>Programming Projects</h2>
-                </div>
-                <div className={`row m-3 justify-content-start`}>
-                  {projects.map((project, i) => <GithubCard project={project} />)}
-                </div>
-              </div>
+          <div className={`col-12 col-md-6 position-relative ${cs.center} p-1 py-3`} style={{zIndex: 10}}>
+              <Circles fill="#FFFFFF25" stroke="#FFFFFF80" strokeWidth={1} style={{ width: "125%", minWidth: 750}} className={`position-absolute`} />
+            <div className={`d-flex flex-column justify-content-center rounded-4 p-3 ${cs.frosted}`}>
+              <h2>Hi there, I’m</h2>
+              <h1>David A Six</h1>
+              <br />
+              <span>I’m a developer, maker, and tech enthusiast.</span>
+              <span>
+                Why the six? I’m the sixth David Anderson in my family tree!
+              </span>
+              <br />
+              <span>
+                Curious about what I bring to the table? Check out my projects and skills above!
+              </span>
             </div>
           </div>
         </section>
