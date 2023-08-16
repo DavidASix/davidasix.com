@@ -13,14 +13,14 @@ const s = {
 
 export default function GithubCard({ project }) {
   return (
-    <div className={`col-md-5 col-12 p-1 ${s.cardContainer}`}>
+    <div className={`col-md-6 col-12 p-2 ${s.cardContainer}`}>
       <div className={`rounded-2 h-100 w-100 d-flex flex-column p-3 ${cs.muted} ${s.card} border rounded-3`}>
         <div className={`row align-items-center position-relative ${cs.muted}`}>  
             <GoRepo size={25} className={`col-2`} />
             <div className={`col-6 p-0`}>
-              <h4 className={`text-no-wrap text-bold ${cs.githubText} ${cs.muted} m-0`}>
+              <h5 className={`text-no-wrap text-bold ${cs.githubText} ${cs.muted} m-0`}>
                   {project.title}
-              </h4>
+              </h5>
               <small className={`m-0`}>
                 DavidASix/{project.slug}
               </small>

@@ -139,8 +139,8 @@ export default function Home({projects}) {
             </div>
 
             <div className={`row`}>
-              <div className={`col-md-3 col-12`} style={{marginTop: -30}}>
-                <div className={` ${s.githubHeadshotContainer} d-md-none d-block`}>
+              <div className={`col-12 col-md-3`} style={{marginTop: -30}}>
+                <div className={` ${s.githubHeadshotContainer} d-none d-md-block`}>
                   <img
                     src="/images/headshot.png"
                     alt="A headshot of David wearing a white collared shirt and a red tie."
