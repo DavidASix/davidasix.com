@@ -58,12 +58,12 @@ export default function Home({socials}) {
               <img
                 src="/images/headshot_bg.svg"
                 alt="An orange circle behind image of David"
-                className={s.headshot}
+                className={`${s.headshot}`}
               />
               <img
                 src="/images/headshot.png"
-                alt="A headshot of David wearing a white collared shirt and a red tie."
-                className={s.headshot}
+                alt="A headshot of David wearing an unbuttoned white collared shirt."
+                className={`${s.headshot}`}
               />
             </div>
             <div className={`${s.socialSpacer}`} />
@@ -75,8 +75,8 @@ export default function Home({socials}) {
           <div className={`col-12 col-md-6 position-relative ${cs.center} p-1 py-3`} style={{zIndex: 10}}>
               <Circles fill="#FFFFFF25" stroke="#FFFFFF80" strokeWidth={1} style={{ width: "125%", minWidth: 750}} className={`position-absolute`} />
             <div className={`d-flex flex-column justify-content-center rounded-4 p-3 ${cs.frosted}`}>
-              <h2>Hi there, I’m</h2>
-              <h1>David A Six</h1>
+              <span className={`display-6 m-0`}>Hi there, I’m</span>
+              <h1 className={`display-4 m-0`}>David A Six</h1>
               <br />
               <span>I’m a developer, maker, and tech enthusiast.</span>
               <span>
