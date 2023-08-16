@@ -1,14 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="660" height="893.64" viewBox="0 0 2000 2708">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="660" height="905.85" viewBox="0 0 2000 2745">
   <defs>
     <style>
       .cls-1 {
         fill: url(#linear-gradient);
       }
     </style>
-    <linearGradient id="linear-gradient" x1="1000" y1="2705.69" x2="1000" y2="709.688" gradientUnits="userSpaceOnUse">
+    <linearGradient id="linear-gradient" x1="1000" y1="2742.69" x2="1000" y2="746.688" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#fa4242"/>
       <stop offset="1" stop-color="#ff9b84"/>
     </linearGradient>
   </defs>
-  <circle class="cls-1" cx="1000" cy="1707.689" r="998"/>
+  <circle class="cls-1" cx="1000" cy="1744.689" r="998"/>
 </svg>
