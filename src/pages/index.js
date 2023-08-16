@@ -3,81 +3,50 @@ import s from "src/pages/home.module.css";
 import cs from "src/styles/common.module.css";
 import NavigationLayout from 'src/components/NavigationLayout/';
 
-import Github from "public/images/icons/github.svg";
-import Instagram from "public/images/icons/instagram.svg";
-import YouTube from "public/images/icons/youtube.svg";
-import Email from "public/images/icons/email.svg";
-
 import Circles from "public/images/shapes/circle-scatter.svg";
 
-
-const socials = {
-  github: {
-    link: "https://github.com/DavidASix",
-    icon: (props) => <Github alt="Github Icon" {...props} />,
-    title: "Github"
-  },
-  instagram: {
-    link: "https://www.instagram.com/dave6dev",
-    icon: (props) => <Instagram alt="Instagram Icon" {...props} />,
-    title: "Instagram"
-  },
-  youtube: {
-    link: "https://www.youtube.com/channel/@Dave6",
-    icon: (props) => <YouTube alt="YouTube Icon" {...props} />,
-    title: "YouTube"
-  },
-  email: {
-    link: "mailto:dave6@dave6.ca",
-    icon: (props) => <Email alt="Email Icon" {...props} />,
-    title: "Email"
-  },
-}
-
 const SocialLink = ({social}) => {
-  const Icon = (props) => socials[social].icon(props);
   return (
     <a 
-      href={socials[social].link} 
+      href={social.link} 
       className={`rounded-4 mx-2 ${cs.center} ${cs.frosted} ${cs.grow} ${s.socialContainer}`}>
-      <Icon style={{height: "70%", width: "70%", fill: "var(--text)" }} />
+      <span>{social.title}</span>
     </a>
   );
 }
 
-async function getProgrammingProjects() {
-  return  [
+async function getSocialAccounts() {
+  const socialAccounts = [
     {
-      slug: "stoplight",
-      icon: "123",
-      title: "BLE Stop Light",
-      description: "Dignissim proin volutpat praesent, adipisci potenti, veritatis quae, ut, lacus hymenaeos lacus platea vulputate habitasse rem expedita ac.",
-      language: "C++, React-Native"
+      type: 'github',
+      link: "https://github.com/DavidASix",
+      title: "Github"
     },
     {
-      slug: "midwife",
-      icon: "123",
-      title: "Midwife Mobile",
-      description: "Dignissim proin volutpat praesent, platea vulputate habitasse rem expedita ac.",
-      language: "React-Native"
+      type: 'instagram',
+      link: "https://www.instagram.com/dave6dev",
+      title: "Instagram"
     },
     {
-      slug: "automouse",
-      icon: "123",
-      title: "Arduino Automouse",
-      description: "Lacus hymenaeos lacus platea vulputate habitasse rem expedita ac.",
-      language: "C++"
-    }
-  ];
+      type: 'youtube',
+      link: "https://www.youtube.com/channel/@Dave6",
+      title: "YouTube"
+    },
+    {
+      type: 'email',
+      link: "mailto:dave6@dave6.ca",
+      title: "Email"
+    },
+  ]
+  return socialAccounts;
 }
 
 export const getServerSideProps = async () => {
-  const projects = await getProgrammingProjects();
-
-  return { props: { projects } }
+  let socials = await getSocialAccounts();
+  return { props: { socials } }
 }
  
-export default function Home({projects}) {
+export default function Home({socials}) {
   return (
     <>
       <Head>
@@ -99,7 +68,7 @@ export default function Home({projects}) {
             </div>
             <div className={`${s.socialSpacer}`} />
             <div className={`d-flex ${cs.center} ${s.socialRow}`}>
-              {Object.keys(socials).map((s, i) => <SocialLink key={i} social={s} />)}
+              {socials.map((s, i) => <SocialLink key={i} social={s} />)}
             </div>
           </div>
 
