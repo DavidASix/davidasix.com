@@ -25,7 +25,7 @@ const BlogListItem = ({ post }) => {
   const firstTextBlock = post.content.find((block) => block.type === "text");
   return (
     <div className={`col-lg-4 col-md-12 p-3 d-flex`}>
-      <div className={`p-3 rounded-3 ${cs.frosted}`}>
+      <div className={`p-3 rounded-3 ${cs.frosted} w-100`}>
         <img
           src={post.header_image}
           className={`rounded-3`}
