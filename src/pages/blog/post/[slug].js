@@ -9,6 +9,8 @@ import {
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import Link from "next/link";
 import Head from 'next/head';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm'
 
 import NavigationLayout from 'src/components/NavigationLayout/';
 import CurveHeader from "src/components/CurveHeader";
@@ -42,7 +44,6 @@ async function getPost(slug) {
   }
   // Single post has been found, now retrieve the extra data around it
   let post = posts[0];
-  console.log({ post })
   post.header_image = await getDownloadURL(ref(storage, post.header_image));
   // Get URLs for Image Content
   for (let contentItem of post.content) {
@@ -62,7 +63,6 @@ async function getPost(slug) {
 
 
 export const getServerSideProps = async ({ params }) => {
-  console.log({params})
   const post = await getPost(params.slug);
   let minutesToRead = 0;
   const wpm = 265;
@@ -129,9 +129,9 @@ export default function BlogPost({ params, post, minutesToRead }) {
                   switch (block.type) {
                     case "text":
                       return (
-                        <p key={i} className="card-text">
+                        <ReactMarkdown key={i} remarkPlugins={[remarkGfm]}>
                           {block.value}
-                        </p>
+                        </ReactMarkdown>
                       );
                     case "images":
                       return (
