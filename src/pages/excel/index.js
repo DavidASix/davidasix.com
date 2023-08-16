@@ -29,7 +29,7 @@ const ExcelFormula = ({title, description, formula_with_whitespace}) => (
     </p>
     <div className={`rounded-3 border px-3 py-1 d-flex align-items-center ${cs.frosted}`}>
       <code className={`p-0 m-0`}>
-        <pre className="m-0">{formula_with_whitespace}</pre>
+        <pre className="m-0" style={{whiteSpace: 'pre-wrap', wordBreak: 'break-all'}}>{formula_with_whitespace}</pre>
       </code>
     </div>
   </div>
@@ -52,16 +52,16 @@ export default function Excel({formulas_str}) {
       <NavigationLayout>
         <section className={`${cs.header}`} />
 
-        <section className={`row d-flex justify-content-center align-items-start ${cs.maxSection} ${cs.heroSection} p-0`}>
+        <section className={`row d-flex justify-content-center align-items-start ${cs.maxSection} ${cs.heroSection} ${cs.stickyParent} p-0`}>
           <div className={`col-12 p-0 ${cs.center} flex-column`} style={{zIndex: 30}}>
-            <h2 className={`m-3 headerFont display-1`}>Hall of Formulas</h2>
+            <h2 className={`m-3 headerFont display-1 text-center`}>Hall of Formulas</h2>
             <p style={{textAlign: 'center'}}>
               In my many years working with Excel I have created and uncovered some clever formulas.
             <br />
               I’ve included some of my favourites works below to impress and amaze.
             </p>
           </div>
-          <div className='col-lg-8 row me-2'>
+          <div className='col-lg-8 row m-0 me-lg-2'>
             {formulas.map((formula, i) => (
               <React.Fragment key={i}>
                 <ExcelFormula {...formula} />

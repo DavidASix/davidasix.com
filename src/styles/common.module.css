@@ -61,6 +61,11 @@
   align-items: center !important;
 }
 
+.stickyParent {
+  position: relative !important;
+  overflow: visible !important;
+}
+
 .header {
   /*min-height: calc(20vh + var(--nav-height));*/
   padding-top: var(--nav-height);
@@ -78,7 +83,6 @@
   overflow: hidden;
   position: relative;
 }
-
 
 .maxSection {
   background-color: var(--background);

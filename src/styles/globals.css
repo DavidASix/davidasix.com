@@ -25,17 +25,6 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0px;
 }
 
-@media screen and (max-width: 991px) {
-  /* Cell Phone Tablet */
-}
-
-@media screen and (max-width: 767px) {
-  /* Cell Phone Landscape */
-}
-
-@media screen and (max-width: 479px) {
-  /* Cell Phone Portrait */
-}
 
 a {
   text-decoration: none;

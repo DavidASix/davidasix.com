@@ -90,7 +90,7 @@ export default function BlogPost({ params, post, minutesToRead }) {
         <section className={`${cs.header}`} />
 
         <section
-          className={`row d-flex justify-content-center align-items-start py-3 ${cs.maxSection} ${cs.heroSection} position-relative`}
+          className={`row d-flex justify-content-center align-items-start py-3 ${cs.maxSection} ${cs.heroSection} ${cs.stickyParent}`}
         >
           <div className="col-lg-8 col-sm-12 row" style={{ zIndex: 30 }}>
             <div className={`rounded-3 ${cs.frosted} p-3`}>
