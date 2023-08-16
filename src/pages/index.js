@@ -53,7 +53,7 @@ export default function Home({socials}) {
       </Head>
       <NavigationLayout>
         <section className={`${cs.center} ${cs.maxSection} ${cs.heroSection} row flex-md-row-reverse px-2`}>
-          <div className={`col-12 col-md-6 position-relative flex-column ${cs.center}`} style={{zIndex: 20}}>
+          <div className={`col-12 col-md-6 position-relative flex-column pt-md-0 pt-3 ${cs.center}`} style={{zIndex: 20}}>
             <div className={`${s.headshotContainer}`}>
               <img
                 src="/images/headshot_bg.svg"
