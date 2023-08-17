@@ -2,15 +2,16 @@ import Head from 'next/head';
 import s from "src/pages/home.module.css";
 import cs from "src/styles/common.module.css";
 import NavigationLayout from 'src/components/NavigationLayout/';
+import SocialIcon from 'src/components/SocialIcon/';
 
 import Circles from "public/images/shapes/circle-scatter.svg";
 
 const SocialLink = ({social}) => {
   return (
     <a 
-      href={social.link} 
+      href={social.url} 
       className={`rounded-4 mx-2 ${cs.center} ${cs.frosted} ${cs.grow} ${s.socialContainer}`}>
-      <span>{social.title}</span>
+      <SocialIcon social={social.socialMedia} style={{height: "70%", width: "70%", fill: "var(--fg)" }} />
     </a>
   );
 }
@@ -18,24 +19,24 @@ const SocialLink = ({social}) => {
 async function getSocialAccounts() {
   const socialAccounts = [
     {
-      type: 'github',
-      link: "https://github.com/DavidASix",
-      title: "Github"
+      socialMedia: 'github',
+      url: "https://github.com/DavidASix",
+      displayName: "DavidASix"
     },
     {
-      type: 'instagram',
-      link: "https://www.instagram.com/dave6dev",
-      title: "Instagram"
+      socialMedia: 'instagram',
+      url: "https://www.instagram.com/dave6dev",
+      displayName: "DavidASix"
     },
     {
-      type: 'youtube',
-      link: "https://www.youtube.com/channel/@Dave6",
-      title: "YouTube"
+      socialMedia: 'youtube',
+      url: "https://www.youtube.com/channel/@Dave6",
+      displayName: "DavidASix"
     },
     {
-      type: 'email',
-      link: "mailto:dave6@dave6.ca",
-      title: "Email"
+      socialMedia: 'email',
+      url: "mailto:dave6@dave6.ca",
+      displayName: "DavidASix"
     },
   ]
   return socialAccounts;
