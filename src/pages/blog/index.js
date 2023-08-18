@@ -61,7 +61,7 @@ export const getServerSideProps = async (props) => {
   const blogCollection = collection(db, "blog");
   const q = query(blogCollection, orderBy("created_on", "desc"));
   const blogSnapshot = await getDocs(q);
-  // Organize pagenation information
+  // Organize pagination information
   const numberOfPages = Math.ceil(blogSnapshot.size / postsPerPage);
   const currentPage = (urlQuery?.page || 1) * 1;
 
