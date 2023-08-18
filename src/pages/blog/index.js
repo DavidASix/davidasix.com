@@ -31,7 +31,7 @@ const BlogListItem = ({ post }) => {
           className={`rounded-3`}
           style={{ width: "100%", height: 150, objectFit: "cover" }}
         />
-        <h4 className={`headerFont pb-3`}>{post.name}</h4>
+        <h4 className={`headerFont pb-3`}>{post.title}</h4>
         <p>{firstTextBlock.value.substring(0, 128)}...</p>
         <p>
           <small>
