@@ -1,10 +1,19 @@
 import Head from 'next/head';
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
+
 import s from "src/pages/home.module.css";
 import cs from "src/styles/common.module.css";
+
 import NavigationLayout from 'src/components/NavigationLayout/';
 import SocialIcon from 'src/components/SocialIcon/';
-
 import Circles from "public/images/shapes/circle-scatter.svg";
+
+// Initialize Firebase
+import firebaseConfig from 'src/assets/firebase-config.json';
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 const SocialLink = ({social}) => {
   return (
@@ -17,28 +26,9 @@ const SocialLink = ({social}) => {
 }
 
 async function getSocialAccounts() {
-  const socialAccounts = [
-    {
-      socialMedia: 'github',
-      url: "https://github.com/DavidASix",
-      displayName: "DavidASix"
-    },
-    {
-      socialMedia: 'instagram',
-      url: "https://www.instagram.com/dave6dev",
-      displayName: "DavidASix"
-    },
-    {
-      socialMedia: 'youtube',
-      url: "https://www.youtube.com/channel/@Dave6",
-      displayName: "DavidASix"
-    },
-    {
-      socialMedia: 'email',
-      url: "mailto:dave6@dave6.ca",
-      displayName: "DavidASix"
-    },
-  ]
+  const socialMediaCollection = collection(db, 'social-media');
+  let socialAccounts = await getDocs(socialMediaCollection)
+  socialAccounts = socialAccounts.docs.map(doc => doc.data())
   return socialAccounts;
 }
 
