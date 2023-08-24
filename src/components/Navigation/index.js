@@ -39,9 +39,9 @@ export default function Navigation() {
             rounded-4 shadow 
             ${cs.frosted}`}
         >
-          <Link className={`navbar-brand ${s.navItem}`} href="/">
+          <a className={`navbar-brand ${s.navItem}`} href="/">
             Dave 6
-          </Link>
+          </a>
           <button
             className="navbar-toggler"
             type="button"
@@ -56,19 +56,19 @@ export default function Navigation() {
           <div className="collapse navbar-collapse" id="navBarContent">
             <ul className="navbar-nav me-auto">
               <li className="nav-item">
-                <Link className={`nav-link grow ${s.navItem} ${cs.grow}`} href="/">
+                <a className={`nav-link grow ${s.navItem} ${cs.grow}`} href="/">
                   Home
-                </Link>
+                </a>
               </li>
               <li className="nav-item">
-                <Link className={`nav-link grow ${s.navItem} ${cs.grow}`} href="/excel">
+                <a className={`nav-link grow ${s.navItem} ${cs.grow}`} href="/excel">
                   Microsoft Excel
-                </Link>
+                </a>
               </li>
               <li className="nav-item">
-                <Link className={`nav-link grow ${s.navItem} ${cs.grow}`} href="/blog">
+                <a className={`nav-link grow ${s.navItem} ${cs.grow}`} href="/blog">
                   Personal Blog
-                </Link>
+                </a>
               </li>
             </ul>
 
