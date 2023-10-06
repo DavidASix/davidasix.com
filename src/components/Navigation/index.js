@@ -78,6 +78,11 @@ export default function Navigation() {
                   {oppTheme.charAt(0).toUpperCase() + oppTheme.slice(1)} Mode
                 </button>
               </li>
+              <li className="nav-item mx-lg-2 mx-0">
+                <a className={`nav-link grow ${s.navItem} ${cs.grow}`} href="/privacy-policies">
+                  Privacy Policies
+                </a>
+              </li>
             </ul>
           </div>
         </nav>
