@@ -73,10 +73,10 @@ export default function MidwifeAssist() {
                 <span>Effective Date: 2023-10-06</span>
                 <ol className='headerFont'>
                     {policy.map((section, i) => (
-                    <li className='headerFont h4 my-4'>
+                    <li key={i} className='headerFont h4 my-4'>
                         <h3 className='headerFont h3 mb-4'>{section.title}</h3>
                         {section.paragraphs.map((p, j) => (
-                            <p className='h6 my-3'>
+                            <p key={j} className='h6 my-3'>
                                 {p}
                             </p>
                         ))}

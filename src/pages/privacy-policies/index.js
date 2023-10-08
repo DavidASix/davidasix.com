@@ -5,6 +5,9 @@ import cs from "src/styles/common.module.css";
 import NavigationLayout from 'src/components/NavigationLayout/';
 import CurveHeader from 'src/components/CurveHeader';
 
+let policies = [
+  {title: 'Midwife Assist', url: '/privacy-policies/midwife-assist'}
+] 
 
 export default function PrivacyPolicies() {
   return (
@@ -31,11 +34,14 @@ export default function PrivacyPolicies() {
           >
             <div className={`${cs.frosted} col-12 rounded-3 d-flex flex-column p-3 mb-3 ${cs.center}`}>
                 <ol className='headerFont'>
-                    <li className='headerFont h4 my-4'>
-                        <a className='headerFont h3 mb-4' href='/privacy-policies/midwife-assist'>
-                          Midwife Assist
-                        </a>
+                  {policies.map((p, i) => (
+                    <li key={i} className='headerFont h4 my-4'>
+                      <a className='headerFont h3 mb-4' href={p.url}>
+                        {p.title}
+                      </a>
                     </li>
+                  ))}
+                    
                 </ol>
 
             </div>
