@@ -6,7 +6,8 @@ import NavigationLayout from 'src/components/NavigationLayout/';
 import CurveHeader from 'src/components/CurveHeader';
 
 let policies = [
-  {title: 'Midwife Assist', url: '/privacy-policies/midwife-assist'}
+  {title: 'Midwife Assist', url: '/privacy-policies/midwife-assist'},
+  {title: 'JustDogs', url: '/privacy-policies/just-dogs'},
 ] 
 
 export default function PrivacyPolicies() {
