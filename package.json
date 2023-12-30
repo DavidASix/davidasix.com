@@ -1,5 +1,5 @@
 {
-  "name": "dave6-pages",
+  "name": "",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,7 +8,8 @@
     "export": "next export",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "firebase deploy"
+    "deploy": "firebase deploy",
+    "style boostrap": "sass src/styles/bootstrap.scss src/styles/bootstrap.css"
   },
   "dependencies": {
     "@svgr/webpack": "^8.0.1",
