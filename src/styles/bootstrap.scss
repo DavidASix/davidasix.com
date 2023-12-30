@@ -1,4 +1,167 @@
-$primary: #47387a;
-$secondary: #4360a3;
+// sass src/styles/bootstrap.scss src/styles/bootstrap.css
+$nav-height: 100px;
+$white: #FFFFFF;
+$primary: #5f539b;
+$secondary: #e6b78e;
+$success: #2C9636;
+$danger: #962C2C;
+$dark: #1A1A1A;
+$light: #F2F2F2;
+$muted: #d3d3d3;
+$muted-dark: #272727;
+$modal: #b4ada6;
 
-@import "../node_modules/bootstrap/scss/bootstrap";
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/variables-dark.scss";
+@import "../../node_modules/bootstrap/scss/maps";
+@import "../../node_modules/bootstrap/scss/mixins";
+@import "../../node_modules/bootstrap/scss/utilities";
+
+// Add responsive classes for font sizing
+$display-fs-1:       $font-size-base * 5 !default;
+$display-fs-2:       $font-size-base * 4.5 !default;
+$display-fs-3:       $font-size-base * 4 !default;
+$display-fs-4:       $font-size-base * 3.5 !default;
+$display-fs-5:       $font-size-base * 3 !default;
+$display-fs-6:       $font-size-base * 2.5 !default;
+
+$h1-font-size:       $font-size-base * 2.5 !default;
+$h2-font-size:       $font-size-base * 2 !default;
+$h3-font-size:       $font-size-base * 1.75 !default;
+$h4-font-size:       $font-size-base * 1.5 !default;
+$h5-font-size:       $font-size-base * 1.25 !default;
+$h6-font-size:       $font-size-base !default;
+
+$fs-small:            $font-size-base * 0.85 !default;
+
+$ro-font-sizes: (
+  d1: $display-fs-1,
+  d2: $display-fs-2,
+  d3: $display-fs-3,
+  d4: $display-fs-4,
+  d5: $display-fs-5,
+  d6: $display-fs-6,
+  1: $h1-font-size,
+  2: $h2-font-size,
+  3: $h3-font-size,
+  4: $h4-font-size,
+  5: $h5-font-size,
+  6: $h6-font-size,
+  body: $h6-font-size,
+  small: $fs-small
+) !default;
+
+$utilities: map-merge(
+  $utilities,
+  (
+    "font-size": (
+        rfs: true,
+        property: font-size,
+        class: fs,
+        values: $ro-font-sizes,
+        responsive: true,
+    ),
+  )
+);
+
+/*
+// MAKE DISPLAY FONTS RESPONSIVE
+// This is removed as it conflicts with FS classes and override is unpredictable
+$utilities: map-merge(
+  $utilities,
+  (
+    
+    "font-size": (
+      rfs: true,
+      property: font-size,
+      class: display,
+      values: $display-font-sizes,
+      responsive: true
+    ),
+  )
+);
+*/
+
+@mixin frosted {
+  background-color: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border:  1px solid rgba(255,255,255,.08);
+}
+
+.frosted {
+  @include frosted;
+}
+
+@mixin frosted-0 {
+  background-color: unset;
+  backdrop-filter: unset;
+  -webkit-backdrop-filter: unset;
+  border: unset;
+}
+
+.frosted-0 {
+  @include frosted-0;
+}
+
+// Responsive classes for frosted
+@media (min-width: map-get($grid-breakpoints, sm)) {
+  .frosted-sm {
+    @include frosted;
+  }
+  .frosted-sm-0 {
+    @include frosted-0;
+  }
+}
+
+@media (min-width: map-get($grid-breakpoints, md)) {
+  .frosted-md {
+    @include frosted;
+  }
+  .frosted-md-0 {
+    @include frosted-0;
+  }
+}
+
+@media (min-width: map-get($grid-breakpoints, lg)) {
+  .frosted-lg {
+    @include frosted;
+  }
+  .frosted-lg-0 {
+    @include frosted-0;
+  }
+}
+
+@media (min-width: map-get($grid-breakpoints, xl)) {
+  .frosted-xl {
+    @include frosted;
+  }
+  .frosted-xl-0 {
+    @include frosted-0;
+  }
+}
+
+@media (min-width: map-get($grid-breakpoints, xxl)) {
+  .frosted-xxl {
+    @include frosted;
+  }
+  .frosted-xxl-0 {
+    @include frosted-0;
+  }
+}
+
+@import "../../node_modules/bootstrap/scss/utilities/api";
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+.row {
+    padding: 0px;
+    margin: 0px;
+    position: 'relative';
+}
+
+// Remove padding from all col- classes
+[class^="col-"] {
+    padding: 0px;
+    margin: 0px;
+}
