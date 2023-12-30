@@ -13,11 +13,18 @@ const socials = require('/src/assets/socials.json');
 
 const SocialLink = ({social}) => {
   return (
-    <a 
-      href={social.url} 
-      className={`rounded-4 mx-2 hover hover-primary  row frosted justify-content-center align-items-center`}>
-      <SocialIcon social={social.socialMedia} className='hover' style={{height: 70, width: 70 }} />
-    </a>
+    <div className='p-1'>
+      <a 
+        href={social.url} 
+        target='_blank' 
+        rel='noopener noreferrer'
+        className={`rounded-4 hover hover-secondary frosted row justify-content-center align-items-center`}>
+        <SocialIcon 
+          social={social.socialMedia} 
+          className='p-2 hover hover-secondary grow'
+          style={{height: 60, width: 70 }} />
+      </a>
+    </div>
   );
 }
 
@@ -51,7 +58,7 @@ export default function Home(props) {
             alt='A gradient background'
             className={s.gradient} />
 
-          <div className={`col-12 col-md-6 row justify-content-center position-relative m-0 px-3`}>
+          <div className={`col-12 col-md-6 row justify-content-center position-relative m-0 px-3 mb-3 mb-lg-0`}>
             <img
               src="/images/headshot_bg.svg"
               alt="An orange circle behind image of David"
@@ -69,8 +76,8 @@ export default function Home(props) {
             </div>
           </div>
 
-          <div className={`col-12 col-md-6 position-relative row justify-content-center align-items-center align-content-center ps-5`}>
-            <div className={`row rounded-5 frosted p-2`} style={{zIndex: 20, maxWidth: 700 }}>
+          <div className={`col-12 col-md-6 position-relative row justify-content-center align-items-center align-content-center px-2 ps-lg-5`}>
+            <div className={`row rounded-5 frosted-0 frosted-md p-2`} style={{zIndex: 20, maxWidth: 700 }}>
               <span className={`fs-3 fw-lighter headerFont`}>
                 Hi there, I’m
               </span>

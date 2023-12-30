@@ -43,21 +43,25 @@ h1, h2, h3, h4, h5, h6, p, img {
 .hover:hover {
   color: var(--primary) !important;
   border-color: var(--primary) !important;
+  fill: var(--primary) !important;
 }
 
 .hover.hover-secondary:hover {
   color: var(--secondary) !important;
   border-color: var(--secondary) !important;
+  fill: var(--secondary) !important;
 }
 
 .hover.hover-muted:hover {
   color: var(--muted-dark) !important;
   border-color: var(--muted-dark) !important;
+  fill: var(--muted-dark) !important;
 }
 
 .hover.hover-muted-light:hover {
   color: var(--muted) !important;
   border-color: var(--muted) !important;
+  fill: var(--muted) !important;
 }
 
 .grow {
