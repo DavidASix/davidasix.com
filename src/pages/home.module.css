@@ -1,29 +1,30 @@
-.headshotContainer {
-  position: relative;
-  width: 80%;
-  max-width: 500px;
-  aspect-ratio: 3/4;
-}
-
-.headshot {
-  position: absolute;
-  object-fit: contain;
-  width: 100%;
+.hero {
+    min-height: 80vh;
 }
 
 .socialRow {
-  position: absolute;
-  bottom: 0; /*calc(-75px / 2);*/
-  width: 100%;
-  height: 75px
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+}
+.headshot {
+    object-fit: contain;
+    width: 100%;
+    height: auto;
+    max-width: 400px;
+    max-height: 100%;
+    margin: 0px;
+    padding: 0px;
 }
 
-.socialSpacer {
-  width: 100%;
-  height: calc(75px / 2);
-}
-
-.socialContainer {
-  height: 75px;
-  aspect-ratio: 1;
+.gradient {
+    position: absolute;
+    max-width: 80vw;
+    max-height: 100vh;
+    height: auto;
+    width: auto;
+    top: -10vh;
+    left: 10vw;
+    opacity: 0.6;
 }
