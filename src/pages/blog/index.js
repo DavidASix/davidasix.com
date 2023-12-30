@@ -1,69 +1,33 @@
-import React from "react";
-import { initializeApp } from "firebase/app";
+import React, { useState, useEffect } from "react";
 import {
-  getFirestore,
   collection,
   query,
   orderBy,
   getDocs,
+  where,
 } from "firebase/firestore";
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import querystring from "querystring";
-import Link from "next/link";
+import { ref, getDownloadURL } from "firebase/storage";
 import Head from 'next/head';
 import NavigationLayout from "src/components/NavigationLayout/";
+import {
+  BlogListItem,
+  BlogSkeletonItem,
+} from "src/components/Blog/";
 
-import s from "./blog.module.css";
-import cs from "src/styles/common.module.css";
+import { db, storage } from "src/components/Firebase";
 
-import CurveHeader from "src/components/CurveHeader";
-// Initialize Firebase
-import firebaseConfig from "src/assets/firebase-config.json";
+import constants from 'src/assets/constants';
 
-const BlogListItem = ({ post }) => {
-  // Extract first text block for preview
-  const firstTextBlock = post.content.find((block) => block.type === "text");
-  return (
-    <div className={`col-lg-4 col-md-12 p-3 d-flex`}>
-      <div className={`p-3 rounded-3 ${cs.frosted} w-100`}>
-        <img
-          src={post.header_image}
-          className={`rounded-3`}
-          style={{ width: "100%", height: 150, objectFit: "cover" }}
-        />
-        <h4 className={`headerFont pb-3`}>{post.title}</h4>
-        <p>{firstTextBlock.value.substring(0, 128)}...</p>
-        <p>
-          <small>
-            Published on{" "}
-            {post.publish_date?.seconds &&
-              new Date(post.publish_date?.seconds * 1000)
-                .toISOString()
-                .split("T")[0]}
-          </small>
-        </p>
-        <Link href={`/blog/post/${post.slug}`} className="btn btn-primary">
-          Read More
-        </Link>
-      </div>
-    </div>
-  );
-};
+const postsPerPage = 9;
 
-export const getServerSideProps = async (props) => {
-  const urlQuery = props.query;
+const getPosts = (page) => new Promise(async (resolve, reject) => {
+  const currentPage = (page || 1) * 1;
   // Get Blog snapshot
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const storage = getStorage();
-  const postsPerPage = 9;
-
   const blogCollection = collection(db, "blog");
-  const q = query(blogCollection, orderBy("created_on", "desc"));
+  const q = query(blogCollection, 
+    //where("status", "==", "published"),
+    orderBy("created_on", "desc"));
   const blogSnapshot = await getDocs(q);
-  // Organize pagination information
-  const numberOfPages = Math.ceil(blogSnapshot.size / postsPerPage);
-  const currentPage = (urlQuery?.page || 1) * 1;
 
   // Get current page of posts
   let posts = blogSnapshot.docs.slice(
@@ -71,7 +35,6 @@ export const getServerSideProps = async (props) => {
     currentPage * postsPerPage
   );
   posts = posts.map(async (doc, i) => {
-    console.log(`Document${i}`);
     const docData = doc.data();
     let header_image = await getDownloadURL(ref(storage, docData.header_image));
     return {
@@ -82,52 +45,109 @@ export const getServerSideProps = async (props) => {
   });
 
   posts = await Promise.all(posts);
-  posts = JSON.stringify(posts);
-  return { props: { numberOfPages, currentPage, posts } };
-};
+  return resolve(posts);
+});
 
-export default function Blog({ numberOfPages, currentPage, posts }) {
-  const pages = [...Array(numberOfPages)].map((_, i) => i + 1);
-  const blogPosts = JSON.parse(posts);
+const getMaxPage = () => new Promise(async (resolve, reject) => {
+  // Get Blog snapshot
+  const blogCollection = collection(db, "blog");
+  const q = query(blogCollection, orderBy("created_on", "desc"));
+  const blogSnapshot = await getDocs(q);
+  // Organize pagination information
+  const numberOfPages = Math.ceil(blogSnapshot.size / postsPerPage);
+
+  return resolve(numberOfPages);
+});
+
+export default function Blog() {
+  const [posts, setPosts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [maxPage, setMaxPage] = useState(null);
+  const [loadingNextPage, setLoadingNextPage] = useState();
+
+  useEffect(() => {
+    const setInitialPosts = async () => {
+      await new Promise(resolve => setTimeout(resolve, 500));
+      const postsFetch = await getPosts(1);
+      setPosts(postsFetch)
+      const maxPageFetch = await getMaxPage();
+      setMaxPage(maxPageFetch);
+    }
+    setInitialPosts();
+  }, []);
+
+  async function loadNextPage() {
+    try {
+      setLoadingNextPage(true);
+      const nextPage = currentPage + 1;
+      const nextPagePosts = await getPosts(nextPage);
+      setPosts([...posts, ...nextPagePosts])
+      setCurrentPage(nextPage);
+    } catch (err) {
+      alert('Could not find more blog posts.')
+      console.log(err)
+    } finally {
+      await new Promise(resolve => setTimeout(resolve, 500));
+      setLoadingNextPage(false);
+    }
+  }
+  console.log(maxPage)
   return (
     <>
       <Head>
-        <title>Blog | DavidASix</title>
+        <title>{`${constants.siteName} | Blog`}</title>
       </Head>
       <NavigationLayout>
-        <section className={`${cs.header}`} />
+        <section 
+          id='header'
+          className='position-relative col-12 row justify-content-center p-0 m-0 mb-4 '>
+          <div
+            className={`col-lg-10 col-12`}>
+            <h1 
+              className="display-4 headerFont p-0 ps-2"
+              style={{zIndex: 10}}>
+              My Blog Title
+            </h1>
+            <span className="fs-6 ps-4">
+              Blog Subheader
+            </span>
+          </div>
+        </section>
 
-        <section
-          className={`row d-flex justify-content-center align-items-start align-content-start ${cs.maxSection} ${cs.heroSection} p-0`}
-        >
-          <div
-            className={`col-12 p-0 ${cs.center} flex-column`}
-            style={{ zIndex: 30 }}
-          >
-            <h2 className={`mb-3 headerFont display-1`}>Blog</h2>
-            <p style={{ textAlign: "center" }}></p>
+        <section 
+          id='Blog Entries'
+          className="col-12 col-lg-7 row justify-content-start align-items-start p-0 m-0"
+          style={{zIndex: 15}}>
+          {/* If there are no posts yet, render a skeleton layout. */}
+          {maxPage === null && Array.from({ length: 3 }).map((_, i) => <BlogSkeletonItem key={i} />)}
+          {posts.map((post, i) => <BlogListItem key={i} post={post} />)}
+          {loadingNextPage && <BlogSkeletonItem />}
+          <div className="col-12 mt-3 d-flex justify-content-center">
+            {currentPage === maxPage ? (
+              <span className="fs-small text-muted">
+              </span>
+            ) : (
+            <button 
+              className="btn btn-outline-primary rounded-pill px-4 py-1"
+              onClick={loadNextPage}>
+              Load More
+            </button>
+            )}
           </div>
-          <div className={`row col-lg-10 col-sm-12 align-items-stretch`}>
-            {blogPosts.map((post, i) => (
-              <BlogListItem key={i} post={post} />
-            ))}
-          </div>
-          <div
-            className={`${cs.center} ${s.indicatorContainer} row pt-3 col-lg-4 col-sm-10 mb-3 border-top`}
-          >
-            {pages.map((num) => (
-              <Link
-                key={num}
-                href={`/blog?${querystring.stringify({ page: num })}`}
-                className={`col-2 h3 ${cs.center} ${s.pageIndicator} ${
-                  num === currentPage && s.selectedPage
-                }`}
-              >
-                {num}
-              </Link>
-            ))}
-          </div>
-          <CurveHeader style={{ zIndex: 10 }} />
+        </section>
+
+        <section 
+          className={`row d-lg-flex d-none col-3 p-0 m-0 ps-3 sticky-top`} 
+          style={{top: 'var(--nav-height)'}}>
+          <h1 className="mb-2 h3">
+            What is this about?
+          </h1>
+          <p>
+            Here is a description about the blog
+          </p>
+          {/*
+            TODO: Add filtering for topic and publish date.
+          */}
         </section>
       </NavigationLayout>
     </>
