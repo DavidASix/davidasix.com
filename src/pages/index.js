@@ -21,6 +21,18 @@ const SocialLink = ({social}) => {
   );
 }
 
+const Bento = ({size, containerClass, np, children}) => {
+  // np = no padding
+  const padding = np ? 'p-0' : 'p-2';
+  return (
+    <div className={`col-${size} ${padding}`}>
+      <div className={`h-100 w-100 frosted rounded-4 row justify-content-center align-items-center ${padding} ${containerClass}`}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
 export default function Home(props) {
   return (
     <>
@@ -28,7 +40,9 @@ export default function Home(props) {
         <title>{`${constants.siteName}`}</title>
       </Head>
       <NavigationLayout>
-        <section className={`col-12 row flex-md-row-reverse 
+        <section 
+          id='hero'
+          className={`col-12 row flex-md-row-reverse 
         position-relative 
         justify-content-center align-items-center align-content-center        
         nav-padding ${s.hero}`}>
@@ -68,12 +82,70 @@ export default function Home(props) {
                 Why the six? I’m the sixth David Anderson in my family tree!
               </span>
               <span className='my-2'>
-                Need a developer or data expert with proven soft and hard skills? Look no further!
+                Need a developer or data expert with proven soft and hard skills? Here I am!
               </span>
             </div>
           </div>
-
         </section>
+        <section
+          id='bento'
+          className={`col-12 row justify-content-center`}>
+          <div 
+            className={`col-12 col-lg-10 row justify-content-center align-items-center align-content-center`}>
+              <h1 className='fs-d5 col-12 p-0'>
+                A little about me
+              </h1>
+              <div className='col-12 row'>
+                <Bento size={3}>
+                  <span className='border'>text</span>
+                </Bento>
+                <Bento size={6}>
+                  <span>text</span>
+                </Bento>
+                <Bento size={3} containerClass='bg-primary'>
+                  <span>text</span>
+                </Bento>
+              </div>
+              
+              <div className='col-12 row'>
+                <Bento size={2}>
+                  <span>text</span>
+                </Bento>
+                <Bento size={4} containerClass='frosted-0'>
+                  <span>text</span>
+                </Bento>
+                <Bento size={6} containerClass='bg-primary'>
+                  <span>text</span>
+                </Bento>
+              </div>
+
+              <div className='col-12 row'>
+                <Bento size={4} containerClass='bg-primary'>
+                  <span>text</span>
+                </Bento>
+                <Bento size={8} np containerClass='frosted-0'>
+                  <Bento size={12}>
+                    <span>text</span>
+                  </Bento>
+                  <Bento size={12}>
+                    <span>text</span>
+                  </Bento>
+                </Bento>
+              </div>
+            </div>
+          </section>
+          
+          <section
+            id='work'
+            className={`col-12 row justify-content-center`}>
+            <div 
+              className={`col-12 col-lg-10 row justify-content-center align-items-center align-content-center`}>
+                <h1 className='fs-d5 col-12 p-0'>
+                  My recent work
+                </h1>
+              </div>
+            </section>
+          
       </NavigationLayout>
     </>
   );
