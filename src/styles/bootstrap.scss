@@ -165,3 +165,11 @@ $utilities: map-merge(
     padding: 0px;
     margin: 0px;
 }
+
+.ratio > * {
+  position: static;
+  top: auto;
+  left: auto;
+  width: auto;
+  height: auto;
+}

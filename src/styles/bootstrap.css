@@ -17483,4 +17483,12 @@ textarea.form-control-lg {
   margin: 0px;
 }
 
+.ratio > * {
+  position: static;
+  top: auto;
+  left: auto;
+  width: auto;
+  height: auto;
+}
+
 /*# sourceMappingURL=bootstrap.css.map */

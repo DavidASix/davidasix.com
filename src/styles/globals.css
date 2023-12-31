@@ -64,6 +64,12 @@ h1, h2, h3, h4, h5, h6, p, img {
   fill: var(--muted) !important;
 }
 
+.hover.hover-danger:hover {
+  color: var(--danger) !important;
+  border-color: var(--danger) !important;
+  fill: var(--danger) !important;
+}
+
 .grow {
   transition: all 0.2s ease-in-out;
   transform-origin: center;
