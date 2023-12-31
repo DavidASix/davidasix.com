@@ -7,7 +7,9 @@ import constants from 'src/assets/constants';
 
 import NavigationLayout from 'src/components/NavigationLayout/';
 import SocialIcon from 'src/components/SocialIcon/';
-import Circles from "public/images/shapes/circle-scatter.svg";
+import Python from "public/vectors/python.svg";
+import Node from "public/vectors/node.svg";
+import SQL from "public/vectors/sql.svg";
 
 const socials = require('/src/assets/socials.json');
 
@@ -28,12 +30,17 @@ const SocialLink = ({social}) => {
   );
 }
 
-const Bento = ({size, containerClass, np, children}) => {
+const Bento = ({size, containerClass, np, ar1, children}) => {
   // np = no padding
   const padding = np ? 'p-0' : 'p-2';
+  // ar = aspect ratio
+  // a size of 2 is the lowest col that is used in the bento.
+  // Thus 2 is a square
+  const ar =  size === 2 || ar1 ? 'ratio ratio-1x1 align-content-center' : '';
   return (
-    <div className={`col-${size} ${padding}`}>
-      <div className={`h-100 w-100 frosted rounded-4 row justify-content-center align-items-center ${padding} ${containerClass}`}>
+    <div className={`col-${size} ${padding} d-flex`} style={{minHeight: 150
+    }}>
+      <div className={`${ar} flex-grow-1 frosted rounded-4 row  justify-content-center align-items-center ${padding} ${containerClass}`}>
         {children}
       </div>
     </div>
@@ -96,63 +103,119 @@ export default function Home(props) {
         </section>
         <section
           id='bento'
-          className={`col-12 row justify-content-center`}>
+          className={`col-12 row justify-content-center position-relative`}>
+            
+            <img 
+              src='/images/shapes/gradient-bg.png' 
+              alt='A gradient background'
+              style={{zIndex: 10}}
+              className={s.gradient} />
           <div 
-            className={`col-12 col-lg-10 row justify-content-center align-items-center align-content-center`}>
+            style={{zIndex: 20}}
+            className={`col-12 col-lg-10 col-xl-9 col-xxl-8 row justify-content-center align-items-center align-content-center`}>
               <h1 className='fs-d5 col-12 p-0'>
                 A little about me
               </h1>
+
               <div className='col-12 row'>
-                <Bento size={3}>
-                  <span className='border'>text</span>
+                <Bento size={2}>
+                  <h2 className='row text-center align-content-center'>
+                    <span className='fs-d5 p-0'>7</span>
+                    <span className='fs-5 p-0'>Years as a Developer</span>
+                  </h2>
                 </Bento>
-                <Bento size={6}>
-                  <span>text</span>
+                <Bento size={4} containerClass='align-content-center'>
+                  <h2 className='fs-5'>
+                    I've worked with lots of tech
+                  </h2>
+                  <span>
+                    But I do most of my coding in these languages
+                  </span>
                 </Bento>
-                <Bento size={3} containerClass='bg-primary'>
-                  <span>text</span>
-                </Bento>
+                <img
+                  src='/images/nodejs.png'
+                  className='col-2' 
+                  aria-label='NodeJS' 
+                  alt='NodeJS' />
+                <img
+                  src='/images/python.png'
+                  className='col-2'
+                  aria-label='Python' 
+                  alt='Python'  />
+                <img
+                  src='/images/sql.png'
+                  className='col-2'
+                  aria-label='SQL' 
+                  alt='SQL' />
               </div>
               
               <div className='col-12 row'>
+                <Bento size={4} containerClass=''>
+                  <span>
+                    I've worn red oxfords for years, and they inspired the name for my webdesign company, <a href='https://redoxfordonline.com' target='_blank' rel='noopener noreferrer' className='hover hover-danger fw-bold'>Red Oxford Online</a>.
+                  </span>
+                </Bento>
+                <img 
+                  style={{ height: 'auto', objectFit: 'contain'}}
+                  className='col-2 p-1 position-relative'
+                  src='/images/low-poly-red-shoes.png' 
+                  alt='A pair of red oxford shoes' />
                 <Bento size={2}>
-                  <span>text</span>
+                  <h2 className='row text-center align-content-center'>
+                    <span className='fs-d5 p-0'>5</span>
+                    <span className='fs-5 p-0'>Years in Sales & Business</span>
+                  </h2>
                 </Bento>
-                <Bento size={4} containerClass='frosted-0'>
-                  <span>text</span>
-                </Bento>
-                <Bento size={6} containerClass='bg-primary'>
-                  <span>text</span>
+                <Bento size={4} containerClass='bg-primary'>
+                  <h2 className='fs-5'>
+                    Corporate & Startups
+                  </h2>
+                  <span>
+                    My varied experience has allowed me to develop excellent communication and leadership skills
+                  </span>
                 </Bento>
               </div>
 
               <div className='col-12 row'>
-                <Bento size={4} containerClass='bg-primary'>
-                  <span>text</span>
-                </Bento>
-                <Bento size={8} np containerClass='frosted-0'>
-                  <Bento size={12}>
+                <img 
+                  style={{ height: 'auto', objectFit: 'contain'}}
+                  className='col-4'
+                  src='/images/low-poly-shepherd.png' 
+                  alt='A German Shepherd' />
+                <div className='col-8 row'>
+                  <Bento size={3} containerClass='bg-primary align-content-center'>
+                    <span className='text-center fs-5 p-0'>
+                      I have a dog
+                    </span>
+                    <span className='text-center fs-small p-0'>
+                      His name is Zachary. He is very cute.
+                    </span>
+                  </Bento>
+                  <Bento size={9}>
                     <span>text</span>
                   </Bento>
                   <Bento size={12}>
                     <span>text</span>
                   </Bento>
-                </Bento>
+                </div>
               </div>
+
             </div>
           </section>
           
           <section
             id='work'
-            className={`col-12 row justify-content-center`}>
+            className={`col-12 row justify-content-center mt-5`}>
             <div 
               className={`col-12 col-lg-10 row justify-content-center align-items-center align-content-center`}>
-                <h1 className='fs-d5 col-12 p-0'>
+                {/* <h1 className='fs-d5 col-12 p-0'>
                   My recent work
                 </h1>
+              <span>
+                https://iconscout.com/free-3d-illustration-pack/coding-lang
+              </span> */}
               </div>
             </section>
-          
       </NavigationLayout>
     </>
   );
