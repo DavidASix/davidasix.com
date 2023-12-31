@@ -3,7 +3,6 @@ import React from 'react'
 import cs from "src/styles/common.module.css";
 
 import NavigationLayout from 'src/components/NavigationLayout/';
-import CurveHeader from 'src/components/CurveHeader';
 
 const apps = [
     {
@@ -78,7 +77,6 @@ export default function DataDelete() {
             </div>
           </div>
 
-          <CurveHeader style={{zIndex: 10}}/>
         </section>
 
       </NavigationLayout>

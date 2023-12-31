@@ -3,8 +3,6 @@ import React from 'react'
 import cs from "src/styles/common.module.css";
 
 import NavigationLayout from 'src/components/NavigationLayout/';
-import CurveHeader from 'src/components/CurveHeader';
-
 let links = [
   {title: 'Data Delete Request', url: '/mobile-apps/data-delete'},
   {title: 'Privacy Policies', url: '/privacy-policies'}
@@ -48,7 +46,6 @@ export default function MobileApps() {
             </div>
           </div>
 
-          <CurveHeader style={{zIndex: 10}}/>
         </section>
 
       </NavigationLayout>

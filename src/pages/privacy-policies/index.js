@@ -3,7 +3,6 @@ import React from 'react'
 import cs from "src/styles/common.module.css";
 
 import NavigationLayout from 'src/components/NavigationLayout/';
-import CurveHeader from 'src/components/CurveHeader';
 
 let policies = [
   {title: 'Midwife Assist', url: '/privacy-policies/midwife-assist'},
@@ -48,7 +47,6 @@ export default function PrivacyPolicies() {
             </div>
           </div>
 
-          <CurveHeader style={{zIndex: 10}}/>
         </section>
 
       </NavigationLayout>
