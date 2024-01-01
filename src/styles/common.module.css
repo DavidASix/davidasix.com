@@ -13,11 +13,6 @@
   border-color: var(--fg-muted);
 }
 
-.stickyParent {
-  position: relative !important;
-  overflow: visible !important;
-}
-
 .section {
   background-color: var(--background);
   width: 100%;
@@ -32,9 +27,9 @@
 
 @keyframes skeleton-loading {
   0% {
-    background-color: hsl(84, 28%, 80%);
+    background-color: rgba(247, 245, 248, 0.4);
   }
   100% {
-    background-color: hsl(84, 28%, 95%);
+    background-color: rgba(247, 245, 248, 0.30);
   }
 }
