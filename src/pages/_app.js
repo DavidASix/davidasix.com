@@ -4,6 +4,7 @@ import Script from 'next/script'
 import 'src/styles/bootstrap.css';
 import 'src/styles/theme.css';
 import 'src/styles/globals.css';
+import 'src/styles/blogPost.css';
 
 import constants from 'src/assets/constants';
 

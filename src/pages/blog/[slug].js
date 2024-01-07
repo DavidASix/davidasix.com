@@ -71,16 +71,17 @@ export default function BlogPost({ params, post, minutesToRead }) {
   return (
     <>
       <Head>
-        <title>{blog.title || 'Article'} | DavidASix</title>
+        <title>{`${blog.title || 'Article'} | DavidASix`}</title>
       </Head>
       <NavigationLayout>
-        <article className="row justify-content-center col-xl-6 col-lg-8 col-sm-10 col-12">
+        <article className="nav-padding row justify-content-center col-xxl-8 col-xl-9 col-lg-10 col-md-10 col-12">
           <div className="d-flex flex-row align-items-center justify-content-between flex-nowrap border-bottom pt-1 pb-3 mb-3">
-            <a href='/blog' className="fs-small">
+            <a href='/blog' className="fs-small hover hover-danger">
               ⬅ Blog Home
             </a>
             <button 
-              className='p-0 m-0 bg-transparent border-0 stealth-btn'
+              style={{fill: 'var(--light)'}}
+              className='p-0 m-0 bg-transparent border-0 hover hover-danger'
               aria-label='Copy URL to clipboard'
               data-bs-toggle="tooltip" 
               data-bs-title="URL Copied"
@@ -92,31 +93,23 @@ export default function BlogPost({ params, post, minutesToRead }) {
           <section 
             id='header'
             className="row p-0 pb-3 col-12 justify-content-center">
-            <h1 className="h1 text-start fw-bold">
+            <h1 className="fs-1 text-start fw-bold">
               {blog.title}
             </h1>
-            <h2 className="h5 text-muted text-start">
+            <h2 className="fs-5 text-start">
               {blog.sub_title}
             </h2>
-            <div className="d-flex flex-row align-items-center flex-wrap mb-2">
-              {blog?.topics.length && (<span className='text-muted me-1 fw-bold fs-small'>Topics:</span>)}
-              {blog.topics.map((topic, i) => (
-                <div key={i} className="badge rounded-pill bg-light border text-muted m-1 mx-1 d-flex align-items-center">
-                  {topic}
-                </div>
-              ))}
-            </div>
-            {/* add topics covered and share link */}
             <small className="ms-1">
               Published:{" "}
               {blog.publish_date?.seconds && new Date(blog.publish_date?.seconds * 1000).toISOString().split('T')[0]}
+              <span className="ms-1">| {minutesToRead} min read</span>
             </small>
             <small className="ms-1">
-              {minutesToRead} min read
+              
             </small>
             <img
               src={blog.header_image}
-              className={`col-12 col-lg-8`}
+              className={`col-12 col-lg-8 rounded-4 mt-2`}
               style={{maxHeight: '50vh', objectFit: 'contain'}}
               alt="Header image"
             />
@@ -160,13 +153,14 @@ export default function BlogPost({ params, post, minutesToRead }) {
                   return null;
               }
             })}
-            <span className="fst-italic text-muted fs-small text-center m-0 p-0">© Kate Urquhart Psychotherapy</span>
-            <span className="fst-italic text-muted fs-small text-center m-0 p-0">kateurquhart.com</span>
+            <span className="fst-italic fs-small text-center m-0 p-0 mt-2">
+              © DavidASix | davidasix.com
+            </span>
           </article>
           <section 
             id='articleFooter'
             className="row p-0 pt-3 pb-0 col-12 justify-content-center border-top">
-            <a href='/blog' className="fs-small mb-3 col-12">
+            <a href='/blog' className="fs-small hover hover-primary mb-3 col-12">
               ⬅ Blog Home
             </a>
           </section>
