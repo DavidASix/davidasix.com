@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 
 
@@ -46,7 +46,13 @@ export default function Excel() {
   const [formulas, setFormulas] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [maxPage, setMaxPage] = useState(null);
-  const [loadingNextPage, setLoadingNextPage] = useState();
+  const [loadingNextPage, setLoadingNextPage] = useState(false);
+
+  const formulaListRef = useRef(null);
+  // Current page state needs to be available in the scroll listener
+  // while currentPage is not displayed in the UI, I'm keeping it in state as the functionality may be used in future
+  const currentPageRef = useRef(currentPage);
+  useEffect(() => {currentPageRef.current = currentPage}, [currentPage]);;
 
   useEffect(() => {
     // Likely does not need to be Async, but I might add an async call here later
@@ -60,21 +66,48 @@ export default function Excel() {
     setInitialFormulas();
   }, []);
 
+  useEffect(() => {
+    const checkScrollEnd = () => { 
+      if (formulaListRef.current) {
+        const formulaListTop = formulaListRef.current.getBoundingClientRect().top + window.scrollY;
+        const formulaListHeight = formulaListRef.current.clientHeight;
+        const formulaListLoadNewBuffer = 100;
+        const loadMoreLocation = formulaListTop + formulaListHeight - formulaListLoadNewBuffer;
+        const { scrollTop, clientHeight } = document.documentElement;
+        const scrolledLoad = (scrollTop + clientHeight) >= loadMoreLocation;
+
+        if (scrolledLoad && !loadingNextPage && currentPageRef.current !== maxPage) {
+          loadNextPage();
+        }
+      }
+    }
+
+    if (maxPage !== null) {
+      window.addEventListener('scroll', checkScrollEnd);
+    }
+
+    // Return function to kill listener when component unmounts
+    return () => {
+        window.removeEventListener('scroll', checkScrollEnd);
+    };
+  }, [maxPage]);
+
   async function loadNextPage() {
     try {
       setLoadingNextPage(true);
       const nextPage = currentPage + 1;
       const nextPageFormulas = await getFormulas(nextPage);
+      await new Promise(resolve => setTimeout(resolve, 500));
       setFormulas([...formulas, ...nextPageFormulas])
       setCurrentPage(nextPage);
     } catch (err) {
       alert('Could not find more formulas.')
       console.log(err)
     } finally {
-      await new Promise(resolve => setTimeout(resolve, 500));
       setLoadingNextPage(false);
     }
   }
+
   return (
     <>
       <Head>
@@ -96,12 +129,16 @@ export default function Excel() {
             <h3 className={`fs-1 col-12 col-lg-10 mb-2`}>
               The Hall of Formulas
             </h3>
-          <div className='col-12 col-lg-6 row order-lg-1 order-2'>
+          <div 
+            id="formulaList" 
+            ref={formulaListRef}
+            className='col-12 col-lg-6 row order-lg-1 order-2'>
             {/* If there are no formulas loaded yet, render a skeleton layout. */}
             {maxPage === null && Array.from({ length: 3 })
               .map((_, i) => <FormulaSkeleton index={i} key={i} />)}
             {formulas.map((formula, i) => <Formula {...formula} key={i} /> )}
             {loadingNextPage && <FormulaSkeleton />}
+            {currentPage === maxPage && <p className="text-center col-12">That's all for now!</p>}
           </div>
           <div
             className={`d-flex col-lg-4 px-3 row sticky-lg-top order-lg-2 order-1`}
