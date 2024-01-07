@@ -28,8 +28,18 @@ export default function App({ Component, pageProps }) {
         
       `}
       </Script>
-      <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous" />
-
+      <Script 
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
+        crossorigin="anonymous"
+        onLoad={() => {
+          // After bootstrap script is loaded, we set up the dynamic elements, depending on what is on each page.
+          // This is done here as due to SSR each page might not have access to document, or bootstrap. 
+          // Performing these functions here ensures that bootstrap class is available
+          const tooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+          if (!tooltips.length) { return; }
+          tooltips.forEach(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+        }}/>
       <Component {...pageProps} />
     </>
   );
