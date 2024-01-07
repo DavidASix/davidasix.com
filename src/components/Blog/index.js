@@ -3,7 +3,6 @@ import cs from "src/styles/common.module.css";
 
 export const BlogListItem = (props) => {
   let post = {...props.post};
-  console.log(post)
   // Article text is stored in markdown format, this code removes the markdown for article preview
   let articleText = '';
   // Minutes to read is calculated to display how long it might take to read, similiar to Medium.
@@ -34,7 +33,8 @@ export const BlogListItem = (props) => {
     post.topics = post?.topics ? post.topics : [];
 
     return (
-      <div className={`col-12 py-3 row px-1 m-0`}>
+      <div className={`col-12 row px-1 py-2`}>
+      <div className={`col-12 row p-3 frosted rounded-4 `}>
         <h2 className='col-12 text-start fw-bold m-0 p-0'>
           {post.title}
         </h2>
@@ -50,7 +50,7 @@ export const BlogListItem = (props) => {
         <div className={`col-12 p-0 d-flex justify-content-center align-items-center`}>
           <a 
             href={`/blog/${post.slug}`}
-            className='p-0 m-0 pe-1 position-relative' 
+            className='p-0 m-0 pe-1 position-relative hover'
             style={{ flex: 1, maxHeight: 100, overflow: 'hidden' }}>
             <p className='m-0'>{articleText?.slice(0, 300)}...</p>
             <div className={s.readMore}>
@@ -65,25 +65,23 @@ export const BlogListItem = (props) => {
             className={`${s.blogItemImage} rounded-3`} />
         </div>
         
-        <div className='d-flex flex-column justify-content-start align-items-start flex-md-row align-items-md-center m-0 p-0 mt-3'>
+        <div className='d-flex flex-row justify-content-start align-items-center m-0 p-0'>
           <div className="d-flex flex-row align-items-center flex-wrap">
-            {post?.topics.length && (<span className='text-muted me-1 fw-bold fs-small'>Topics:</span>)}
-            {post?.topics.map((topic, i) => (
-              <div key={i} className="badge rounded-pill bg-light border text-muted m-1 mx-1 d-flex align-items-center">
-                {topic}
-              </div>
-            ))}
+            <span className='fs-small fst-italic me-2 text-nowrap'>
+              {minutesToRead} minute read
+            </span>
           </div>
   
           <div style={{ flex: 1}} className='d-flex justify-content-end align-items-center align-self-end py-1'>
-            <span className='text-muted fs-small fst-italic me-2 text-nowrap'>
-              {minutesToRead} minute read
-            </span>
-            <a href={`/blog/${post.slug}`} className="btn btn-primary p-0 px-2 rounded-pill fs-6 text-nowrap"  style={{justifySelf: 'end'}}>
+            <a 
+              href={`/blog/${post.slug}`} 
+              className="btn btn-primary p-0 px-2 rounded-pill fs-6 text-nowrap"  
+              style={{justifySelf: 'end', width: 110}}>
               Read Entry
             </a>
           </div>
         </div>
+      </div>
       </div>
     );
   };
@@ -91,7 +89,8 @@ export const BlogListItem = (props) => {
 
   export const BlogSkeletonItem = () => {
     return (
-      <div className={`col-12 py-3 row px-1 m-0`}>
+      <div className={`col-12 row px-1 py-2`}>
+      <div className={`col-12 row p-3 frosted rounded-4 `}>
         <div
           className={`m-0 p-0 ${cs.skeleton}`}
           style={{ width: "25%", height: "2rem" }}
@@ -134,36 +133,26 @@ export const BlogListItem = (props) => {
           />
         </div>
   
-        <div className="d-flex flex-column justify-content-start align-items-start flex-md-row align-items-md-center m-0 p-0 mt-3">
+        
+        <div className='d-flex flex-row justify-content-start align-items-center m-0 p-0'>
           <div className="d-flex flex-row align-items-center flex-wrap">
             <div
               className={`m-0 m-0 mx-1 p-0 ${cs.skeleton}`}
-              style={{ width: '3rem', height: "1rem" }}
-            />
-            <div
-              className={`m-0 m-0 mx-1 p-0 ${cs.skeleton}`}
-              style={{ width: "4rem", height: "1rem" }}
-            />
-            <div
-              className={`m-0 m-0 mx-1 p-0 ${cs.skeleton}`}
-              style={{ width: "4rem", height: "1rem" }}
+              style={{ width: '5rem', height: "1rem" }}
             />
           </div>
   
           <div
             style={{ flex: 1 }}
-            className="d-flex justify-content-end align-items-center align-self-end py-1"
-          >
+            className="d-flex justify-content-end align-items-center align-self-end"
+          >    
             <div
               className={`m-0 m-0 mx-1 p-0 ${cs.skeleton}`}
-              style={{ width: "6rem", height: "1rem" }}
-            />
-            <div
-              className={`m-0 m-0 mx-1 p-0 ${cs.skeleton}`}
-              style={{ width: "6rem", height: "1.5rem" }}
+              style={{ width: 110, height: "1.5rem" }}
             />
           </div>
         </div>
+      </div>
       </div>
     );
   };

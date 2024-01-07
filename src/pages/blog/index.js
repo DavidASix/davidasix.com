@@ -81,75 +81,57 @@ export default function Blog() {
       setLoadingNextPage(true);
       const nextPage = currentPage + 1;
       const nextPagePosts = await getPosts(nextPage);
+      //await new Promise(resolve => setTimeout(resolve, 500));
       setPosts([...posts, ...nextPagePosts])
       setCurrentPage(nextPage);
     } catch (err) {
       alert('Could not find more blog posts.')
       console.log(err)
     } finally {
-      await new Promise(resolve => setTimeout(resolve, 500));
       setLoadingNextPage(false);
     }
   }
-  console.log(maxPage)
+
   return (
     <>
       <Head>
         <title>{`${constants.siteName} | Blog`}</title>
       </Head>
       <NavigationLayout>
-        <section 
-          id='header'
-          className='position-relative col-12 row justify-content-center p-0 m-0 mb-4 '>
-          <div
-            className={`col-lg-10 col-12`}>
-            <h1 
-              className="display-4 headerFont p-0 ps-2"
-              style={{zIndex: 10}}>
-              My Blog Title
-            </h1>
-            <span className="fs-6 ps-4">
-              Blog Subheader
-            </span>
-          </div>
+        <section className={`nav-padding col-12 row justify-content-center align-items-start`}>
+            <div className={`col-12 col-md-10 col-lg-8 row justify-content-center`} style={{zIndex: 30}}>
+              <h1 className={`fs-d1 text-center text-nowrap`}>
+                Six Blog
+              </h1>
+              <p className={`text-center`}>
+                In these posts you'll find stream of conciousness writing on productivity, programming, and my projects. 
+                <br />
+                No schedule, no particular topic, just some thoughts I decided to write down.
+              </p>
+            </div>
         </section>
 
         <section 
           id='Blog Entries'
-          className="col-12 col-lg-7 row justify-content-start align-items-start p-0 m-0"
+          className="col-12 col-md-10 col-lg-9 col-xl-8 col-xxl-7 row justify-content-start align-items-start p-0 m-0"
           style={{zIndex: 15}}>
           {/* If there are no posts yet, render a skeleton layout. */}
           {maxPage === null && Array.from({ length: 3 }).map((_, i) => <BlogSkeletonItem key={i} />)}
           {posts.map((post, i) => <BlogListItem key={i} post={post} />)}
           {loadingNextPage && <BlogSkeletonItem />}
           <div className="col-12 mt-3 d-flex justify-content-center">
-            {currentPage === maxPage ? (
-              <span className="fs-small text-muted">
-              </span>
-            ) : (
+            {currentPage === maxPage && <p>That's all for now!</p> }
+            {!loadingNextPage && currentPage !== maxPage && (
             <button 
-              className="btn btn-outline-primary rounded-pill px-4 py-1"
+              className="btn btn-primary rounded-pill px-4 py-1"
               onClick={loadNextPage}>
               Load More
             </button>
             )}
           </div>
         </section>
-
-        <section 
-          className={`row d-lg-flex d-none col-3 p-0 m-0 ps-3 sticky-top`} 
-          style={{top: 'var(--nav-height)'}}>
-          <h1 className="mb-2 h3">
-            What is this about?
-          </h1>
-          <p>
-            Here is a description about the blog
-          </p>
-          {/*
-            TODO: Add filtering for topic and publish date.
-          */}
-        </section>
       </NavigationLayout>
+
     </>
   );
 }
