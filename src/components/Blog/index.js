@@ -34,54 +34,54 @@ export const BlogListItem = (props) => {
 
     return (
       <div className={`col-12 row px-1 py-2`}>
-      <div className={`col-12 row p-3 frosted rounded-4 `}>
-        <h2 className='col-12 text-start fw-bold m-0 p-0'>
-          {post.title}
-        </h2>
-  
-        <small className='col-12 p-0 fst-italic'>
-          Published on{" "}
-          {post.publish_date?.seconds &&
-            new Date(post.publish_date?.seconds * 1000)
-              .toISOString()
-              .split("T")[0]}
-        </small>
-  
-        <div className={`col-12 p-0 d-flex justify-content-center align-items-center`}>
-          <a 
-            href={`/blog/${post.slug}`}
-            className='p-0 m-0 pe-1 position-relative hover'
-            style={{ flex: 1, maxHeight: 100, overflow: 'hidden' }}>
-            <p className='m-0'>{articleText?.slice(0, 300)}...</p>
-            <div className={s.readMore}>
-              <span className="badge rounded-pill bg-light border text-muted m-0 d-flex py-0 align-items-center">
-                Read More
+        <div className={`col-12 row p-3 frosted rounded-4 `}>
+          <h2 className='col-12 text-start fw-bold m-0 p-0'>
+            {post.title}
+          </h2>
+    
+          <small className='col-12 p-0 fst-italic'>
+            Published on{" "}
+            {post.publish_date?.seconds &&
+              new Date(post.publish_date?.seconds * 1000)
+                .toISOString()
+                .split("T")[0]}
+          </small>
+    
+          <div className={`col-12 p-0 d-flex justify-content-center align-items-center`}>
+            <a 
+              href={`/blog/${post.slug}`}
+              className='p-0 m-0 pe-1 position-relative hover'
+              style={{ flex: 1, maxHeight: 100, overflow: 'hidden' }}>
+              <p className='m-0'>{articleText?.slice(0, 300)}...</p>
+              <div className={s.readMore}>
+                <span className="badge rounded-pill bg-light border text-muted m-0 d-flex py-0 align-items-center">
+                  Read More
+                </span>
+              </div>
+            </a>
+            <a 
+              href={`/blog/${post.slug}`}
+              style={{ backgroundImage: `url(${post.header_image})`}}
+              className={`${s.blogItemImage} rounded-3`} />
+          </div>
+          
+          <div className='d-flex flex-row justify-content-start align-items-center m-0 p-0'>
+            <div className="d-flex flex-row align-items-center flex-wrap">
+              <span className='fs-small fst-italic me-2 text-nowrap'>
+                {minutesToRead} minute read
               </span>
             </div>
-          </a>
-          <a 
-            href={`/blog/${post.slug}`}
-            style={{ backgroundImage: `url(${post.header_image})`}}
-            className={`${s.blogItemImage} rounded-3`} />
-        </div>
-        
-        <div className='d-flex flex-row justify-content-start align-items-center m-0 p-0'>
-          <div className="d-flex flex-row align-items-center flex-wrap">
-            <span className='fs-small fst-italic me-2 text-nowrap'>
-              {minutesToRead} minute read
-            </span>
-          </div>
-  
-          <div style={{ flex: 1}} className='d-flex justify-content-end align-items-center align-self-end py-1'>
-            <a 
-              href={`/blog/${post.slug}`} 
-              className="btn btn-primary p-0 px-2 rounded-pill fs-6 text-nowrap"  
-              style={{justifySelf: 'end', width: 110}}>
-              Read Entry
-            </a>
+    
+            <div style={{ flex: 1}} className='d-flex justify-content-end align-items-center align-self-end py-1'>
+              <a 
+                href={`/blog/${post.slug}`} 
+                className="btn btn-primary p-0 px-2 rounded-pill fs-6 text-nowrap"  
+                style={{justifySelf: 'end', width: 110}}>
+                Read Entry
+              </a>
+            </div>
           </div>
         </div>
-      </div>
       </div>
     );
   };
@@ -90,69 +90,69 @@ export const BlogListItem = (props) => {
   export const BlogSkeletonItem = () => {
     return (
       <div className={`col-12 row px-1 py-2`}>
-      <div className={`col-12 row p-3 frosted rounded-4 `}>
-        <div
-          className={`m-0 p-0 ${cs.skeleton}`}
-          style={{ width: "25%", height: "2rem" }}
-        />
-  
-        <div className="col-12 text-start fw-bold m-0 p-0">
+        <div className={`col-12 row p-3 frosted rounded-4 `}>
           <div
-            className={`m-0 m-0 mt-2 mx-1 p-0 ${cs.skeleton}`}
-            style={{ width: "20%", height: "1rem" }}
+            className={`m-0 p-0 ${cs.skeleton}`}
+            style={{ width: "25%", height: "2rem" }}
           />
-        </div>
-  
-        <div
-          className={`col-12 p-0 d-flex justify-content-center align-items-center`}
-        >
+    
+          <div className="col-12 text-start fw-bold m-0 p-0">
+            <div
+              className={`m-0 m-0 mt-2 mx-1 p-0 ${cs.skeleton}`}
+              style={{ width: "20%", height: "1rem" }}
+            />
+          </div>
+    
           <div
-            className="p-0 m-0 pe-1 position-relative"
-            style={{ flex: 1, maxHeight: 100, overflow: "hidden" }}
+            className={`col-12 p-0 d-flex justify-content-center align-items-center`}
           >
             <div
-              className={`m-0 my-1 mx-1 p-0 ${cs.skeleton}`}
-              style={{ width: "100%", height: "1.1rem" }}
-            />
+              className="p-0 m-0 pe-1 position-relative"
+              style={{ flex: 1, maxHeight: 100, overflow: "hidden" }}
+            >
+              <div
+                className={`m-0 my-1 mx-1 p-0 ${cs.skeleton}`}
+                style={{ width: "100%", height: "1.1rem" }}
+              />
+              <div
+                className={`m-0 my-1 mx-1 p-0 ${cs.skeleton}`}
+                style={{ width: "100%", height: "1.1rem" }}
+              />
+              <div
+                className={`m-0 my-1 mx-1 p-0 ${cs.skeleton}`}
+                style={{ width: "100%", height: "1.1rem" }}
+              />
+              <div
+                className={`m-0 my-1 mx-1 p-0 ${cs.skeleton}`}
+                style={{ width: "100%", height: "1.1rem" }}
+              />
+            </div>
             <div
               className={`m-0 my-1 mx-1 p-0 ${cs.skeleton}`}
-              style={{ width: "100%", height: "1.1rem" }}
-            />
-            <div
-              className={`m-0 my-1 mx-1 p-0 ${cs.skeleton}`}
-              style={{ width: "100%", height: "1.1rem" }}
-            />
-            <div
-              className={`m-0 my-1 mx-1 p-0 ${cs.skeleton}`}
-              style={{ width: "100%", height: "1.1rem" }}
+              style={{ width: 110, height: 110 }}
             />
           </div>
-          <div
-            className={`m-0 my-1 mx-1 p-0 ${cs.skeleton}`}
-            style={{ width: 110, height: 110 }}
-          />
+    
+          
+          <div className='d-flex flex-row justify-content-start align-items-center m-0 p-0'>
+            <div className="d-flex flex-row align-items-center flex-wrap">
+              <div
+                className={`m-0 m-0 mx-1 p-0 ${cs.skeleton}`}
+                style={{ width: '5rem', height: "1rem" }}
+              />
+            </div>
+    
+            <div
+              style={{ flex: 1 }}
+              className="d-flex justify-content-end align-items-center align-self-end"
+            >    
+              <div
+                className={`m-0 m-0 mx-1 p-0 ${cs.skeleton}`}
+                style={{ width: 110, height: "1.5rem" }}
+              />
+            </div>
+          </div>
         </div>
-  
-        
-        <div className='d-flex flex-row justify-content-start align-items-center m-0 p-0'>
-          <div className="d-flex flex-row align-items-center flex-wrap">
-            <div
-              className={`m-0 m-0 mx-1 p-0 ${cs.skeleton}`}
-              style={{ width: '5rem', height: "1rem" }}
-            />
-          </div>
-  
-          <div
-            style={{ flex: 1 }}
-            className="d-flex justify-content-end align-items-center align-self-end"
-          >    
-            <div
-              className={`m-0 m-0 mx-1 p-0 ${cs.skeleton}`}
-              style={{ width: 110, height: "1.5rem" }}
-            />
-          </div>
-        </div>
-      </div>
       </div>
     );
   };
