@@ -120,7 +120,9 @@ export default function Home(props) {
               <div className='col-12 row'>
                 <Bento size={2}>
                   <h2 className='row text-center align-content-center'>
-                    <span className='fs-d5 p-0'>7</span>
+                    <span className='fs-d5 p-0'>
+                    {new Date().getFullYear() - 2017}
+                    </span>
                     <span className='fs-5 p-0'>Years as a Developer</span>
                   </h2>
                 </Bento>
@@ -135,16 +137,19 @@ export default function Home(props) {
                 <img
                   src='/images/nodejs.png'
                   className='col-2' 
+                  style={{objectFit: 'contain'}}
                   aria-label='NodeJS' 
                   alt='NodeJS' />
                 <img
                   src='/images/python.png'
                   className='col-2'
+                  style={{objectFit: 'contain'}}
                   aria-label='Python' 
                   alt='Python'  />
                 <img
                   src='/images/sql.png'
                   className='col-2'
+                  style={{objectFit: 'contain'}}
                   aria-label='SQL' 
                   alt='SQL' />
               </div>
