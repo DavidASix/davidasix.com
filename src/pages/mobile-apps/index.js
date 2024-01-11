@@ -1,9 +1,35 @@
 import Head from 'next/head';
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+import { ref, getDownloadURL } from "firebase/storage";
+
+import { db, storage } from "src/components/Firebase";
+import NavigationLayout from 'src/components/NavigationLayout/';
+import { MobileApp, MobileAppSkeleton } from 'src/components/MobileApps/';
 
 import Arrow from "public/vectors/arrow.svg";
 
-import NavigationLayout from 'src/components/NavigationLayout/';
+
+const getMobileApps = () => new Promise(async (resolve, reject) => {
+  const mobileAppCollection = collection(db, "mobile-apps");
+  const q = query(mobileAppCollection, orderBy("createdOn", "desc"));
+  const snapshot = await getDocs(q);
+
+  // Get the appicon image urls for each app
+  let mobileApps = snapshot.docs;
+  mobileApps = mobileApps.map(async (doc, i) => {
+    const docData = doc.data();
+    let appIcon = await getDownloadURL(ref(storage, docData.appIcon));
+    return {
+      ...docData,
+      id: doc.id,
+      appIcon: appIcon,
+    };
+  });
+  mobileApps = await Promise.all(mobileApps);
+
+  return resolve(mobileApps);
+});
 
 const Bento = ({size, containerClass, np, ar1, children, zIndex}) => {
   // np = no padding
@@ -27,6 +53,21 @@ const Bento = ({size, containerClass, np, ar1, children, zIndex}) => {
 }
 
 export default function MobileApps() {
+  const [mobileApps, setMobileApps] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const initialFetch = async () => {
+      console.log('initial fetch');
+      setLoading(true);
+      await new Promise(resolve => setTimeout(resolve, 500));
+      const fetchedMobileApps = await getMobileApps();
+      setMobileApps(fetchedMobileApps)
+      setLoading(false);
+    }
+    initialFetch();
+  }, []);
+
   return (
     <>
       <Head>
@@ -90,21 +131,8 @@ export default function MobileApps() {
                       zIndex: 10}} />
                 </Bento>
                 
-                <img
-                  src='/images/nodejs.png'
-                  className='col-3 col-md-2'
-                  aria-label='NodeJS' 
-                  alt='NodeJS' />
-                <img
-                  src='/images/python.png'
-                  className='col-3 col-md-2'
-                  aria-label='Python' 
-                  alt='Python'  />
-                <img
-                  src='/images/python.png'
-                  className='col-3 col-md-2'
-                  aria-label='Python' 
-                  alt='Python'  />
+                {loading && Array.from({ length: 4 }).map((_, i) => <MobileAppSkeleton key={i} />)}
+                {mobileApps.map((app, i) => <MobileApp key={i} app={app} />)}
               
             </div>
         </section>
