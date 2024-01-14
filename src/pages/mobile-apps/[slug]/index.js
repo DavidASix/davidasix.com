@@ -1,6 +1,8 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { ref, getDownloadURL } from "firebase/storage";
 import Head from "next/head";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 import { db, storage } from "src/components/Firebase";
 import NavigationLayout from "src/components/NavigationLayout/";
@@ -40,7 +42,7 @@ async function getApp(slug) {
     );
     screenshotUrls = await Promise.all(screenshotUrls);
   }
-  console.log(app);
+  
   return app;
 }
 
@@ -61,7 +63,6 @@ export const getServerSideProps = async ({ params }) => {
 export default function MobileApp(props) {
   const { app_str, params } = props;
   const app = JSON.parse(app_str);
-  console.log(app);
   return (
     <>
       <Head>
@@ -75,9 +76,11 @@ export default function MobileApp(props) {
             className={`col-12 col-md-10 col-lg-8 px-1 p-md-0 row justify-content-center`}
             style={{ zIndex: 30 }}
           >
-            <div className="col-9 row align-content-center order-2 order-md-1">
-              <h1 className={`fs-1 fs-md-d1 text-start text-md-center`}>{app.title}</h1>
-              <p className={`text-start text-md-center fs-small fs-md-6`}>
+            <div className="col-9 row align-content-center justify-content-start order-2 order-md-1">
+              <h1 className={`fs-1 fs-md-d1 text-start text-md-center`}>
+                {app.title}
+              </h1>
+              <p className={`text-start text-md-center fs-small fs-md-6 mb-2`}>
                 {app.shortDescription}
               </p>
             </div>
@@ -85,22 +88,109 @@ export default function MobileApp(props) {
               <img
                 src={app.appIcon}
                 className="rounded-4 rounded-md-5 shadow"
-                style={{ width: '100%', height: 'auto', aspectRatio: 1 }}
+                style={{ width: "100%", height: "auto", aspectRatio: 1 }}
                 aria-label={`${app.title} App Icon`}
                 alt={`${app.title} App Icon`}
               />
+            </div>
+            <div className="col-12 order-3 row justify-content-center">
+              {app.appleStoreLink && (
+                <a
+                  href={app.appleStoreListing}
+                  className="hover p-2 col-5 col-sm-4 col-md-3 row justify-content-center"
+                  title="Download on the App Store"
+                  aria-label="Download on the App Store"
+                >
+                  <img
+                    src="/images/apple-store-button.png"
+                    className="col-12"
+                    aria-label="Download on the App Store"
+                    alt="Download on the App Store"
+                  />
+                </a>
+              )}
+              {app.googlePlayLink && (
+                <a
+                  href={app.googlePlayLink}
+                  className="hover p-2 col-5 col-sm-4 col-md-3 row justify-content-center"
+                  title="Download on Google Play"
+                  aria-label="Download on Google Play"
+                >
+                  <img
+                    src="/images/google-play-button.png"
+                    className="col-12"
+                    aria-label="Download on Google Play"
+                    alt="Download on Google Play"
+                  />
+                </a>
+              )}
+              {app.githubLink && (
+                <a
+                  href={app.githubLink}
+                  className="hover p-2 col-5 col-sm-4 col-md-3 row justify-content-center"
+                  title="View code on Github"
+                  aria-label="View code on Github"
+                >
+                  <img
+                    src="/images/github-button.png"
+                    className="col-12"
+                    aria-label="View code on Github"
+                    alt="View code on Github"
+                  />
+                </a>
+              )}
             </div>
           </div>
         </section>
 
         <section
-          id="apps"
+          id="screenshots"
           className={`col-12 row justify-content-center align-items-start`}
         >
           <div
-            style={{ zIndex: 20 }}
-            className={`col-12 col-lg-10 col-xl-9 col-xxl-8 row justify-content-start align-items-start align-content-start`}
+            className={`col-12 col-md-10 col-lg-8 px-1 p-md-0 row justify-content-center`}
           ></div>
+        </section>
+
+        <section
+          id="Writeup"
+          className={`col-12 row justify-content-center align-items-start`}
+        >
+          <div
+            className={`col-12 col-md-10 col-lg-8 px-1 p-md-0 row justify-content-center`}
+          >
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {app.writeUp.replace(/\n/g, "  \n")}
+            </ReactMarkdown>
+          </div>
+        </section>
+
+        <section
+          id="Links"
+          className="col-12 row justify-content-center align-items-start mt-3"
+        >
+          <div
+            className={`col-12 col-md-10 col-lg-8 px-1 p-md-0 row justify-content-start`}
+          >
+            {app.privacyPolicy && (
+              <a
+                href={`/mobile-apps/${app.slug}/privacy-policy`}
+                className="badge border border-light rounded-pill hover hover-danger mx-2"
+                style={{ width: "unset" }}
+              >
+                Privacy Policy
+              </a>
+            )}
+            {app.dataDelete && (
+              <a
+                href={`/mobile-apps/${app.slug}/data-delete`}
+                className="badge border border-light rounded-pill hover hover-danger"
+                style={{ width: "unset" }}
+              >
+                Data Delete Policy
+              </a>
+            )}
+          </div>
         </section>
       </NavigationLayout>
     </>
