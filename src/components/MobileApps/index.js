@@ -10,8 +10,8 @@ export const MobileApp = (props) => {
             <img
                 src={app.appIcon}
                 className='col-10 rounded-5 shadow'
-                aria-label='Python' 
-                alt='Python'  />
+                aria-label={`${app.title} App Icon`} 
+                alt={`${app.title} App Icon`}  />
             <span className="p-0 m-0 fs-5 text-center">
                 {app.title}
             </span>

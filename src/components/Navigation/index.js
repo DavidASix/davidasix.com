@@ -4,8 +4,8 @@ const links = [
   {title: 'Blog', url: 'blog'},
   {title: 'Excel', url: '/excel'},
   {title: 'Data', url: '/data'},
-  {title: 'Mobile', url: '/mobile-apps'},
-  {title: 'Web', url: 'web-dev'},
+  {title: 'Apps', url: '/mobile-apps'},
+  //{title: 'Web', url: 'web-dev'},
 ]
 
 export default function Navigation() {
