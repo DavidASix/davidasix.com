@@ -1,7 +1,7 @@
 import s from "./Navigation.module.css";
 const links = [
   {title: 'Home', url: '/'},
-  {title: 'Blog', url: 'blog'},
+  {title: 'Blog', url: '/blog'},
   {title: 'Excel', url: '/excel'},
   {title: 'Data', url: '/data'},
   {title: 'Apps', url: '/mobile-apps'},
