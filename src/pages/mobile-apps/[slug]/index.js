@@ -1,13 +1,16 @@
+import { useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { ref, getDownloadURL } from "firebase/storage";
 import Head from "next/head";
 import ReactMarkdown from "react-markdown";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import remarkGfm from "remark-gfm";
 
 import { db, storage } from "src/components/Firebase";
 import NavigationLayout from "src/components/NavigationLayout/";
 
 import cs from "src/styles/common.module.css";
+import s from "./mobileApp.module.css";
 
 async function getApp(slug) {
   const appQuery = query(
@@ -41,8 +44,8 @@ async function getApp(slug) {
       async (screenshot) => await getDownloadURL(ref(storage, screenshot))
     );
     screenshotUrls = await Promise.all(screenshotUrls);
+    app.screenshots = screenshotUrls;
   }
-  
   return app;
 }
 
@@ -63,6 +66,7 @@ export const getServerSideProps = async ({ params }) => {
 export default function MobileApp(props) {
   const { app_str, params } = props;
   const app = JSON.parse(app_str);
+  const [currentImage, setCurrentImage] = useState(0);
   return (
     <>
       <Head>
@@ -103,7 +107,7 @@ export default function MobileApp(props) {
                 >
                   <img
                     src="/images/apple-store-button.png"
-                    className="col-12"
+                    style={{maxWidth: 200}}
                     aria-label="Download on the App Store"
                     alt="Download on the App Store"
                   />
@@ -118,7 +122,7 @@ export default function MobileApp(props) {
                 >
                   <img
                     src="/images/google-play-button.png"
-                    className="col-12"
+                    style={{maxWidth: 200}}
                     aria-label="Download on Google Play"
                     alt="Download on Google Play"
                   />
@@ -133,7 +137,7 @@ export default function MobileApp(props) {
                 >
                   <img
                     src="/images/github-button.png"
-                    className="col-12"
+                    style={{maxWidth: 200}}
                     aria-label="View code on Github"
                     alt="View code on Github"
                   />
@@ -148,8 +152,58 @@ export default function MobileApp(props) {
           className={`col-12 row justify-content-center align-items-start`}
         >
           <div
-            className={`col-12 col-md-10 col-lg-8 px-1 p-md-0 row justify-content-center`}
-          ></div>
+            className={`my-3 col-12 col-md-10 col-lg-8 px-1 p-md-0 row justify-content-center`}
+          >
+            <div className="col-1 position-relative">
+              <button
+                onClick={() =>
+                  setCurrentImage(
+                    currentImage > 0 ? currentImage - 1 : currentImage
+                  )
+                }
+                className={`frosted ${s.carouselButton} ${s.carouselButtonLeft}`}
+              >
+                <FaChevronLeft size='45%' />
+              </button>
+            </div>
+            {app.screenshots && (
+              <div className={`col-10 rounded-5 ${s.carouselWrapper}`}>
+                {/* This div is the same aspect ratio as the images, so it can be centered to ensure the below div starts the first image in the center  */}
+                <div className={s.carouselCenter}>
+                  {/* This div has all images in a row, they are cut off by carouselWrapper */}
+                  <div
+                    className="d-inline position-absolute"
+                    style={{ width: `${(app.screenshots.length + 1) * 100}%` }}
+                  >
+                    {app.screenshots.map((screenshot, i) => (
+                      <img
+                        src={screenshot}
+                        key={i}
+                        className={`${s.carouselImage} rounded-4`}
+                        style={{
+                          transform: `translateX(-${currentImage * 100}%)`,
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+            <div className="col-1 position-relative">
+              <button
+                onClick={() =>
+                  setCurrentImage(
+                    currentImage < app.screenshots.length - 1
+                      ? currentImage + 1
+                      : currentImage
+                  )
+                }
+                className={`frosted ${s.carouselButton} ${s.carouselButtonRight}`}
+              >
+                <FaChevronRight size='45%' />
+              </button>
+            </div>
+          </div>
         </section>
 
         <section
@@ -184,7 +238,7 @@ export default function MobileApp(props) {
             {app.dataDelete && (
               <a
                 href={`/mobile-apps/${app.slug}/data-delete`}
-                className="badge border border-light rounded-pill hover hover-danger"
+                className="badge border border-light rounded-pill hover hover-danger mx-2"
                 style={{ width: "unset" }}
               >
                 Data Delete Policy
