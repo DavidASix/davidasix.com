@@ -67,7 +67,6 @@ export default function MobileApp(props) {
   const { app_str, params } = props;
   const app = JSON.parse(app_str);
   const [currentImage, setCurrentImage] = useState(0);
-  console.log(app)
   return (
     <>
       <Head>
@@ -149,6 +148,34 @@ export default function MobileApp(props) {
         </section>
 
         <section
+          id="Links"
+          className="col-12 row justify-content-center align-items-center mt-3"
+        >
+          <div
+            className={`col-12 col-md-10 col-lg-8 px-1 p-md-0 row justify-content-center`}
+          >
+            {app.privacyPolicy && (
+              <a
+                href={`/mobile-apps/${app.slug}/privacy-policy`}
+                className="hover hover-danger mx-2 fw-bold"
+                style={{ width: "unset" }}
+              >
+                Privacy Policy
+              </a>
+            )}
+            {app.dataDelete && (
+              <a
+                href={`/mobile-apps/${app.slug}/data-delete`}
+                className="hover hover-danger mx-2 fw-bold"
+                style={{ width: "unset" }}
+              >
+                Data Delete Policy
+              </a>
+            )}
+          </div>
+        </section>
+
+        <section
           id="screenshots"
           className={`col-12 row justify-content-center align-items-start`}
         >
@@ -168,9 +195,9 @@ export default function MobileApp(props) {
               </button>
             </div>
             {app.screenshots && (
-              <div className={`col-10 rounded-5 ${s.carouselWrapper}`}>
+              <div className={`col-10 rounded-4 ${s.carouselWrapper}`}>
                 {/* This div is the same aspect ratio as the images, so it can be centered to ensure the below div starts the first image in the center  */}
-                <div className={s.carouselCenter}>
+                <div className={`${s.carouselCenter}`}>
                   {/* This div has all images in a row, they are cut off by carouselWrapper */}
                   <div
                     className="d-inline position-absolute"
@@ -217,10 +244,10 @@ export default function MobileApp(props) {
             {app.featureList.length && (
               <div className="col-12 col-md-6">
                 <h2>Features</h2>
-                <ul>
+                <ul className="p-0">
                   {app.featureList.map((feature, i) => (
                     <li 
-                      className="badge border border-light rounded-pill hover hover-danger m-1"
+                      className="badge border border-light rounded-pill m-1"
                       key={i}>
                         {feature}
                     </li>
@@ -232,10 +259,10 @@ export default function MobileApp(props) {
             {app.featureList.length && (
               <div className="col-12 col-md-6">
                 <h2>Technologies</h2>
-                <ul>
+                <ul className="p-0">
                   {app.technologyList.map((tech, i) => (
                     <li 
-                      className="badge border border-light rounded-pill hover hover-danger m-1"
+                      className="badge border border-light rounded-pill m-1"
                       key={i}>
                         {tech}
                     </li>
@@ -251,33 +278,6 @@ export default function MobileApp(props) {
           </div>
         </section>
 
-        <section
-          id="Links"
-          className="col-12 row justify-content-center align-items-start mt-3"
-        >
-          <div
-            className={`col-12 col-md-10 col-lg-8 px-1 p-md-0 row justify-content-start`}
-          >
-            {app.privacyPolicy && (
-              <a
-                href={`/mobile-apps/${app.slug}/privacy-policy`}
-                className="badge border border-light rounded-pill hover hover-danger mx-2"
-                style={{ width: "unset" }}
-              >
-                Privacy Policy
-              </a>
-            )}
-            {app.dataDelete && (
-              <a
-                href={`/mobile-apps/${app.slug}/data-delete`}
-                className="badge border border-light rounded-pill hover hover-danger mx-2"
-                style={{ width: "unset" }}
-              >
-                Data Delete Policy
-              </a>
-            )}
-          </div>
-        </section>
       </NavigationLayout>
     </>
   );
