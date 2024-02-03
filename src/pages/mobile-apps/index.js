@@ -7,12 +7,12 @@ import { db, storage } from "src/components/Firebase";
 import NavigationLayout from 'src/components/NavigationLayout/';
 import { MobileApp, MobileAppSkeleton } from 'src/components/MobileApps/';
 
-import Arrow from "public/vectors/arrow.svg";
+import Arrow from "public/vectors/arrow-curly.svg";
 
 
 const getMobileApps = () => new Promise(async (resolve, reject) => {
   const mobileAppCollection = collection(db, "mobile-apps");
-  const q = query(mobileAppCollection, orderBy("createdOn", "desc"));
+  const q = query(mobileAppCollection, orderBy("publishDate", "desc"));
   const snapshot = await getDocs(q);
 
   // Get the appicon image urls for each app
@@ -33,7 +33,7 @@ const getMobileApps = () => new Promise(async (resolve, reject) => {
 
 const Bento = ({size, containerClass, np, ar1, children, zIndex}) => {
   // np = no padding
-  const padding = np ? 'p-0' : 'p-2';
+  const padding = np ? 'p-0' : 'p-2 py-3';
   // ar = aspect ratio
   // a size of 2 is the lowest col that is used in the bento.
   // Thus 2 is a square
@@ -110,7 +110,7 @@ export default function MobileApps() {
                   </div>
                 </Bento>
                 <Bento 
-                  size='col-3 col-md-2' 
+                  size='col-4 col-md-2 ' 
                   containerClass='p-0 frosted-0 align-content-start' 
                   zIndex={10}>
                   <h2 className='fs-3 m-0 p-0 mt-2' style={{zIndex: 20}}>
@@ -118,15 +118,13 @@ export default function MobileApps() {
                   </h2>
                   <Arrow 
                     style={{
-                      fill: 'var(--dark)',
-                      stroke: 'var(--light)',
+                      fill: 'var(--light)',
                       strokeWidth: 2,
                       position: 'absolute',
-                      bottom: '0%',
-                      right: '-15%',
                       width: '100%', 
+                      bottom: '20%', 
                       height: 'auto', 
-                      transform: 'scale(1.65)',
+                      transform: 'scale(1.6)rotate(-20deg)',
                       transformOrigin: 'right center',
                       zIndex: 10}} />
                 </Bento>
