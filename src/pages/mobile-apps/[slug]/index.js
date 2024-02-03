@@ -9,7 +9,6 @@ import remarkGfm from "remark-gfm";
 import { db, storage } from "src/components/Firebase";
 import NavigationLayout from "src/components/NavigationLayout/";
 
-import cs from "src/styles/common.module.css";
 import s from "./mobileApp.module.css";
 
 async function getApp(slug) {
@@ -64,7 +63,7 @@ export const getServerSideProps = async ({ params }) => {
 };
 
 export default function MobileApp(props) {
-  const { app_str, params } = props;
+  const { app_str } = props;
   const app = JSON.parse(app_str);
   const [currentImage, setCurrentImage] = useState(0);
   return (
@@ -100,7 +99,8 @@ export default function MobileApp(props) {
             <div className="col-12 order-3 row justify-content-center">
               {app.appleStoreLink && (
                 <a
-                  href={app.appleStoreListing}
+                  href={app.appleStoreLink}
+                  target='_blank'
                   className="hover p-2 col-5 col-sm-4 col-md-3 row justify-content-center"
                   title="Download on the App Store"
                   aria-label="Download on the App Store"
@@ -116,6 +116,7 @@ export default function MobileApp(props) {
               {app.googlePlayLink && (
                 <a
                   href={app.googlePlayLink}
+                  target='_blank'
                   className="hover p-2 col-5 col-sm-4 col-md-3 row justify-content-center"
                   title="Download on Google Play"
                   aria-label="Download on Google Play"
@@ -131,6 +132,7 @@ export default function MobileApp(props) {
               {app.githubLink && (
                 <a
                   href={app.githubLink}
+                  target='_blank'
                   className="hover p-2 col-5 col-sm-4 col-md-3 row justify-content-center"
                   title="View code on Github"
                   aria-label="View code on Github"
@@ -239,9 +241,9 @@ export default function MobileApp(props) {
           className={`col-12 row justify-content-center align-items-start`}
         >
           <div
-            className={`col-12 col-md-10 col-lg-8 px-1 p-md-0 row justify-content-center`}
+            className={`col-12 col-md-10 col-lg-8 px-1 p-md-0 row justify-content-between`}
           >
-            {app.featureList.length && (
+            {app?.featureList ? app.featureList.join('') && (
               <div className="col-12 col-md-6">
                 <h2>Features</h2>
                 <ul className="p-0">
@@ -254,9 +256,9 @@ export default function MobileApp(props) {
                   ))}
                 </ul>
               </div>
-            )}
+            ) : null}
             
-            {app.featureList.length && (
+            {app?.technologyList ? app.technologyList.join('') && (
               <div className="col-12 col-md-6">
                 <h2>Technologies</h2>
                 <ul className="p-0">
@@ -269,7 +271,7 @@ export default function MobileApp(props) {
                   ))}
                 </ul>
               </div>
-            )}
+            ) : null}
 
             <h2>Project Description</h2>
             <ReactMarkdown remarkPlugins={[remarkGfm]}>

@@ -24,6 +24,7 @@
   width: calc(60vh * 9 / 16);
   transition: all 250ms ease-in-out;
   padding: 5px;
+  object-fit: contain;
 }
 
 .carouselButton {
