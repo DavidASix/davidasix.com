@@ -67,6 +67,7 @@ export default function MobileApp(props) {
   const { app_str, params } = props;
   const app = JSON.parse(app_str);
   const [currentImage, setCurrentImage] = useState(0);
+  console.log(app)
   return (
     <>
       <Head>
@@ -213,6 +214,37 @@ export default function MobileApp(props) {
           <div
             className={`col-12 col-md-10 col-lg-8 px-1 p-md-0 row justify-content-center`}
           >
+            {app.featureList.length && (
+              <div className="col-12 col-md-6">
+                <h2>Features</h2>
+                <ul>
+                  {app.featureList.map((feature, i) => (
+                    <li 
+                      className="badge border border-light rounded-pill hover hover-danger m-1"
+                      key={i}>
+                        {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            
+            {app.featureList.length && (
+              <div className="col-12 col-md-6">
+                <h2>Technologies</h2>
+                <ul>
+                  {app.technologyList.map((tech, i) => (
+                    <li 
+                      className="badge border border-light rounded-pill hover hover-danger m-1"
+                      key={i}>
+                        {tech}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            <h2>Project Description</h2>
             <ReactMarkdown remarkPlugins={[remarkGfm]}>
               {app.writeUp.replace(/\n/g, "  \n")}
             </ReactMarkdown>
