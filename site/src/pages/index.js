@@ -51,9 +51,12 @@ const Bento = ({size, containerClass, np, children, id}) => {
     const bentoPrime = document.getElementById('bento-prime');
     if (bentoPrime) {
       const width = bentoPrime.offsetWidth;
-      const bentoGridItems = document.getElementsByClassName('bento-grid-item');
-      for (let i = 0; i < bentoGridItems.length; i++) {
-        bentoGridItems[i].style.height = `${width}px`;
+      // Loop through the possible heights of 1 - 5 row height.
+      for (let i = 1; i <= 5; i++) {
+        const bentoGridItems = document.getElementsByClassName(`bento-rh-${i}`);
+        for (let j = 0; j < bentoGridItems.length; j++) {
+          bentoGridItems[j].style.height = `${width * i}px`;
+        }
       }
     }
   }, [width, height]);
@@ -63,7 +66,7 @@ const Bento = ({size, containerClass, np, children, id}) => {
   return (
     <div
       id={id ? id : undefined}
-      className={`col-${size} ${padding} d-flex bento-grid-item`} style={{minHeight: 150}}>
+      className={`${size} ${padding} d-flex bento-rh-1`} style={{minHeight: 150}}>
       <div className={`flex-grow-1 frosted rounded-4 row align-content-center justify-content-center align-items-center ${padding} ${containerClass}`}>
         {children}
       </div>
@@ -109,7 +112,7 @@ export default function Home(props) {
           </div>
 
           <div className={`col-12 col-md-6 position-relative row justify-content-center align-items-center align-content-center px-2 ps-lg-5`}>
-            <div className={`row rounded-5 frosted-0 frosted-md p-2`} style={{zIndex: 20, maxWidth: 700 }}>
+            <div className={`row rounded-5 frosted-0 frosted-md p-2 py-5 py-md-2`} style={{zIndex: 20, maxWidth: 700 }}>
               <span className={`fs-3 fw-lighter headerFont`}>
                 Hi there, I’m
               </span>
@@ -134,102 +137,110 @@ export default function Home(props) {
               className={s.gradient} />
           <div 
             style={{zIndex: 20}}
-            className={`col-6 col-md-12 col-lg-10 col-xl-9 col-xxl-7 row justify-content-center align-items-center align-content-center`}>
+            className={`col-12 col-lg-10 col-xl-9 col-xxl-7 row justify-content-center align-items-center align-content-center`}>
               <h1 className='fs-d5 col-12 p-0'>
                 A little about me
               </h1>
 
               <div className='col-12 row'>
-                <Bento size={2} id='bento-prime'>
+                <Bento size='col-4 col-md-2' id='bento-prime'>
                   <h2 className='row text-center align-content-center'>
                     <span className='fs-d5 p-0'>
                     {new Date().getFullYear() - 2017}
                     </span>
-                    <span className='fs-5 p-0'>Years as a Developer</span>
+                    <span className='fs-6 fs-md-5 p-0'>Years as a Developer</span>
                   </h2>
                 </Bento>
-                <Bento size={4} containerClass='align-content-center'>
-                  <h2 className='fs-4 mt-0'>
+                <Bento size='col-8 col-md-4' containerClass='align-content-center'>
+                  <h2 className='fs-5 mt-0 fw-semibold'>
                     I've worked with lots of tech
                   </h2>
-                  <span>
+                  <span className='fs-small fs-md-6'>
                     But I do most of my coding in these languages
                   </span>
                 </Bento>
                 <img
                   src='/images/nodejs.png'
-                  className='col-2' 
+                  className='col-4 col-md-2' 
                   style={{objectFit: 'contain'}}
                   aria-label='NodeJS' 
                   alt='NodeJS' />
                 <img
                   src='/images/python.png'
-                  className='col-2'
+                  className='col-4 col-md-2'
                   style={{objectFit: 'contain'}}
                   aria-label='Python' 
                   alt='Python'  />
                 <img
                   src='/images/sql.png'
-                  className='col-2'
+                  className='col-4 col-md-2'
                   style={{objectFit: 'contain'}}
                   aria-label='SQL' 
                   alt='SQL' />
               </div>
               
               <div className='col-12 row'>
-                <Bento size={4} containerClass=''>
-                  <span>
+                <Bento size='col-8 col-md-4' containerClass=''>
+                  <span className='fs-6'>
                     I've worn red shoes for years, and they inspired the name for my webdesign company, <a href='https://redoxfordonline.com' target='_blank' rel='noopener noreferrer' className='hover hover-danger fw-bold'>Red Oxford Online</a>.
                   </span>
                 </Bento>
                 <img 
                   style={{ height: 'auto', objectFit: 'contain'}}
-                  className='col-2 p-1 position-relative'
+                  className='col-4 col-md-2 p-1 position-relative'
                   src='/images/low-poly-red-shoes.png' 
                   alt='A pair of red oxford shoes' />
-                <Bento size={2}>
+                <Bento size='col-4 col-md-2'>
                   <h2 className='row text-center align-content-center'>
                     <span className='fs-d5 p-0'>5</span>
-                    <span className='fs-5 p-0'>Years in Sales & Business</span>
+                    <span className='fs-6 fs-md-5 p-0'>Years in Sales & Business</span>
                   </h2>
                 </Bento>
-                <Bento size={4} containerClass='bg-primary'>
-                  <h2 className='fs-4 mt-0 text-nowrap'>
+                <Bento size='col-8 col-md-4' containerClass='bg-primary'>
+                  <h2 className='fs-5 fw-semibold mt-0 text-nowrap'>
                     Corporate & Startups
                   </h2>
-                  <span>
+                  <span className='fs-small fs-md-6'>
                     My varied experience has allowed me to develop excellent communication and leadership skills
                   </span>
                 </Bento>
               </div>
 
-              <div className='col-12 row'>
+              <div className='col-12 row align-items-center'>
                 <img 
                   style={{ height: 'auto', objectFit: 'contain'}}
-                  className='col-4'
-                  src='/images/low-poly-shepherd.png' 
+                  className='col-4 col-md-2 bento-rh-2 m-0  d-none d-md-block'
+                  src='/images/low-poly-shepherd-1x2.png' 
                   alt='A German Shepherd' />
-                <div className='col-8 row'>
-                  <Bento size={3} containerClass='bg-primary align-content-center'>
-                    <span className='text-center fs-5 p-0'>
+
+                <div className='col-12 col-md-10 row align-items-center'>
+                  
+                <img 
+                  style={{ height: 'auto', objectFit: 'contain'}}
+                  className='col-4 bento-rh-1 m-0 d-block d-md-none'
+                  src='/images/low-poly-shepherd-head.png' 
+                  alt='A German Shepherd' />
+
+                  <Bento size='col-8 col-md-3' containerClass='bg-secondary align-content-center'>
+                    <span className='text-center fs-5 fw-semibold p-0'>
                       I have a dog
                     </span>
-                    <span className='text-center fs-small p-0'>
+                    <span className='text-center fs-small fs-md-6 p-0'>
                       His name is Zachary. He is very cute.
                     </span>
                   </Bento>
-                  <Bento size={6}>
-                    <span>
+                  <Bento size='col-8 col-md-6'>
+                    <span className='fs-6'>
                       I'm a huge fan of <span className='fw-bold'>Cyberpunk.</span> Whether it's books, games, movies or TV, if it's Cyberpunk I'm willing to give it a try.
                     </span>
                   </Bento>
                   <img 
-                    style={{maxHeight: 200, width: 100*3/12 +  '%', objectFit: 'contain'}}
-                    className='p-2 m-0'
+                    style={{maxHeight: 200, objectFit: 'contain'}}
+                    className='p-2 p-md-2 m-0 col-4 col-md-3 bento-rh-1'
                     src='/images/electric-sheep.png' 
                     alt='An Electric Sheep' />
                   <Bento size={12}>
-                    <span>
+                    <span className='fs-6'>
                       I consider myself a lot of things, but first and foremost I am a <span className='fw-bold'>problem solver</span>. When I encounter a new challenge I use my skills in research and analysis to find a creative solution.
                     </span>
                   </Bento>
