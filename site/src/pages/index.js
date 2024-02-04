@@ -1,3 +1,4 @@
+import React, { useEffect, useLayoutEffect } from 'react';
 import Head from 'next/head';
 
 import s from "src/pages/home.module.css";
@@ -20,27 +21,50 @@ const SocialLink = ({social}) => {
         href={social.url} 
         target='_blank' 
         rel='noopener noreferrer'
-        className={`rounded-4 hover hover-secondary frosted row justify-content-center align-items-center`}>
+        className={`rounded-4 hover hover-danger frosted row justify-content-center align-items-center`}>
         <SocialIcon 
           social={social.socialMedia} 
-          className='p-2 hover hover-secondary grow'
+          className='p-2 hover hover-danger'
           style={{height: 60, width: 70 }} />
       </a>
     </div>
   );
 }
 
-const Bento = ({size, containerClass, np, ar1, children}) => {
+
+const Bento = ({size, containerClass, np, children, id}) => {
+  const useWindowSize = () => {
+    const [size, setSize] = React.useState([0, 0]);
+    useLayoutEffect(() => {
+      function updateSize() {
+        setSize([window.innerWidth, window.innerHeight]);
+      }
+      window.addEventListener('resize', updateSize);
+      updateSize();
+      return () => window.removeEventListener('resize', updateSize);
+    }, []);
+    return size;
+  }
+  const [width, height] = useWindowSize();
+  
+  useEffect(() => {
+    const bentoPrime = document.getElementById('bento-prime');
+    if (bentoPrime) {
+      const width = bentoPrime.offsetWidth;
+      const bentoGridItems = document.getElementsByClassName('bento-grid-item');
+      for (let i = 0; i < bentoGridItems.length; i++) {
+        bentoGridItems[i].style.height = `${width}px`;
+      }
+    }
+  }, [width, height]);
+  
   // np = no padding
-  const padding = np ? 'p-0' : 'p-2';
-  // ar = aspect ratio
-  // a size of 2 is the lowest col that is used in the bento.
-  // Thus 2 is a square
-  const ar =  size === 2 || ar1 ? 'ratio ratio-1x1 align-content-center' : '';
+  const padding = np ? 'p-0' : 'p-1';
   return (
-    <div className={`col-${size} ${padding} d-flex`} style={{minHeight: 150
-    }}>
-      <div className={`${ar} flex-grow-1 frosted rounded-4 row  justify-content-center align-items-center ${padding} ${containerClass}`}>
+    <div
+      id={id ? id : undefined}
+      className={`col-${size} ${padding} d-flex bento-grid-item`} style={{minHeight: 150}}>
+      <div className={`flex-grow-1 frosted rounded-4 row align-content-center justify-content-center align-items-center ${padding} ${containerClass}`}>
         {children}
       </div>
     </div>
@@ -48,6 +72,7 @@ const Bento = ({size, containerClass, np, ar1, children}) => {
 }
 
 export default function Home(props) {
+  
   return (
     <>
       <Head>
@@ -90,10 +115,7 @@ export default function Home(props) {
               </span>
               <h1 className={`fs-d5 headerFont`}>David A Six</h1>
               <span className='mt-2'>
-                I’m a developer, maker, and tech enthusiast.
-              </span>
-              <span className='mt-2'>
-                Why the six? I’m the sixth David Anderson in my family tree!
+                I’m a developer, maker, and tech enthusiast. Why the six? I’m the sixth David Anderson in my family tree.
               </span>
               <span className='my-2'>
                 Need a developer or data expert with proven soft and hard skills? Here I am!
@@ -112,13 +134,13 @@ export default function Home(props) {
               className={s.gradient} />
           <div 
             style={{zIndex: 20}}
-            className={`col-12 col-lg-10 col-xl-9 col-xxl-8 row justify-content-center align-items-center align-content-center`}>
+            className={`col-6 col-md-12 col-lg-10 col-xl-9 col-xxl-7 row justify-content-center align-items-center align-content-center`}>
               <h1 className='fs-d5 col-12 p-0'>
                 A little about me
               </h1>
 
               <div className='col-12 row'>
-                <Bento size={2}>
+                <Bento size={2} id='bento-prime'>
                   <h2 className='row text-center align-content-center'>
                     <span className='fs-d5 p-0'>
                     {new Date().getFullYear() - 2017}
@@ -127,7 +149,7 @@ export default function Home(props) {
                   </h2>
                 </Bento>
                 <Bento size={4} containerClass='align-content-center'>
-                  <h2 className='fs-5'>
+                  <h2 className='fs-4 mt-0'>
                     I've worked with lots of tech
                   </h2>
                   <span>
@@ -157,7 +179,7 @@ export default function Home(props) {
               <div className='col-12 row'>
                 <Bento size={4} containerClass=''>
                   <span>
-                    I've worn red oxfords for years, and they inspired the name for my webdesign company, <a href='https://redoxfordonline.com' target='_blank' rel='noopener noreferrer' className='hover hover-danger fw-bold'>Red Oxford Online</a>.
+                    I've worn red shoes for years, and they inspired the name for my webdesign company, <a href='https://redoxfordonline.com' target='_blank' rel='noopener noreferrer' className='hover hover-danger fw-bold'>Red Oxford Online</a>.
                   </span>
                 </Bento>
                 <img 
@@ -172,7 +194,7 @@ export default function Home(props) {
                   </h2>
                 </Bento>
                 <Bento size={4} containerClass='bg-primary'>
-                  <h2 className='fs-5'>
+                  <h2 className='fs-4 mt-0 text-nowrap'>
                     Corporate & Startups
                   </h2>
                   <span>
@@ -196,18 +218,26 @@ export default function Home(props) {
                       His name is Zachary. He is very cute.
                     </span>
                   </Bento>
-                  <Bento size={9}>
-                    <span>text</span>
+                  <Bento size={6}>
+                    <span>
+                      I'm a huge fan of <span className='fw-bold'>Cyberpunk.</span> Whether it's books, games, movies or TV, if it's Cyberpunk I'm willing to give it a try.
+                    </span>
                   </Bento>
+                  <img 
+                    style={{maxHeight: 200, width: 100*3/12 +  '%', objectFit: 'contain'}}
+                    className='p-2 m-0'
+                    src='/images/electric-sheep.png' 
+                    alt='An Electric Sheep' />
                   <Bento size={12}>
-                    <span>text</span>
+                    <span>
+                      I consider myself a lot of things, but first and foremost I am a <span className='fw-bold'>problem solver</span>. When I encounter a new challenge I use my skills in research and analysis to find a creative solution.
+                    </span>
                   </Bento>
                 </div>
               </div>
 
             </div>
           </section>
-          
           <section
             id='work'
             className={`col-12 row justify-content-center mt-5`}>
