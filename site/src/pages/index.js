@@ -196,7 +196,7 @@ export default function Home(props) {
                     <span className='fs-6 fs-md-5 p-0'>Years in Sales & Business</span>
                   </h2>
                 </Bento>
-                <Bento size='col-8 col-md-4' containerClass='bg-primary'>
+                <Bento size='col-8 col-md-4' containerClass='frosted-primary'>
                   <h2 className='fs-5 fw-semibold mt-0 text-nowrap'>
                     Corporate & Startups
                   </h2>
@@ -221,7 +221,7 @@ export default function Home(props) {
                   src='/images/low-poly-shepherd-head.png' 
                   alt='A German Shepherd' />
 
-                  <Bento size='col-8 col-md-3' containerClass='bg-secondary align-content-center'>
+                  <Bento size='col-8 col-md-3' containerClass='frosted-danger align-content-center'>
                     <span className='text-center fs-5 fw-semibold p-0'>
                       I have a dog
                     </span>

@@ -37,3 +37,5 @@ firebase-config.json
 
 .package-lock.json
 mailgun.json
+
+.sass-cache

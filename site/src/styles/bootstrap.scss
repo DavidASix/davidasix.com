@@ -2,7 +2,7 @@
 $nav-height: 100px;
 $white: #FFFFFF;
 $primary: #5f539b;
-$secondary: #e6b78e;
+$secondary: #4360a3;
 $success: #2C9636;
 $danger: #962C2C;
 $dark: #1A1A1A;
@@ -83,15 +83,15 @@ $utilities: map-merge(
 );
 */
 
+// Set up responsive classes to loop
+$breakpoints: map-keys($grid-breakpoints);
+$colors: map-keys($theme-colors);
+
 @mixin frosted {
   background-color: rgba(255, 255, 255, 0.08);
+  border:  1px solid rgba(255,255,255,.08);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border:  1px solid rgba(255,255,255,.08);
-}
-
-.frosted {
-  @include frosted;
 }
 
 @mixin frosted-0 {
@@ -101,53 +101,45 @@ $utilities: map-merge(
   border: unset;
 }
 
+.frosted {
+  @include frosted;
+}
+
 .frosted-0 {
   @include frosted-0;
 }
 
-// Responsive classes for frosted
-@media (min-width: map-get($grid-breakpoints, sm)) {
-  .frosted-sm {
+@each $color, $value in $theme-colors {
+  .frosted-#{$color} {
     @include frosted;
+    background-color: rgba(map-get($theme-colors, $color), 0.40);
+    border:  1px solid rgba(map-get($theme-colors, $color), 0.40);
   }
-  .frosted-sm-0 {
+  .frosted-#{$color}-0 {
     @include frosted-0;
   }
 }
 
-@media (min-width: map-get($grid-breakpoints, md)) {
-  .frosted-md {
-    @include frosted;
-  }
-  .frosted-md-0 {
-    @include frosted-0;
-  }
-}
-
-@media (min-width: map-get($grid-breakpoints, lg)) {
-  .frosted-lg {
-    @include frosted;
-  }
-  .frosted-lg-0 {
-    @include frosted-0;
-  }
-}
-
-@media (min-width: map-get($grid-breakpoints, xl)) {
-  .frosted-xl {
-    @include frosted;
-  }
-  .frosted-xl-0 {
-    @include frosted-0;
-  }
-}
-
-@media (min-width: map-get($grid-breakpoints, xxl)) {
-  .frosted-xxl {
-    @include frosted;
-  }
-  .frosted-xxl-0 {
-    @include frosted-0;
+// Map out responsive breakpoints
+@each $breakpoint in $breakpoints {
+  @media (min-width: map-get($grid-breakpoints, $breakpoint)) {
+    .frosted-#{$breakpoint} {
+      @include frosted;
+    }
+    .frosted-#{$breakpoint}-0 {
+      @include frosted-0;
+    }
+// Map out responsive colors
+    @each $color, $value in $theme-colors {
+      .frosted-#{$color}-#{$breakpoint} {
+        @include frosted;
+        background-color: rgba(map-get($theme-colors, $color), 0.40);
+        border:  1px solid rgba(map-get($theme-colors, $color), 0.40);
+      }
+      .frosted-#{$color}-#{$breakpoint}-0 {
+        @include frosted-0;
+      }
+    }
   }
 }
 
