@@ -3,7 +3,7 @@ const links = [
   {title: 'Home', url: '/'},
   {title: 'Blog', url: '/blog'},
   {title: 'Excel', url: '/excel'},
-  {title: 'Data', url: '/data'},
+  //{title: 'Projects', url: '/projects'},
   {title: 'Apps', url: '/mobile-apps'},
   //{title: 'Web', url: 'web-dev'},
 ]
