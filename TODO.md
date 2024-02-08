@@ -5,3 +5,5 @@
 - [ ] Update personal text on home page
 - [ ] Add Publish Date to Blog and Excel formulas
 - [ ] Add activity aggregator to home page
+- [ ] Add glowing gradient under cursor
+- [ ] Change second gradient on home page
