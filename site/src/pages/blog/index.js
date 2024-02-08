@@ -4,7 +4,6 @@ import {
   query,
   orderBy,
   getDocs,
-  where,
 } from "firebase/firestore";
 import { ref, getDownloadURL } from "firebase/storage";
 import Head from 'next/head';

@@ -5,8 +5,6 @@ import Head from "next/head";
 import Markdown from "react-markdown";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import remarkGfm from "remark-gfm";
-import { Remarkable } from 'remarkable';
-var md = new Remarkable();
 
 import { db, storage } from "src/components/Firebase";
 import NavigationLayout from "src/components/NavigationLayout/";
