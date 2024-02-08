@@ -1,10 +1,12 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { ref, getDownloadURL } from "firebase/storage";
 import Head from "next/head";
-import ReactMarkdown from "react-markdown";
+import Markdown from "react-markdown";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import remarkGfm from "remark-gfm";
+import { Remarkable } from 'remarkable';
+var md = new Remarkable();
 
 import { db, storage } from "src/components/Firebase";
 import NavigationLayout from "src/components/NavigationLayout/";
@@ -208,6 +210,7 @@ export default function MobileApp(props) {
                     {app.screenshots.map((screenshot, i) => (
                       <img
                         src={screenshot}
+                        alt={`${app.title} Screenshot ${i + 1}`}
                         key={i}
                         className={`${s.carouselImage} rounded-4`}
                         style={{
@@ -272,11 +275,19 @@ export default function MobileApp(props) {
                 </ul>
               </div>
             ) : null}
-
             <h2>Project Description</h2>
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
-              {app.writeUp.replace(/\n/g, "  \n")}
-            </ReactMarkdown>
+            <article 
+              id='content'
+              className="mt-3 mx-0 " 
+              style={{display: 'inline-block'}}>
+              {app.writeUp.split('\n\n\n').map((line, i) => (
+                <React.Fragment key={i}>
+                  <Markdown remarkPlugins={[remarkGfm]}>
+                    {line.replace(/\n/g, "  \n")}
+                  </Markdown>
+                </React.Fragment>
+              ))}
+            </article>
           </div>
         </section>
 

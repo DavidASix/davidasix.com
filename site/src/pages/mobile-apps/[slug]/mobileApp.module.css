@@ -4,7 +4,7 @@
   overflow: hidden;
   display: flex;
   flex-wrap: nowrap;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .carouselCenter {
@@ -12,9 +12,9 @@
   width: calc(60vh * 9 / 16);
   overflow: visible;
   flex-wrap: nowrap;
-  justify-content: start;
+  justify-content: flex-start;
   position: relative;
-  align-items: start;
+  align-items: flex-start;
   z-index: 99;
 }
 
