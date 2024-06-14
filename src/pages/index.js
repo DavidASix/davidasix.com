@@ -1,18 +1,16 @@
 import React, { useEffect, useLayoutEffect } from 'react';
 import Head from 'next/head';
 
-import s from "src/pages/home.module.css";
-import cs from "src/styles/common.module.css";
+import c from '@/assets/constants';
 
-import constants from 'src/assets/constants';
-
-import NavigationLayout from 'src/components/NavigationLayout/';
-import SocialIcon from 'src/components/SocialIcon/';
+import NavigationLayout from '@/components/NavigationLayout';
+import SocialIcon from '@/components/SocialIcon';
 import Python from "public/vectors/python.svg";
 import Node from "public/vectors/node.svg";
 import SQL from "public/vectors/sql.svg";
 
-const socials = require('/src/assets/socials.json');
+const socials = require('@/assets/socials.json');
+const s = {}
 
 const SocialLink = ({social}) => {
   return (
@@ -21,7 +19,8 @@ const SocialLink = ({social}) => {
         href={social.url} 
         target='_blank' 
         rel='noopener noreferrer'
-        className={`rounded-4 hover hover-danger frosted row justify-content-center align-items-center`}>
+        className={`frosted rounded-2xl flex justify-center items-center aspect-square
+        hover:bg-primary hover:bg-opacity-30`}>
         <SocialIcon 
           social={social.socialMedia} 
           className='p-2 hover hover-danger'
@@ -79,44 +78,25 @@ export default function Home(props) {
   return (
     <>
       <Head>
-        <title>{`${constants.siteName}`}</title>
       </Head>
       <NavigationLayout>
-        <section 
-          id='hero'
-          className={`col-12 row flex-md-row-reverse 
-        position-relative 
-        justify-content-center align-items-center align-content-center        
-        nav-padding ${s.hero}`}>
+        <section className={`${c.sectionPadding} w-full`}>
+          <div
+            className={`${c.contentContainer} w-full grid grid-cols-1 md:grid-cols-2
+              md:py-8 pb-4 relative`}
+          >
           <img 
             src='/images/shapes/gradient-bg.png' 
             alt='A gradient background'
-            className={s.gradient} />
-
-          <div className={`col-12 col-md-6 row justify-content-center position-relative m-0 px-3 mb-3 mb-lg-0`}>
-            <img
-              src="/images/headshot_bg.svg"
-              alt="An orange circle behind image of David"
-              style={{zIndex: 0, position: 'absolute', bottom: 0}}
-              className={`${s.headshot} px-3`}
-            />
-            <img
-              src="/images/headshot.png"
-              alt="A headshot of David wearing an unbuttoned white collared shirt."
-              style={{zIndex: 15}}
-              className={`${s.headshot} px-3`}
-            />
-            <div className={`${s.socialRow}`} style={{zIndex: 20}}>
-              {socials.map((s, i) => <SocialLink key={i} social={s} color='white' />)}
-            </div>
-          </div>
-
-          <div className={`col-12 col-md-6 position-relative row justify-content-center align-items-center align-content-center px-2 ps-lg-5`}>
-            <div className={`row rounded-5 frosted-0 frosted-md p-2 py-5 py-md-2`} style={{zIndex: 20, maxWidth: 700 }}>
-              <span className={`fs-3 fw-lighter header-font`}>
+            className="absolute left-0 top-0" />
+          <div className={`col-span-1 relative flex justify-center items-center order-2 md:order-1`}>
+            <div className={`flex flex-col md:frosted h-min max-w-[700px] p-4 rounded-2xl`}>
+              <span className={`text-xl header-font`}>
                 Hi there, I’m
               </span>
-              <h1 className={`fs-d5 header-font`}>David A Six</h1>
+              <h1 className={`text-4xl header-font`}>
+                David A Six
+              </h1>
               <span className='mt-2'>
                 I’m a developer, maker, and tech enthusiast. Why the six? I’m the sixth David Anderson in my family tree.
               </span>
@@ -125,7 +105,26 @@ export default function Home(props) {
               </span>
             </div>
           </div>
+          
+          <div className={`col-span-1 relative flex justify-center order-1 md:order-2`}>
+            <img
+              src="/images/headshot_bg.svg"
+              alt="An orange circle behind image of David"
+              className="absolute bottom-0 z-0 max-h-[65vh]"
+            />
+            <img
+              src="/images/headshot.png"
+              alt="A headshot of David wearing an unbuttoned white collared shirt."
+              className="z-10 max-h-[65vh]"
+            />
+            <div className="flex h-min absolute bottom-0 z-20">
+              {socials.map((s, i) => <SocialLink key={i} social={s} color='white' />)}
+            </div>
+          </div>
+
+          </div>
         </section>
+
         <section
           id='bento'
           className={`col-12 row justify-content-center position-relative`}>
@@ -249,19 +248,6 @@ export default function Home(props) {
 
             </div>
           </section>
-          <section
-            id='work'
-            className={`col-12 row justify-content-center mt-5`}>
-            <div 
-              className={`col-12 col-lg-10 row justify-content-center align-items-center align-content-center`}>
-                {/* <h1 className='fs-d5 col-12 p-0'>
-                  My recent work
-                </h1>
-              <span>
-                https://iconscout.com/free-3d-illustration-pack/coding-lang
-              </span> */}
-              </div>
-            </section>
       </NavigationLayout>
     </>
   );

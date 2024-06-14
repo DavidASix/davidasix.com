@@ -33,14 +33,17 @@
   * {
     font-size: inherit;
     font-family: "Satoshi", sans-serif;
-    @apply text-da-dark-50;
+    @apply text-da-dark-50 transition-all duration-300;
   }
 
   .header-font {
-    font-family: "Impact", sans-serif;
+    font-weight: 200;
   }
   .header-font > * {
     color: inherit;
+  }
+  .frosted {
+    @apply bg-da-dark-50 bg-opacity-10 backdrop-blur-md border border-da-dark-50 border-opacity-20;
   }
 }
 
