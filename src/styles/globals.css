@@ -1,0 +1,87 @@
+/*
+
+.stickyParent {
+  position: relative !important;
+  overflow: visible !important;
+}
+
+.nav-padding {
+  padding-top: var(--nav-height);
+}
+*/
+/*
+@media screen and (min-width: 992px) {
+  /* lg breakpoint, 992px -> 1199px */
+/* Styles here are in effect when page is 1200px wide or wider 
+  .navContentContainer {
+      max-width: unset;
+  }
+}
+*/
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-da-dark;
+    background: linear-gradient(rgba(26, 26, 26, 0.95), rgba(26, 26, 26, 0.95)),
+      url("/images/bg-tile.png") repeat;
+  }
+
+  * {
+    font-size: inherit;
+    font-family: "Satoshi", sans-serif;
+    @apply text-da-dark-50;
+  }
+
+  .header-font {
+    font-family: "Impact", sans-serif;
+  }
+  .header-font > * {
+    color: inherit;
+  }
+}
+
+@layer components {
+  .rich-text-container > * {
+    @apply my-4;
+  }
+  .rich-text-container > h1 {
+    @apply font-bold text-2xl;
+  }
+  .rich-text-container > h2 {
+    @apply font-bold text-xl;
+  }
+  .rich-text-container > h3 {
+    @apply font-bold text-lg;
+  }
+  .rich-text-container > h4 {
+    @apply font-semibold text-lg;
+  }
+  .rich-text-container > h5 {
+    @apply text-lg;
+  }
+
+  .rich-text-container > p,
+  .rich-text-container > h6 {
+    @apply text-base text-da-dark;
+  }
+  .rich-text-container a {
+    @apply transition-all duration-300 hover:underline;
+  }
+
+  .rich-text-container > *:last-child {
+    @apply mb-0 !important;
+  }
+  .rich-text-container > *:first-child {
+    @apply mt-0 !important;
+  }
+}
+
+@layer utilities {
+  .pause {
+    animation-play-state: paused;
+  }
+}

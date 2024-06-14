@@ -2,34 +2,9 @@
 
 Welcome to the repository of my portfolio website. This project is a combination of a front-end site and a Content Management System (CMS). The front-end is built with Next.js and the CMS is powered by FireCMS. Both parts are hosted through a single Firebase project.
 
-## Project Structure
-
-The project is divided into two main directories:
-
-- [`cms`](# "cms"): Contains the code for the CMS powered by FireCMS.
-- [`site`](# "site"): Contains the code for the front-end website built with Next.js.
-
-Each directory has its own set of dependencies and scripts defined in their respective [`package.json`](# "cms/package.json") files.
-
 ## Tech Stack
 ### Front-End
 The front-end of the portfolio is built using [Next.js](# "https://nextjs.org/") in order to take advantage of the power of React as well as the simplicity of Server Side Rendering. The front-end code is located in the [`site`](# "site") directory.
-
-### CMS
-The CMS is built using [FireCMS](# "https://firecms.co/"), a headless CMS powered by Firebase. It provides an intuitive interface for managing the content of the portfolio. The CMS is configured in the [`cms`](# "cms") directory.
-
-### Firebase
-For simplicity the whole project is created with Firebase. Previously I have hosted my portfolio sites on a VPS running NGINX, but the simplicity of hosting and managing data in one location is hard to beat. This project makes use of the following Firebase features:
-* **Hosting**
-    The site and CMS are both hosted on Firebase hosting, taking advantage of their experimental web framework settings.
-* **Firestore Database** & **Storage**
-    The CMS stores collections and uploaded files here
-* **Authentication**
-    Used to log into the CMS
-* **Analytics**
-    Integrated with Google Analytics proper, views and actions per page are monitored here.
-* **Functions**
-    Used for server side rendering as well as secure API routes
 
 ## License
 
