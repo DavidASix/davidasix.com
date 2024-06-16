@@ -96,7 +96,7 @@ export default function Home(props) {
 
             <div
               className="relative justify-center 
-              grid grid-cols-3 grid-rows-7 md:grid-cols-6 md:grid-rows-4 px-1"
+              grid grid-cols-3 grid-rows-8 md:grid-cols-6 md:grid-rows-4 px-1"
             >
               <div className="col-span-1 row-span-1 md:col-span-1 md:row-span-1 p-1 md:p-2">
                 <div className="h-full w-full flex flex-col justify-center items-start p-2 lg:p-4 frosted rounded-2xl">
@@ -180,7 +180,7 @@ export default function Home(props) {
 
               <div className="col-span-2 row-span-1 md:col-span-2 md:row-span-1 p-1 md:p-2">
                 <div className="h-full w-full flex flex-col justify-center items-start p-2 lg:p-4 frosted rounded-2xl bg-da-primary bg-opacity-30">
-                  <h2 className="text-md sm:text-xl font-semibold whitespace-nowrap">
+                  <h2 className="text-xl sm:text-2xl font-semibold whitespace-nowrap">
                     Corporate & Startups
                   </h2>
                   <span className="text-sm sm:text-lg">
@@ -204,7 +204,7 @@ export default function Home(props) {
 
               <div className="col-span-2 row-span-1 md:col-span-2 md:row-span-1 p-1 md:p-2">
                 <div className="h-full w-full flex flex-col justify-center items-start p-2 lg:p-4 frosted rounded-2xl bg-da-accent bg-opacity-30">
-                  <span className="text-center text-2xl font-semibold">
+                  <span className="text-center text-xl sm:text-2xl font-semibold">
                     I have a dog
                   </span>
                   <span className="text-sm sm:text-lg">
@@ -225,14 +225,55 @@ export default function Home(props) {
               </div>
 
               <img
-                className="col-span-1 row-span-1 md:col-span-1 md:row-span-1 self-center"
+                className="col-span-1 row-span-1 md:col-span-1 md:row-span-1 self-center p-2"
                 src="/images/electric-sheep.png"
                 alt="An Electric Sheep"
               />
 
-              <div className="col-span-3 row-span-1 md:col-span-5 md:row-span-1 p-1 md:p-2">
+              <div className="col-span-1 row-span-1 md:col-span-1 md:row-span-1 p-1 md:p-2">
+                <div className="h-full w-full flex flex-col justify-center md:items-start p-2 lg:p-4 frosted rounded-2xl">
+                  <span className="text-xl md:text-xl">
+                    I run <b>Linux</b>. <br />
+                  </span>
+                  <span className="text-sm sm:text-lg hidden md:flex flex-col">
+                    <span className="text-nowrap whitespace-nowrap">
+                      PC: <b>Pop!_OS</b>
+                    </span>
+                    <span className="text-nowrap whitespace-nowrap">
+                      Laptop: <b>Debian</b>
+                    </span>
+                    <span className="text-nowrap whitespace-nowrap">
+                      Server: <b>Ubuntu</b>
+                    </span>
+                  </span>
+                </div>
+              </div>
+
+              <img
+                className="col-span-1 row-span-1 md:col-span-1 md:row-span-1 self-center p-2"
+                src="/images/penguin.webp"
+                alt="An Electric Sheep"
+              />
+
+              <div className="col-span-1 row-span-1 md:col-span-1 md:row-span-1 p-1 md:p-2 md:hidden">
+                <div className="h-full w-full flex flex-col justify-center md:items-start p-2 lg:p-4">
+                  <span className="text-md sm:text-lg flex flex-col">
+                    <span className="text-nowrap whitespace-nowrap">
+                      PC: <b>Pop!_OS</b>
+                    </span>
+                    <span className="text-nowrap whitespace-nowrap">
+                      Laptop: <b>Debian</b>
+                    </span>
+                    <span className="text-nowrap whitespace-nowrap">
+                      Server: <b>Ubuntu</b>
+                    </span>
+                  </span>
+                </div>
+              </div>
+
+              <div className="col-span-3 row-span-1 md:col-span-3 md:row-span-1 p-1 md:p-2">
                 <div className="h-full w-full flex flex-col justify-center items-start p-2 lg:p-4 frosted rounded-2xl">
-                  <span className="text-sm md:text-lg">
+                  <span className="text-lg md:text-lg">
                     I consider myself a lot of things, but first and foremost I
                     am a <span className="font-bold">problem solver</span>. When
                     I encounter a new challenge I use my skills in research and
