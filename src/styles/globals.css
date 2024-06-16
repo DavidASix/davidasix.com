@@ -27,7 +27,7 @@
   body {
     @apply bg-da-dark;
     background: linear-gradient(rgba(26, 26, 26, 0.95), rgba(26, 26, 26, 0.95)),
-      url("/images/bg-tile.png") repeat;
+      url("/images/bg-tile.png") repeat fixed;
   }
 
   * {
@@ -43,7 +43,12 @@
     color: inherit;
   }
   .frosted {
-    @apply bg-da-dark-50 bg-opacity-10 backdrop-blur-md border border-da-dark-50 border-opacity-20;
+    @apply bg-da-dark-50 bg-opacity-10 backdrop-blur-md 
+      border border-da-dark-50 border-opacity-20;
+  }
+  .frosted-0 {
+    @apply bg-transparent bg-opacity-100 backdrop-blur-0 
+      border-0 border-opacity-100;
   }
 }
 

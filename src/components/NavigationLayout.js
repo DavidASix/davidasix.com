@@ -5,7 +5,7 @@ export default function NavigationLayout({ children }) {
   return (
     <>
       <div className="flex flex-col w-full">
-        <div className="bg-da-primary w-full h-20 absolute top-0" />
+        <div className="bg-transparent w-full h-16 absolute top-0" />
         <header className="sticky top-0 z-50 h-20">
           <NavBar />
         </header>
