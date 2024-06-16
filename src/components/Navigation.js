@@ -24,8 +24,8 @@ const NavLink = (props) => {
           role="button"
           className={`h-min ${
             link.options.map((l) => l.url).includes(currentPath)
-              ? "text-ku-green font-bold"
-              : "md:link-clean"
+            ? "text-da-primary-400 font-bold"
+            : "text-da-dark-100 hover:text-da-primary-300"
           }`}
         >
           {link.title}
@@ -41,7 +41,9 @@ const NavLink = (props) => {
               key={i}
               className={`ps-4 list-disc list-inside md:ps-0 md:list-none
               ${
-                l.url === currentPath ? "text-ku-green font-bold" : "link-clean"
+                l.url === currentPath 
+                ? "text-da-primary-400 font-bold"
+                : "text-da-dark-100 hover:text-da-primary-300"
               }`}
             >
               <a href={l.url}>{l.title}</a>
