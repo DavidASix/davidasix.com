@@ -4,7 +4,11 @@ c.siteName = "DavidASix";
 c.titlePrefix = 'DavidASix';
 c.url = "davidasix.com";
 
-c.api = 'https://api.davidasix.com'
+c.cms = 'https://api.davidasix.com'
+
+c.domain = process.env.NODE_ENV === "production"
+  ? "https://davidasix.com"
+  : "http://localhost:3000";
 
 c.plausible_domain = process.env.NODE_ENV === "production"
 ? "davidasix.com"
