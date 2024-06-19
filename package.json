@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@strapi/blocks-react-renderer": "^1.0.1",
+    "axios": "^1.7.2",
     "daisyui": "^4.12.2",
     "next": "13.5.6",
     "prop-types": "^15.8.1",
