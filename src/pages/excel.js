@@ -30,6 +30,10 @@ export default function Excel({ formulas_str, max_page }) {
   const [maxPage, setMaxPage] = useState(max_page * 1);
   const [loadingNextPage, setLoadingNextPage] = useState(false);
   const formulaListRef = useRef(null);
+  // Current page state needs to be available in the scroll listener
+  // while currentPage is not displayed in the UI, I'm keeping it in state as the functionality may be used in future
+  const currentPageRef = useRef(currentPage);
+  useEffect(() => {currentPageRef.current = currentPage}, [currentPage]);
 
   useEffect(() => {
     const checkScrollEnd = () => {
@@ -42,8 +46,7 @@ export default function Excel({ formulas_str, max_page }) {
           formulaListTop + formulaListHeight - formulaListLoadNewBuffer;
         const { scrollTop, clientHeight } = document.documentElement;
         const scrolledLoad = scrollTop + clientHeight >= loadMoreLocation;
-
-        if (scrolledLoad && !loadingNextPage && currentPage !== maxPage) {
+        if (scrolledLoad && !loadingNextPage && currentPageRef.current !== maxPage) {
           loadNextPage();
         }
       }
@@ -58,14 +61,21 @@ export default function Excel({ formulas_str, max_page }) {
   }, [maxPage]);
 
   async function loadNextPage() {
+    setLoadingNextPage(true)
     try {
       const { data } = await axios.post("/api/cms/excel", {
         page: currentPage + 1,
         itemsPerPage,
       });
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      await new Promise((resolve) => setTimeout(resolve, 750));
       setFormulas([...formulas, ...data.formulas]);
-      setCurrentPage((prev) => prev + 1);
+      // Due to the ref being used to check current page in the scroll event listener
+      // If the event listener triggers again before the state and ref are updated,
+      // the state will update multiple times, potentiall jumping above maxPage
+      // The logic in this state update prevents that, maxing out the page to maxPage
+      setCurrentPage((prev) => {
+        return prev >= maxPage ? maxPage : prev + 1;
+      });
     } catch (err) {
       console.log(err);
       alert("Could not find more formulas.");
@@ -80,80 +90,86 @@ export default function Excel({ formulas_str, max_page }) {
         <title>{`Excel | ${c.siteName}`}</title>
       </Head>
       <NavigationLayout>
-        <section
-          className={`nav-padding col-12 row justify-content-center align-items-start stickyParent`}
-        >
+        <section className={`${c.sectionPadding} w-full`}>
           <div
-            className={`col-10 col-lg-8 row justify-content-center`}
-            style={{ zIndex: 30 }}
+            className={`${c.contentContainer} w-full relative grid grid-cols-6`}
           >
-            <h1 className={`fs-d1 text-center text-nowrap`}>Microsoft Excel</h1>
-            <p className={`text-center`}>
-              Excel is a tool I think everyone should know a little about, and
-              one that I know a lot about.
-              <br />
-              In my many years working with Excel I have created and uncovered
-              some clever formulas. I’ve included some of my favorite works
-              below to impress and amaze.
-            </p>
-          </div>
-          <h3 className={`fs-1 col-12 col-lg-10 mb-2`}>The Hall of Formulas</h3>
-          <div
-            id="formulaList"
-            ref={formulaListRef}
-            className="col-12 col-lg-6 row order-lg-1 order-2"
-          >
-            {formulas.map((formula, i) => (
-              <Formula {...formula} key={i} />
-            ))}
-            {loadingNextPage && <FormulaSkeleton />}
-            {currentPage === maxPage && (
-              <p className="text-center col-12">That's all for now!</p>
-            )}
-          </div>
-          <div
-            className={`d-flex col-lg-4 px-3 row sticky-lg-top order-lg-2 order-1`}
-            style={{ zIndex: 30, top: 40 + 8 + 8 + 8 }}
-          >
+            <div className="col-span-6 mb-8 md:mb-4">
+              <h1 className={`text-7xl header-font text-center text-nowrap`}>
+                Microsoft Excel
+              </h1>
+              <p className={`text-center max-w-[700px] mx-auto mt-8`}>
+                Excel is a tool I think everyone should know a little about, and
+                one that I know a lot about.
+                <br />
+                In my many years working with Excel I have created and uncovered
+                some clever formulas. I’ve included some of my favorite works
+                below to impress and amaze.
+              </p>
+            </div>
+
+            <div className="order-2 md:order-1 col-span-6 md:col-span-4 relative h-content px-2 md:p-0">
+              <h2 className={`text-4xl font-bold mt-8 mb-4 md:mt-0`}>
+                The Hall of Formulas
+              </h2>
+              <div
+                id="formulaList"
+                ref={formulaListRef}
+                className="flex flex-col space-y-6 md:pe-3"
+              >
+                {formulas.map((formula, i) => (
+                  <Formula {...formula} key={i} />
+                ))}
+                {loadingNextPage && <FormulaSkeleton />}
+                {currentPage === maxPage && (
+                  <p className="text-center col-12">That's all for now!</p>
+                )}
+              </div>
+            </div>
+
             <div
-              className={`frosted col-12 rounded-4 d-flex flex-column p-3 mb-3`}
+              className={`order-1 md:order-2 col-span-6 md:col-span-2 h-min flex md:sticky md:top-16 p-1`}
             >
-              <h5 className="header-font m-0 mb-1">Excel & Me</h5>
-              <p>
-                Some people have a love hate relationship with Spreadsheets; I
-                have a love love relationship with them.
-              </p>
-              <p>
-                Over my many years of experience with Excel I've always
-                challenged myself to push the boundaries, making sheets and
-                reports that are as small as possible while still being easy for
-                a user to utilize
-              </p>
-              <p>
-                I've been an Excel beta feature tester for years, subscribing on
-                my personal Microsoft account as trying out the new features is
-                so fun.
-              </p>
-              <h6 className="mt-1 fw-bold">Excel Highlights</h6>
-              <ul>
-                <li>
-                  Creating reports for C level executives in Canadian Telecom
-                </li>
-                <li>
-                  Creating reproducible accountability reporting to effect
-                  actual change in a large company
-                </li>
-                <li>
-                  Selling hundreds of spreadsheet reports online due to great UI
-                  design
-                </li>
-                <li>
-                  Pushing Excel's capabilities with Power Query, Data Models, 3D
-                  maps, and advanced functions
-                </li>
-              </ul>
-              <h6 className="fw-bold">TL;DR</h6>
-              <p>Excel rocks and I rock at Excel.</p>
+              <div className={`frosted rounded-2xl flex flex-col p-3`}>
+                <div className="hidden md:flex flex-col space-y-2 pb-4">
+                  <h5 className="text-xl font-bold">Excel & Me</h5>
+                  <p>
+                    Some people have a love hate relationship with Spreadsheets;
+                    I have a love love relationship with them.
+                  </p>
+                  <p>
+                    Over my many years of experience with Excel I've always
+                    challenged myself to push the boundaries, making sheets and
+                    reports that are as small as possible while still being easy
+                    for a user to utilize
+                  </p>
+                  <p>
+                    I've been an Excel beta feature tester for years,
+                    subscribing on my personal Microsoft account as trying out
+                    the new features is so fun.
+                  </p>
+                </div>
+                <h5 className="text-xl font-bold">Excel Highlights</h5>
+                <ul className="list-disc list-inside">
+                  <li>
+                    Creating reports for C level executives in Canadian Telecom
+                  </li>
+                  <li>
+                    Creating reproducible accountability reporting to effect
+                    actual change in a large company
+                  </li>
+                  <li>
+                    Selling hundreds of spreadsheet reports online due to great
+                    UI design
+                  </li>
+                  <li>
+                    Pushing Excel's capabilities with Power Query, Data Models,
+                    3D maps, and advanced functions
+                  </li>
+                </ul>
+                <b className="font-bold mt-4">TL;DR</b>
+                <p>Excel rocks and I rock at Excel.</p>
+              </div>
             </div>
           </div>
         </section>
