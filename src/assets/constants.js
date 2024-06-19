@@ -19,5 +19,5 @@ c.google_tag = process.env.NODE_ENV === "production"
 : "na";
 
 
-c.sectionPadding = "w-full px-0 md:px-4 lg:px-10 xl:px-48 2xl:px-80 flex flex-col items-center";
-c.contentContainer = "max-w-[1250px] md:px-0";
+c.sectionPadding = "w-full px-0 md:px-4 lg:px-10 xl:px-32 2xl:px-64 flex flex-col items-center";
+c.contentContainer = "max-w-[1500px] px-1 md:px-0";

@@ -47,7 +47,7 @@ export default function Home(props) {
               className={`col-span-1 relative flex justify-center items-center order-2 md:order-1`}
             >
               <div
-                className={`flex flex-col md:frosted h-min max-w-[700px] p-4 rounded-2xl`}
+                className={`flex flex-col md:frosted h-min max-w-[700px] p-4 rounded-2xl mt-6 md:mt-0`}
               >
                 <span className={`text-xl header-font`}>Hi there, I’m</span>
                 <h1 className={`text-4xl header-font`}>David A Six</h1>
@@ -85,7 +85,7 @@ export default function Home(props) {
         </section>
 
         <section className={`${c.sectionPadding} w-full`}>
-          <div className={`${c.contentContainer} w-full`}>
+          <div className={`max-w-[1250px] w-full`}>
             <img
               src="/images/shapes/gradient-bg.png"
               alt="A gradient background"
