@@ -1,159 +1,84 @@
-import s from "./blog.module.css";
-import cs from "src/styles/common.module.css";
+import c from "@/assets/constants";
 
 export const BlogListItem = (props) => {
-  let post = {...props.post};
-  // Article text is stored in markdown format, this code removes the markdown for article preview
-  let articleText = '';
-  // Minutes to read is calculated to display how long it might take to read, similiar to Medium.
+  let post = { ...props.post };
+  // Minutes to read is calculated to display how long it might take to read,
+  // similiar to Medium.
   let minutesToRead = 0;
 
-  if (post?.content) {
-    articleText = post.content.reduce(
-        (accumulator, block) => {
-          const markdownRegex = /[_*\[\]#\(\)~`>!\-|]/g;
-          let text =  block.type === 'text' ? block.value : "";
-          text = text.replace(markdownRegex, '');
-          accumulator += text;
-          return accumulator;
-      }, '');
+  const wpm = 200;
+  minutesToRead = Math.ceil(post.text.length / wpm);
 
-      const wpm = 200;
-      post.content.forEach((block, i) => {
-        let increase = 0;
-        if (["text", "quote"].includes(block.type))
-          increase = block.value.split(" ").length / wpm;
-        // Assumes each image in the article takes 6 seconds for user to review
-        if (block.type === "images") increase = block.value.length * 0.1;
-        minutesToRead += increase;
-      });
-      minutesToRead = Math.ceil(minutesToRead);
-    }
+  post.topics = post?.topics ? post.topics : [];
 
-    post.topics = post?.topics ? post.topics : [];
+  return (
+    <div className=" max-w-[1000px] mx-auto">
+      <div className="frosted rounded-2xl p-4">
+        <h2 className="text-start font-bold text-3xl">{post.title}</h2>
 
-    return (
-      <div className={`col-12 row px-1 py-2`}>
-        <div className={`col-12 row p-3 frosted rounded-4 `}>
-          <h2 className='col-12 text-start fw-bold m-0 p-0'>
-            {post.title}
-          </h2>
-    
-          <small className='col-12 p-0 fst-italic'>
-            Published on{" "}
-            {post.publish_date?.seconds &&
-              new Date(post.publish_date?.seconds * 1000)
-                .toISOString()
-                .split("T")[0]}
-          </small>
-    
-          <div className={`col-12 p-0 d-flex justify-content-center align-items-center`}>
-            <a 
-              href={`/blog/${post.slug}`}
-              className='p-0 m-0 pe-1 position-relative hover'
-              style={{ flex: 1, maxHeight: 100, overflow: 'hidden' }}>
-              <p className='m-0'>{articleText?.slice(0, 300)}...</p>
-              <div className={s.readMore}>
-                <span className="badge rounded-pill bg-light border text-muted m-0 d-flex py-0 align-items-center">
-                  Read More
-                </span>
-              </div>
-            </a>
-            <a 
-              href={`/blog/${post.slug}`}
-              style={{ backgroundImage: `url(${post.header_image})`}}
-              className={`${s.blogItemImage} rounded-3`} />
-          </div>
-          
-          <div className='d-flex flex-row justify-content-start align-items-center m-0 p-0'>
-            <div className="d-flex flex-row align-items-center flex-wrap">
-              <span className='fs-small fst-italic me-2 text-nowrap'>
-                {minutesToRead} minute read
+        <small className="text-sm italic">
+          Published on {post.publish_date}
+        </small>
+
+        <div className="flex justify-start items-center">
+          <a
+            href={`/blog/${post.slug}`}
+            className="me-4 relative flex-1 max-h-[100px]"
+          >
+            <p className="text-md max-h-[100px] overflow-clip">
+              {post.text}...
+            </p>
+            <div className="absolute bottom-1 right-0 w-1/2 h-min flex justify-end">
+              <span className="py-2 px-2 badge badge-neutral italic text-xs">
+                Read More
               </span>
             </div>
-    
-            <div style={{ flex: 1}} className='d-flex justify-content-end align-items-center align-self-end py-1'>
-              <a 
-                href={`/blog/${post.slug}`} 
-                className="btn btn-primary p-0 px-2 rounded-pill fs-6 text-nowrap"  
-                style={{justifySelf: 'end', width: 110}}>
-                Read Entry
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-
-  export const BlogSkeletonItem = () => {
-    return (
-      <div className={`col-12 row px-1 py-2`}>
-        <div className={`col-12 row p-3 frosted rounded-4 `}>
-          <div
-            className={`m-0 p-0 ${cs.skeleton}`}
-            style={{ width: "25%", height: "2rem" }}
+          </a>
+          <img
+            src={`${c.cms}${post.header_image}`}
+            className="rounded-2xl h-24 w-24 object-cover"
           />
-    
-          <div className="col-12 text-start fw-bold m-0 p-0">
-            <div
-              className={`m-0 m-0 mt-2 mx-1 p-0 ${cs.skeleton}`}
-              style={{ width: "20%", height: "1rem" }}
-            />
-          </div>
-    
-          <div
-            className={`col-12 p-0 d-flex justify-content-center align-items-center`}
+        </div>
+
+        <div className="flex justify-between items-center mt-2">
+          <span className="fs-small fst-italic me-2 text-nowrap">
+            {minutesToRead} minute read
+          </span>
+
+          <a
+            href={`/blog/${post.slug}`}
+            className="btn btn-primary w-24 h-6 min-h-min whitespace-nowrap rounded-full
+                text-md"
           >
-            <div
-              className="p-0 m-0 pe-1 position-relative"
-              style={{ flex: 1, maxHeight: 100, overflow: "hidden" }}
-            >
-              <div
-                className={`m-0 my-1 mx-1 p-0 ${cs.skeleton}`}
-                style={{ width: "100%", height: "1.1rem" }}
-              />
-              <div
-                className={`m-0 my-1 mx-1 p-0 ${cs.skeleton}`}
-                style={{ width: "100%", height: "1.1rem" }}
-              />
-              <div
-                className={`m-0 my-1 mx-1 p-0 ${cs.skeleton}`}
-                style={{ width: "100%", height: "1.1rem" }}
-              />
-              <div
-                className={`m-0 my-1 mx-1 p-0 ${cs.skeleton}`}
-                style={{ width: "100%", height: "1.1rem" }}
-              />
-            </div>
-            <div
-              className={`m-0 my-1 mx-1 p-0 ${cs.skeleton}`}
-              style={{ width: 110, height: 110 }}
-            />
-          </div>
-    
-          
-          <div className='d-flex flex-row justify-content-start align-items-center m-0 p-0'>
-            <div className="d-flex flex-row align-items-center flex-wrap">
-              <div
-                className={`m-0 m-0 mx-1 p-0 ${cs.skeleton}`}
-                style={{ width: '5rem', height: "1rem" }}
-              />
-            </div>
-    
-            <div
-              style={{ flex: 1 }}
-              className="d-flex justify-content-end align-items-center align-self-end"
-            >    
-              <div
-                className={`m-0 m-0 mx-1 p-0 ${cs.skeleton}`}
-                style={{ width: 110, height: "1.5rem" }}
-              />
-            </div>
-          </div>
+            Read Post
+          </a>
         </div>
       </div>
-    );
-  };
-  
+    </div>
+  );
+};
+
+export const BlogSkeletonItem = () => {
+  return (
+    <div className=" max-w-[1000px] mx-auto">
+      <div className="frosted rounded-2xl p-4">
+        <div className="skeleton bg-white bg-opacity-10 w-1/2 h-8" />
+        <div className="skeleton bg-white bg-opacity-10 w-1/5 h-4 my-2 ms-1" />
+
+        <div className="flex justify-start items-center">
+          <div className="flex-1 flex flex-col space-y-2 pe-4">
+            <div className="skeleton bg-white bg-opacity-10 w-full h-6" />
+            <div className="skeleton bg-white bg-opacity-10 w-full h-6" />
+            <div className="skeleton bg-white bg-opacity-10 w-11/12 h-6" />
+          </div>
+          <div className="h-24 w-24 rounded-2xl skeleton bg-white bg-opacity-10" />
+        </div>
+
+        <div className="flex justify-between items-center mt-2">
+          <div className="skeleton bg-white bg-opacity-10 w-32 h-6" />
+          <div className="skeleton bg-white bg-opacity-10 w-24 h-6" />
+        </div>
+      </div>
+    </div>
+  );
+};
