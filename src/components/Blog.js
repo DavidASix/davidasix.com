@@ -1,3 +1,4 @@
+import Link from "next/link";
 import c from "@/assets/constants";
 
 export const BlogListItem = (props) => {
@@ -21,7 +22,7 @@ export const BlogListItem = (props) => {
         </small>
 
         <div className="flex justify-start items-center">
-          <a
+          <Link
             href={`/blog/${post.slug}`}
             className="me-4 relative flex-1 max-h-[100px]"
           >
@@ -33,7 +34,7 @@ export const BlogListItem = (props) => {
                 Read More
               </span>
             </div>
-          </a>
+          </Link>
           <img
             src={`${c.cms}${post.header_image}`}
             className="rounded-2xl h-24 w-24 object-cover"
@@ -45,13 +46,13 @@ export const BlogListItem = (props) => {
             {minutesToRead} minute read
           </span>
 
-          <a
+          <Link
             href={`/blog/${post.slug}`}
             className="btn btn-primary w-24 h-6 min-h-min whitespace-nowrap rounded-full
                 text-md"
           >
             Read Post
-          </a>
+          </Link>
         </div>
       </div>
     </div>

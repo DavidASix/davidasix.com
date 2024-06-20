@@ -33,7 +33,9 @@ export default function Excel({ formulas_str, max_page }) {
   // Current page state needs to be available in the scroll listener
   // while currentPage is not displayed in the UI, I'm keeping it in state as the functionality may be used in future
   const currentPageRef = useRef(currentPage);
-  useEffect(() => {currentPageRef.current = currentPage}, [currentPage]);
+  useEffect(() => {
+    currentPageRef.current = currentPage;
+  }, [currentPage]);
 
   useEffect(() => {
     const checkScrollEnd = () => {
@@ -46,7 +48,11 @@ export default function Excel({ formulas_str, max_page }) {
           formulaListTop + formulaListHeight - formulaListLoadNewBuffer;
         const { scrollTop, clientHeight } = document.documentElement;
         const scrolledLoad = scrollTop + clientHeight >= loadMoreLocation;
-        if (scrolledLoad && !loadingNextPage && currentPageRef.current !== maxPage) {
+        if (
+          scrolledLoad &&
+          !loadingNextPage &&
+          currentPageRef.current !== maxPage
+        ) {
           loadNextPage();
         }
       }
@@ -61,7 +67,7 @@ export default function Excel({ formulas_str, max_page }) {
   }, [maxPage]);
 
   async function loadNextPage() {
-    setLoadingNextPage(true)
+    setLoadingNextPage(true);
     try {
       const { data } = await axios.post("/api/cms/excel", {
         page: currentPage + 1,

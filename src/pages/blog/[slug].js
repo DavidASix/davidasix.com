@@ -1,6 +1,6 @@
 import axios from "axios";
 import Head from "next/head";
-import Link from 'next/link'
+import Link from "next/link";
 import { SlShareAlt } from "react-icons/sl";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 
@@ -20,14 +20,13 @@ export const getServerSideProps = async ({ params }) => {
   return { props: { post: JSON.stringify(post) } };
 };
 
-
 const ContentBlock = ({ block }) => {
   /* eslint-disable react/prop-types */
-  const {Text, Image} = block;
+  const { Text, Image } = block;
   const imgUrl = Image?.data?.attributes?.url;
   return (
     <section className="w-full flex flex-col items-start rich-text-container pb-4">
-    {Text && <BlocksRenderer content={Text} />}
+      {Text && <BlocksRenderer content={Text} />}
       {imgUrl && (
         <img
           src={`${c.cms}${imgUrl}`}
@@ -95,7 +94,6 @@ export default function BlogPost({ post, minutesToRead }) {
               </section>
 
               <section id="content">
-
                 {blog.content_block.map((b, i) => (
                   <ContentBlock block={b} index={i} key={i} />
                 ))}

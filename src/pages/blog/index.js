@@ -62,7 +62,7 @@ export default function Blog({ max_page, posts_str }) {
       <NavigationLayout>
         <section className={`${c.sectionPadding} w-full`}>
           <div className={`${c.contentContainer} w-full`}>
-            <div className="col-span-6 mb-8 md:mb-4">
+            <div className="mb-8 md:mb-4">
               <h1 className={`text-7xl header-font text-center text-nowrap`}>
                 Blog
               </h1>

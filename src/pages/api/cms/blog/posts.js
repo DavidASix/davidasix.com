@@ -31,9 +31,10 @@ export default async function handler(req, res) {
       },
       {
         query: "populate",
-        values: { 
-          "[header_image][fields][0]": "url", 
-          "[content_block][populate]": "Text" },
+        values: {
+          "[header_image][fields][0]": "url",
+          "[content_block][populate]": "Text",
+        },
       },
       { query: "sort", values: { "[0]": "publish_date:desc" } },
       {
@@ -64,21 +65,24 @@ export default async function handler(req, res) {
     posts = posts?.data?.data;
     // Flatten out blogposts to usable objects
     posts = posts.map((f, i) => {
-      const {title, slug, publish_date, header_image, content_block} = f.attributes;
+      const { title, slug, publish_date, header_image, content_block } =
+        f.attributes;
       // Reduce all nested content_block text content into a single long string, then truncate it
       // This string will be displayed on front end.
-      
-      // content_block is an array of content blocks       
+
+      // content_block is an array of content blocks
       let text = content_block.reduce((allBlockText, cb) => {
-        const textInBlock = cb?.['Text']
-          .reduce((sum, textBlock) => {
-              // text block is an array of types of text. A single sentence could have multiple
-              // array elements as it has bold and italic text. 
-              const children = textBlock.children.reduce((s, c) => `${s} ${c.text}`, "")
-              return `${sum} ${children}`
-            }, "");
-        return `${allBlockText} ${textInBlock}`
-      } , "");
+        const textInBlock = cb?.["Text"].reduce((sum, textBlock) => {
+          // text block is an array of types of text. A single sentence could have multiple
+          // array elements as it has bold and italic text.
+          const children = textBlock.children.reduce(
+            (s, c) => `${s} ${c.text}`,
+            ""
+          );
+          return `${sum} ${children}`;
+        }, "");
+        return `${allBlockText} ${textInBlock}`;
+      }, "");
 
       return {
         title,
@@ -86,8 +90,8 @@ export default async function handler(req, res) {
         publish_date,
         header_image: header_image?.data?.attributes?.url,
         text: text.trim().slice(0, 300),
-        wordCount: text.split(' ').length + 1
-      }
+        wordCount: text.split(" ").length + 1,
+      };
     });
 
     res.status(200).json({ max_page, posts });
