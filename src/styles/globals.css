@@ -54,30 +54,62 @@
 
 @layer components {
   .rich-text-container > * {
-    @apply my-4;
+    @apply mt-1 text-da-dark-50;
   }
   .rich-text-container > h1 {
-    @apply font-bold text-2xl;
+    @apply font-bold text-3xl mt-6;
   }
   .rich-text-container > h2 {
-    @apply font-bold text-xl;
+    @apply font-bold text-2xl mt-6;
   }
   .rich-text-container > h3 {
-    @apply font-bold text-lg;
+    @apply font-bold text-xl mt-6;
   }
   .rich-text-container > h4 {
-    @apply font-semibold text-lg;
+    @apply font-bold text-lg mt-6;
   }
   .rich-text-container > h5 {
-    @apply text-lg;
+    @apply font-semibold text-lg mt-6;
   }
 
   .rich-text-container > p,
   .rich-text-container > h6 {
-    @apply text-base text-da-dark;
+    @apply text-base;
+  }
+  .rich-text-container > p {
+    @apply px-2;
   }
   .rich-text-container a {
-    @apply transition-all duration-300 hover:underline;
+    @apply transition-all duration-300 hover:underline hover:text-da-primary-500 text-da-primary-300;
+  }
+
+  .rich-text-container > ul {
+    @apply list-inside list-disc ps-4;
+  }
+
+  .rich-text-container > blockquote {
+    @apply font-semibold text-3xl max-w-[600px] relative mx-auto p-2;
+    line-height: 1.4;
+  }
+  
+  .rich-text-container > blockquote:before,
+  .rich-text-container > blockquote:after {
+    @apply text-da-dark-50 absolute;
+    font-size: 8rem;
+    width: 4rem;
+    height: 4rem;
+  }
+  
+  .rich-text-container > blockquote:before {
+    content: '“';
+    left: -5rem;
+    top: -2rem;
+  }
+  
+  .rich-text-container > blockquote:after {
+    content: '”';
+    right: -5rem;
+    bottom: 1rem;
   }
 
   .rich-text-container > *:last-child {
