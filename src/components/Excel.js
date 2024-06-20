@@ -7,7 +7,7 @@ export const Formula = (props) => {
       <div
         className={`p-3 mt-2 mx-2 d-flex align-items-center frosted rounded-2xl`}
       >
-        <code className="whitespace-pre break-all">{formula}</code>
+        <code className="whitespace-pre-wrap break-all">{formula}</code>
       </div>
     </div>
   );
