@@ -13,7 +13,7 @@ export const getServerSideProps = async () => {
   let posts = [];
   let max_page = 0;
   try {
-    const { data } = await axios.post(`${c.domain}/api/cms/blog-posts`, {
+    const { data } = await axios.post(`${c.domain}/api/cms/blog/posts`, {
       page: 1,
       itemsPerPage,
     });
@@ -35,7 +35,7 @@ export default function Blog({ max_page, posts_str }) {
     try {
       setLoadingNextPage(true);
       const nextPage = currentPage + 1;
-      const { data } = await axios.post(`${c.domain}/api/cms/blog-posts`, {
+      const { data } = await axios.post(`${c.domain}/api/cms/blog/posts`, {
         page: nextPage,
         itemsPerPage,
       });
