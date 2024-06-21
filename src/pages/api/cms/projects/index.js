@@ -30,9 +30,9 @@ export default async function handler(req, res) {
       {
         query: "populate",
         values: {
-            "[logo][fields][0]": "url",
+          "[logo][fields][0]": "url",
         },
-      }
+      },
     ];
 
     const queryStr = queries
@@ -47,12 +47,17 @@ export default async function handler(req, res) {
       headers
     );
     projects = projects?.data?.data;
-    console.log(projects);
     // Flatten out blogposts to usable objects
     projects = projects.map((project, i) => ({
-        ...project.attributes,
-        logo: project?.attributes?.logo?.data?.attributes?.url,
+      ...project.attributes,
+      logo: project?.attributes?.logo?.data?.attributes?.url,
     }));
+
+    projects = projects.sort(
+      (a, b) =>
+        new Date(b.completed_date || "2100-01-01") -
+        new Date(a.completed_date || "2100-01-01")
+    );
 
     res.status(200).json(projects);
   } catch (err) {
