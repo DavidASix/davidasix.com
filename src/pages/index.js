@@ -273,7 +273,7 @@ export default function Home(props) {
 
               <div className="col-span-3 row-span-1 md:col-span-3 md:row-span-1 p-1 md:p-2">
                 <div className="h-full w-full flex flex-col justify-center items-start p-2 lg:p-4 frosted rounded-2xl">
-                  <span className="text-lg md:text-lg">
+                  <span className="text-sm md:text-lg">
                     I consider myself a lot of things, but first and foremost I
                     am a <span className="font-bold">problem solver</span>. When
                     I encounter a new challenge I use my skills in research and

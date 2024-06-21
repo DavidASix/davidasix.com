@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Head from "next/head";
+import Link from "next/link";
 import axios from "axios";
 
 import NavigationLayout from "@/components/NavigationLayout";
@@ -66,7 +67,7 @@ export default function Projects({ projects_str, categories_str }) {
                     .filter((p) => p.category === category)
                     .map((project, j) => (
                       <li className="col-span-2 md:col-span-1" key={j}>
-                        <a
+                        <Link
                           href={`/projects/${project.slug}`}
                           className="frosted rounded-2xl h-full min-h-32 p-3 flex flex-col blur-li
                         transition-all duration-300 hover:scale-[1.01] hover:bg-da-primary-300 hover:bg-opacity-10"
@@ -91,7 +92,7 @@ export default function Projects({ projects_str, categories_str }) {
                             {project.start_date} -{" "}
                             {project.completed_date || "Current"}
                           </span>
-                        </a>
+                        </Link>
                       </li>
                     ))}
                 </ul>

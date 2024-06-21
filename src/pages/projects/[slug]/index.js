@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Link from 'next/link';
 import Head from "next/head";
 import axios from "axios";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
@@ -92,7 +93,7 @@ export default function Project({ project_str }) {
                   return <React.Fragment key={i} />;
                 }
                 return (
-                  <a
+                  <Link
                     key={i}
                     href={link.url}
                     target="_blank"
@@ -106,26 +107,26 @@ export default function Project({ project_str }) {
                       aria-label={link.helpText}
                       alt={link.helpText}
                     />
-                  </a>
+                  </Link>
                 );
               })}
             </div>
             <div className="flex justify-center gap-8 py-8 max-w-[600px] mx-auto flex-wrap">
               {project.privacy_policy && (
-                <a
+                <Link
                   href={`/projects/${project.slug}/privacy-policy`}
                   className="font-bold hover:text-da-primary-400 transition-colors duration-150"
                 >
                   Privacy Policy
-                </a>
+                </Link>
               )}
               {project.data_delete && (
-                <a
+                <Link
                   href={`/projects/${project.slug}/data-delete`}
                   className="font-bold hover:text-da-primary-400 transition-colors duration-150"
                 >
                   Data Delete Policy
-                </a>
+                </Link>
               )}
             </div>
           </div>
