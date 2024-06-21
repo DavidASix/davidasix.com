@@ -7,7 +7,7 @@ c.url = "davidasix.com";
 c.cms = 'https://api.davidasix.com'
 
 c.domain = process.env.NODE_ENV === "production"
-  ? "https://davidasix.com"
+  ? "https://davidasix-com.vercel.app"
   : "http://localhost:3000";
 
 c.plausible_domain = process.env.NODE_ENV === "production"
