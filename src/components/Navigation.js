@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const links = [
   { title: "Home", url: "/", text: "where the heart is" },
   { title: "Blog", url: "/blog", text: "scattered thoughts" },
   { title: "Excel", url: "/excel", text: "favourite formulas" },
-  //{title: 'Projects', url: '/projects', text: 'This is a sentence'},
-  { title: "Apps", url: "/mobile-apps", text: "react-native apps" },
+  {title: 'Projects', url: '/projects', text: 'coding projects'},
+  //{ title: "Apps", url: "/mobile-apps", text: "react-native apps" },
   {
     title: "ROO",
     url: "https://redoxfordonline.com/projects/?utm_source=davidasix&utm_medium=main_menu&utm_campaign=referral",
@@ -46,7 +47,7 @@ const NavLink = (props) => {
                 : "text-da-dark-100 hover:text-da-primary-300"
               }`}
             >
-              <a href={l.url}>{l.title}</a>
+              <Link href={l.url}>{l.title}</Link>
             </li>
           ))}
         </ul>
@@ -55,7 +56,7 @@ const NavLink = (props) => {
   }
   return (
     <li className="w-full h-min">
-      <a
+      <Link
         href={link.url}
         className={`flex justify-between ${
           link.url === currentPath
@@ -68,7 +69,7 @@ const NavLink = (props) => {
           {" "}
           {link.text}
         </span>
-      </a>
+      </Link>
     </li>
   );
 };

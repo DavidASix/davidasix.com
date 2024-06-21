@@ -24,10 +24,14 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply bg-da-dark;
+  html {
+
     background: linear-gradient(rgba(26, 26, 26, 0.95), rgba(26, 26, 26, 0.95)),
       url("/images/bg-tile.png") repeat fixed;
+  }
+
+  body {
+    @apply bg-transparent;
   }
 
   * {
@@ -49,6 +53,14 @@
   .frosted-0 {
     @apply bg-transparent bg-opacity-100 backdrop-blur-0 
       border-0 border-opacity-100;
+  }
+
+  .blur-li {
+    @apply transition-all duration-500;
+  }
+
+  .blur-list:has(.blur-li:hover) .blur-li:not(:hover) {
+    @apply blur-[2px];
   }
 }
 
