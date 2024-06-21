@@ -11,15 +11,19 @@ import c from "@/assets/constants";
 export const getServerSideProps = async ({ params }) => {
   let project = [];
   try {
+    console.log(`${c.domain}/api/cms/projects/by-slug`);
     const { data } = await axios.post(`${c.domain}/api/cms/projects/by-slug`, {
       slug: params.slug,
     });
+    console.log(data)
     project = data;
   } catch (err) {
+    console.log(err)
     console.log("getServerSideProps Error");
   }
   return { props: { project_str: JSON.stringify(project) } };
 };
+
 const ContentBlock = ({ block }) => {
   /* eslint-disable react/prop-types */
   const { Text, Image } = block;
@@ -39,6 +43,7 @@ const ContentBlock = ({ block }) => {
 
 export default function Project({ project_str }) {
   let project = JSON.parse(project_str);
+  console.log(project)
   const links = [
     {
       url: project.project_url,
