@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Head from "next/head";
 import axios from "axios";
+import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 
 import NavigationLayout from "@/components/NavigationLayout";
 
@@ -17,6 +18,22 @@ export const getServerSideProps = async ({ params }) => {
     console.log("getServerSideProps Error");
   }
   return { props: { project_str: JSON.stringify(project) } };
+};
+const ContentBlock = ({ block }) => {
+  /* eslint-disable react/prop-types */
+  const { Text, Image } = block;
+  const imgUrl = Image?.data?.attributes?.url;
+  return (
+    <section className="w-full flex flex-col items-start rich-text-container pb-4">
+      {Text && <BlocksRenderer content={Text} />}
+      {imgUrl && (
+        <img
+          src={`${c.cms}${imgUrl}`}
+          className="object-contain object-center w-auto max-w-[700px] max-h-[40vh] rounded-2xl mx-auto"
+        />
+      )}
+    </section>
+  );
 };
 
 export default function Project({ project_str }) {
@@ -72,13 +89,14 @@ export default function Project({ project_str }) {
             <div className="flex justify-around gap-4 pt-8 max-w-[600px] mx-auto flex-wrap">
               {links.map((link, i) => {
                 if (!link.url) {
-                  return null;
+                  return <React.Fragment key={i} />;
                 }
                 return (
                   <a
+                    key={i}
                     href={link.url}
                     target="_blank"
-                    className=""
+                    className="hover:scale-[1.01] transition-all duration-200"
                     title={link.helpText}
                     aria-label={link.helpText}
                   >
@@ -113,10 +131,69 @@ export default function Project({ project_str }) {
           </div>
         </section>
 
-        <section className={`${c.sectionPadding} w-full`}>
-          <div className={`${c.contentContainer} w-full`}>
-            
+        {project.screenshots && (
+          <section id="screenshots" className={`${c.sectionPadding} w-full`}>
+            <div className={`${c.contentContainer} w-full flex justify-center`}>
+              <div className="w-full max-w-[800px] flex overflow-scroll p-4 space-x-4 frosted rounded-box">
+                {project.screenshots.map((url, i) => (
+                  <img
+                    key={i}
+                    src={`${c.cms}${url}`}
+                    className="h-[50vh] w-auto rounded-box"
+                  />
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        <section
+          id="features&technology"
+          className={`${c.sectionPadding} w-full`}
+        >
+          <div
+            className={`${c.contentContainer} grid grid-cols-2 gap-2 max-w-[1200px] `}
+          >
+            <article className="col-span-2 md:col-span-1 flex flex-col items-center md:items-start">
+              <h2 className="text-xl font-semibold md:text-3xl my-4">
+                Features
+              </h2>
+              <ul className="flex flex-wrap gap-2 justify-center md:justify-start">
+                {project.features.map((feature, i) => (
+                  <li
+                    key={i}
+                    className="inline-flex text-sm md:text-md px-4 py-1 rounded-full frosted hover:cursor-default"
+                  >
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </article>
+
+            <article className="col-span-2 md:col-span-1 flex flex-col items-center md:items-start">
+              <h2 className="text-xl font-semibold md:text-3xl my-4">
+                Technology
+              </h2>
+              <ul className="flex flex-wrap gap-2 justify-center md:justify-start">
+                {project.technologies.map((tech, i) => (
+                  <li
+                    key={i}
+                    className="inline-flex text-sm md:text-md px-4 py-1 rounded-full frosted hover:cursor-pointer"
+                  >
+                    {tech}
+                  </li>
+                ))}
+              </ul>
+            </article>
           </div>
+        </section>
+
+        <section id="writeup" className={`${c.sectionPadding} w-full pt-8`}>
+          <article className={`${c.contentContainer} max-w-[1200px]`}>
+            {project.description_blocks.map((b, i) => (
+              <ContentBlock block={b} index={i} key={i} />
+            ))}
+          </article>
         </section>
       </NavigationLayout>
     </>
