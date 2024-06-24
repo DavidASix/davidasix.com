@@ -56,7 +56,7 @@ export default function Projects({ projects_str, categories_str }) {
             {categories.map((category, i) => (
               <React.Fragment key={i}>
                 <h1 className="text-5xl text-da-dark-300 font-light">
-                  {`${category}s`}
+                  {category}
                 </h1>
                 <ul
                   id={category}
