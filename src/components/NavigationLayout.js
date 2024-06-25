@@ -10,7 +10,7 @@ export default function NavigationLayout({ children }) {
           <NavBar />
         </header>
         <main
-          className={`z-20 row pt-10 m-0 justify-content-center align-items-start`}
+          className={`z-20 row pt-2 md:pt-10 m-0 justify-content-center align-items-start`}
         >
           {children}
         </main>

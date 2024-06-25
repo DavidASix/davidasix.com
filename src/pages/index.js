@@ -62,12 +62,7 @@ export default function Home() {
               className={`col-span-1 relative flex justify-center order-1 md:order-2`}
             >
               <img
-                src="/images/headshot_bg.svg"
-                alt="An orange circle behind image of David"
-                className="absolute bottom-0 z-0 max-h-[65vh]"
-              />
-              <img
-                src="/images/headshot.png"
+                src="/images/headshot-square.png"
                 alt="A headshot of David wearing an unbuttoned white collared shirt."
                 className="z-10 max-h-[65vh]"
               />
