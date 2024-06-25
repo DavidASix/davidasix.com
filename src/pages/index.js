@@ -16,11 +16,11 @@ const SocialLink = ({ social }) => {
         target="_blank"
         rel="noopener noreferrer"
         className={`frosted bg-da-dark-600 bg-opacity-20 rounded-2xl flex justify-center items-center aspect-square
-        hover:bg-primary hover:bg-opacity-30`}
+        hover:bg-da-primary-300 hover:bg-opacity-30`}
       >
         <SocialIcon
           social={social.socialMedia}
-          className="p-2 fill-white hover:fill-da-secondary"
+          className="p-2 fill-white hover:fill-da-da-50"
           style={{ height: 60, width: 70 }}
         />
       </a>
@@ -28,7 +28,7 @@ const SocialLink = ({ social }) => {
   );
 };
 
-export default function Home(props) {
+export default function Home() {
   return (
     <>
       <Head></Head>
@@ -38,16 +38,11 @@ export default function Home(props) {
             className={`${c.contentContainer} w-full grid grid-cols-1 md:grid-cols-2
               md:py-8 pb-4 relative px-4`}
           >
-            <img
-              src="/images/shapes/gradient-bg.png"
-              alt="A gradient background"
-              className="absolute left-0 top-0"
-            />
             <div
               className={`col-span-1 relative flex justify-center items-center order-2 md:order-1`}
             >
               <div
-                className={`flex flex-col md:frosted h-min max-w-[700px] p-4 rounded-2xl mt-6 md:mt-0`}
+                className={`z-10 flex flex-col md:frosted h-min max-w-[700px] p-4 rounded-2xl mt-6 md:mt-0`}
               >
                 <span className={`text-xl header-font`}>Hi there, I’m</span>
                 <h1 className={`text-4xl header-font`}>David A Six</h1>
@@ -60,6 +55,7 @@ export default function Home(props) {
                   skills? Here I am!
                 </span>
               </div>
+              <div className="orange-gradient-ball absolute z-0 left-[25%] top-[40%]" />
             </div>
 
             <div
@@ -85,21 +81,17 @@ export default function Home(props) {
         </section>
 
         <section className={`${c.sectionPadding} w-full`}>
-          <div className={`max-w-[1250px] w-full`}>
-            <img
-              src="/images/shapes/gradient-bg.png"
-              alt="A gradient background"
-              className="absolute z-0"
-            />
+          <div className={`max-w-[1250px] w-full relative`}>
+            <div className="yellow-gradient-ball absolute z-0 left-[25%] top-[50%]" />
 
             <h2 className="text-4xl px-2 pb-2">A little about me</h2>
 
             <div
-              className="relative justify-center 
+              className="relative justify-center blur-list
               grid grid-cols-3 grid-rows-8 md:grid-cols-6 md:grid-rows-4 px-1"
             >
               <div className="col-span-1 row-span-1 md:col-span-1 md:row-span-1 p-1 md:p-2">
-                <div className="h-full w-full flex flex-col justify-center items-start p-2 lg:p-4 frosted rounded-2xl">
+                <div className="h-full w-full flex flex-col justify-center items-start p-2 lg:p-4 frosted rounded-2xl blur-li">
                   <h2 className="flex flex-col w-full text-center">
                     <span className="text-3xl sm:text-5xl font-bold">
                       {new Date().getFullYear() - 2017}
@@ -112,7 +104,7 @@ export default function Home(props) {
               </div>
 
               <div className="col-span-2 row-span-1 md:col-span-2 md:row-span-1 p-1 md:p-2">
-                <div className="h-full w-full flex flex-col justify-center items-start p-2 lg:p-4 frosted rounded-2xl">
+                <div className="h-full w-full flex flex-col justify-center items-start p-2 lg:p-4 frosted rounded-2xl blur-li">
                   <h2 className="text-md sm:text-xl font-semibold">
                     I've worked with lots of tech
                   </h2>
@@ -124,25 +116,25 @@ export default function Home(props) {
 
               <img
                 src="/images/nodejs.png"
-                className="col-span-1 row-span-1 md:col-span-1 md:row-span-1 self-center"
+                className="col-span-1 row-span-1 md:col-span-1 md:row-span-1 self-center blur-li"
                 aria-label="NodeJS"
                 alt="NodeJS"
               />
               <img
                 src="/images/python.png"
-                className="col-span-1 row-span-1 md:col-span-1 md:row-span-1 self-center"
+                className="col-span-1 row-span-1 md:col-span-1 md:row-span-1 self-center blur-li"
                 aria-label="Python"
                 alt="Python"
               />
               <img
                 src="/images/sql.png"
-                className="col-span-1 row-span-1 md:col-span-1 md:row-span-1 self-center"
+                className="col-span-1 row-span-1 md:col-span-1 md:row-span-1 self-center blur-li"
                 aria-label="SQL"
                 alt="SQL"
               />
 
               <div className="col-span-2 row-span-1 md:col-span-2 md:row-span-1 p-1 md:p-2">
-                <div className="h-full w-full flex flex-col justify-center items-start p-2 lg:p-4 frosted rounded-2xl">
+                <div className="h-full w-full flex flex-col justify-center items-start p-2 lg:p-4 frosted rounded-2xl  blur-li">
                   <span className="text-sm sm:text-lg">
                     I've worn red shoes for years, and they inspired the name
                     for my webdesign company,{" "}
@@ -160,13 +152,13 @@ export default function Home(props) {
               </div>
 
               <img
-                className="col-span-1 row-span-1 md:col-span-1 md:row-span-1 self-center"
+                className="col-span-1 row-span-1 md:col-span-1 md:row-span-1 self-center blur-li"
                 src="/images/low-poly-red-shoes.png"
                 alt="A pair of red oxford shoes"
               />
 
               <div className="col-span-1 row-span-1 md:col-span-1 md:row-span-1 p-1 md:p-2">
-                <div className="h-full w-full flex flex-col justify-center items-start p-2 lg:p-4 frosted rounded-2xl">
+                <div className="h-full w-full flex flex-col justify-center items-start p-2 lg:p-4 frosted rounded-2xl blur-li">
                   <h2 className="flex flex-col w-full text-center">
                     <span className="text-3xl sm:text-5xl font-bold">
                       {new Date().getFullYear() - 2019}
@@ -179,7 +171,7 @@ export default function Home(props) {
               </div>
 
               <div className="col-span-2 row-span-1 md:col-span-2 md:row-span-1 p-1 md:p-2">
-                <div className="h-full w-full flex flex-col justify-center items-start p-2 lg:p-4 frosted rounded-2xl bg-da-primary bg-opacity-30">
+                <div className="h-full w-full flex flex-col justify-center items-start p-2 lg:p-4 frosted rounded-2xl bg-da-primary bg-opacity-30 blur-li">
                   <h2 className="text-xl sm:text-2xl font-semibold whitespace-nowrap">
                     Corporate & Startups
                   </h2>
@@ -191,19 +183,19 @@ export default function Home(props) {
               </div>
 
               <img
-                className="col-span-1 row-span-2 hidden md:block self-center"
+                className="col-span-1 row-span-2 hidden md:block self-center blur-li"
                 src="/images/low-poly-shepherd-1x2.png"
                 alt="A German Shepherd"
               />
 
               <img
-                className="col-span-1 row-span-1 block md:hidden self-center"
+                className="col-span-1 row-span-1 block md:hidden self-center blur-li"
                 src="/images/low-poly-shepherd-head.png"
                 alt="A German Shepherd"
               />
 
               <div className="col-span-2 row-span-1 md:col-span-2 md:row-span-1 p-1 md:p-2">
-                <div className="h-full w-full flex flex-col justify-center items-start p-2 lg:p-4 frosted rounded-2xl bg-da-accent bg-opacity-30">
+                <div className="h-full w-full flex flex-col justify-center items-start p-2 lg:p-4 frosted rounded-2xl bg-da-accent bg-opacity-30 blur-li">
                   <span className="text-center text-xl sm:text-2xl font-semibold">
                     I have a dog
                   </span>
@@ -214,7 +206,7 @@ export default function Home(props) {
               </div>
 
               <div className="col-span-2 row-span-1 md:col-span-2 md:row-span-1 p-1 md:p-2">
-                <div className="h-full w-full flex flex-col justify-center items-start p-2 lg:p-4 frosted rounded-2xl">
+                <div className="h-full w-full flex flex-col justify-center items-start p-2 lg:p-4 frosted rounded-2xl blur-li">
                   <span className="text-sm sm:text-lg">
                     I'm a huge fan of{" "}
                     <span className="font-bold">Cyberpunk.</span> Whether it's
@@ -225,13 +217,13 @@ export default function Home(props) {
               </div>
 
               <img
-                className="col-span-1 row-span-1 md:col-span-1 md:row-span-1 self-center p-2"
+                className="col-span-1 row-span-1 md:col-span-1 md:row-span-1 self-center p-2 blur-li"
                 src="/images/electric-sheep.png"
                 alt="An Electric Sheep"
               />
 
               <div className="col-span-1 row-span-1 md:col-span-1 md:row-span-1 p-1 md:p-2">
-                <div className="h-full w-full flex flex-col justify-center md:items-start p-2 lg:p-4 frosted rounded-2xl">
+                <div className="h-full w-full flex flex-col justify-center md:items-start p-2 lg:p-4 frosted rounded-2xl blur-li">
                   <span className="text-xl md:text-xl">
                     I run <b>Linux</b>. <br />
                   </span>
@@ -250,13 +242,13 @@ export default function Home(props) {
               </div>
 
               <img
-                className="col-span-1 row-span-1 md:col-span-1 md:row-span-1 self-center p-2"
+                className="col-span-1 row-span-1 md:col-span-1 md:row-span-1 self-center p-2 blur-li"
                 src="/images/penguin.webp"
                 alt="An Electric Sheep"
               />
 
               <div className="col-span-1 row-span-1 md:col-span-1 md:row-span-1 p-1 md:p-2 md:hidden">
-                <div className="h-full w-full flex flex-col justify-center md:items-start p-2 lg:p-4">
+                <div className="h-full w-full flex flex-col justify-center md:items-start p-2 lg:p-4 blur-li">
                   <span className="text-md sm:text-lg flex flex-col">
                     <span className="text-nowrap whitespace-nowrap">
                       PC: <b>Pop!_OS</b>
@@ -272,7 +264,7 @@ export default function Home(props) {
               </div>
 
               <div className="col-span-3 row-span-1 md:col-span-3 md:row-span-1 p-1 md:p-2">
-                <div className="h-full w-full flex flex-col justify-center items-start p-2 lg:p-4 frosted rounded-2xl">
+                <div className="h-full w-full flex flex-col justify-center items-start p-2 lg:p-4 frosted rounded-2xl blur-li">
                   <span className="text-sm md:text-lg">
                     I consider myself a lot of things, but first and foremost I
                     am a <span className="font-bold">problem solver</span>. When
