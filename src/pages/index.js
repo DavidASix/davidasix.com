@@ -20,8 +20,7 @@ const SocialLink = ({ social }) => {
       >
         <SocialIcon
           social={social.socialMedia}
-          className="p-2 fill-white hover:fill-da-da-50"
-          style={{ height: 60, width: 70 }}
+          className="p-2 fill-white hover:fill-da-da-50 h-14 w-14 md:h-[70px] md:w-[70px]"
         />
       </a>
     </div>
@@ -64,7 +63,7 @@ export default function Home() {
               <img
                 src="/images/headshot-square.png"
                 alt="A headshot of David wearing an unbuttoned white collared shirt."
-                className="z-10 max-h-[65vh]"
+                className="z-10 max-h-[60vh]"
               />
               <div className="flex h-min absolute -bottom-5 z-20">
                 {socials.map((s, i) => (
