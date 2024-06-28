@@ -101,7 +101,7 @@ export default function Excel({ formulas_str, max_page }) {
             className={`${c.contentContainer} w-full relative grid grid-cols-6`}
           >
             <div className="col-span-6 mb-8 md:mb-4">
-              <h1 className={`text-7xl header-font text-center text-nowrap`}>
+              <h1 className={`text-6xl header-font text-center text-wrap`}>
                 Microsoft Excel
               </h1>
               <p className={`text-center max-w-[700px] mx-auto mt-8`}>
