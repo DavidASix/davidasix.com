@@ -44,7 +44,7 @@ export default function Project({ project_str }) {
     {
       url: project.project_url,
       helpText: "View the project",
-      image: "/images/apple-store-button.png",
+      image: "/images/view-online-button.webp",
     },
     {
       url: project.apple_store_url,
@@ -59,7 +59,7 @@ export default function Project({ project_str }) {
     {
       url: project.github_url,
       helpText: "View code on Github",
-      image: "/images/github-button.png",
+      image: "/images/github-button.webp",
     },
   ];
 
