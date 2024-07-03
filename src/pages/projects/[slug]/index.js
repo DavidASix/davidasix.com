@@ -45,6 +45,7 @@ export default function Project({ project_str }) {
       url: project.project_url,
       helpText: "View the project",
       image: "/images/view-online-button.webp",
+      referral: true,
     },
     {
       url: project.apple_store_url,
@@ -96,7 +97,7 @@ export default function Project({ project_str }) {
                 return (
                   <Link
                     key={i}
-                    href={link.url}
+                    href={link.url + (link.referral ? "?utm_source=davidasix&utm_medium=project-click&utm_campaign=referral" : "")}
                     target="_blank"
                     className="hover:scale-[1.01] transition-all duration-200"
                     title={link.helpText}
