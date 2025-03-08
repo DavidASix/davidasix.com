@@ -4,9 +4,9 @@ import Link from "next/link";
 
 const links = [
   { title: "Home", url: "/", text: "where the heart is" },
-  { title: "Blog", url: "/blog", text: "scattered thoughts" },
-  { title: "Excel", url: "/excel", text: "favourite formulas" },
-  {title: 'Projects', url: '/projects', text: 'coding projects'},
+  //{ title: "Blog", url: "/blog", text: "scattered thoughts" },
+  //{ title: "Excel", url: "/excel", text: "favourite formulas" },
+  //{title: 'Projects', url: '/projects', text: 'coding projects'},
   //{ title: "Apps", url: "/mobile-apps", text: "react-native apps" },
   {
     title: "ROO",
