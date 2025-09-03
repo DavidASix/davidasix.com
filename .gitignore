@@ -39,3 +39,5 @@ firebase-config.json
 mailgun.json
 
 .sass-cache
+
+.env
