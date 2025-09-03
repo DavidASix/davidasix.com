@@ -1,0 +1,44 @@
+excel_and_me_bio: Some people have a love hate relationship with Spreadsheets; I have a love love relationship with them. Over my many years of experience with Excel I've always challenged myself to push the boundaries, making sheets and reports that are as small as possible while still being easy for a user to utilize I've been an Excel beta feature tester for years, subscribing on my personal Microsoft account as trying out the new features is so fun.
+excel_highlights:
+  - Creating reports for C level executives in Canadian Telecom
+  - Creating reproducible accountability reporting to effect actual change in a large company
+  - Selling hundreds of spreadsheet reports online due to great UI design
+  - Pushing Excel's capabilities with Power Query, Data Models, 3D maps, and advanced functions
+excel_functions:
+  - title: String Splitter
+    description: This function is equivalent to the PHP explode, or JS split(''). By iterating over the length of the string, and taking an individual character for each iteration, we end up with an array of all of the strings characters. This will soon be replaced by TEXTSPLIT(), but at the moment I could not find a way to make TEXTSPLIT split after each character.
+    formula: |-
+      =LET(text, $A1, seq, SEQUENCE(1, LEN(text)), RIGHT(LEFT(text, seq), 1))
+         or
+      =LAMBDA(text, RIGHT(LEFT(text,SEQUENCE(1, LEN(text))), 1))
+  - title: Concatenate Two Arrays
+    description: From my research, this is the shortest function (even shorter if you minify it) that can concatenate two arrays of any length. Change the values of a and b to your arrays and the formula will output a single array with those two concatenated without reordering the arrays. The formula uses the SEQUENCE array as an iterator, and conditionally checks which array elements to be adding to our new output array.
+    formula: |-
+      =LET(
+        a, A2#,
+        b, B2#,
+        s, SEQUENCE(ROWS(a) + ROWS(b)),
+        IF(s>ROWS(a), INDEX(b, s - ROWS(a)), INDEX(a, s)))
+  - title: Add a suffix to the date day number
+    description: This function takes a date as an argument (replacing DATEVARIABLE) and outputs the appropriate suffix for that date. I find this function super valuable when creating automated email subject lines, and body text. Ususally I utilize it in a string concatonation with the function TEXT(DATEVARIABLE, "mmmm d"). Including the suffix on a date like that is one of the little adjustments that makes automated emails feel less robotic and more pleasant to read.
+    formula: '=LOOKUP(DAY( DATEVARIABLE ),{1,"st";2,"nd";3,"rd";4,"th";21,"st";22,"nd";23,"rd";24,"th";31,"st"})'
+  - title: Cell Reference Generator
+    description: The below monster of a formula can be placed in any cell of an Excel sheet and generate that cells refernce. But wait, theres more! You can change the numerical arguments of the SEQUENCE functions in c and r to change the number of additional column and row references to generate. For instance, if this formula is in A1, and the variable values are set to to c(26) and r(30) the formula will spill to Z30, generating each cell reference in its respective cell. This formula could benefit from being turned into a LAMBDA function.
+    formula: |-
+      =LET(
+        c, SEQUENCE(1) + (COLUMN() - 1),
+        r, SEQUENCE(1) + (ROW() - 1),
+        a1c, IF(c - 1 < (26^2+26), "", CHAR(MOD(FLOOR.MATH((c-1)/(26^2+26)), 26) + 64)),
+        a2c, IF(c - 1 < 26, "", CHAR(MOD(FLOOR.MATH((c-27)/26), 26) + 65)),
+        a3c, CHAR(MOD(c - 1, 26) + 65),
+        alpha, CHAR(MOD(c - 1, 26) + 65),
+        TRANSPOSE(a1c&a2c&a3c)&r)
+  - title: Array to Matrix
+    description: Given a matrix of any size (in this example, $A$1:$D$5) this function outputs a vertical array of those numbers, sorted. This function is useful when "ugly" data is provided and needs to be quickly converted to an array. I initially wrote this when I was provided with unsorted data in a matrix, and needed to create a frequency table from it.
+    formula: |-
+      =LET(
+        array, SORT($1:$5),
+        s, SEQUENCE(COUNTA(array)),
+        r, FLOOR.MATH((s-1) / COLUMNS(array)) + 1,
+        c, MOD(s - 1, COLUMNS(array)) + 1,
+        INDEX(array, r, c))
