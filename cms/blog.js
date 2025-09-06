@@ -1,20 +1,24 @@
-const axios = require('axios');
-const fs = require('fs');
-const path = require('path');
-const { downloadImage, extractImageFilename, processContentBlocks } = require('./utils');
+const axios = require("axios");
+const fs = require("fs");
+const path = require("path");
+const {
+  downloadImage,
+  extractImageFilename,
+  processContentBlocks,
+} = require("./utils");
 
 // Read .env file manually
-const envPath = path.join(__dirname, '..', '.env');
-const envContent = fs.readFileSync(envPath, 'utf8');
-const envLines = envContent.split('\n');
+const envPath = path.join(__dirname, "..", ".env");
+const envContent = fs.readFileSync(envPath, "utf8");
+const envLines = envContent.split("\n");
 const envVars = {};
 
-envLines.forEach(line => {
+envLines.forEach((line) => {
   const trimmed = line.trim();
-  if (trimmed && !trimmed.startsWith('#')) {
-    const [key, ...valueParts] = trimmed.split('=');
+  if (trimmed && !trimmed.startsWith("#")) {
+    const [key, ...valueParts] = trimmed.split("=");
     if (key && valueParts.length > 0) {
-      envVars[key] = valueParts.join('=');
+      envVars[key] = valueParts.join("=");
     }
   }
 });
@@ -23,16 +27,16 @@ const { CMS_KEY } = envVars;
 
 async function scrapeBlogPosts() {
   try {
-    console.log('Starting Blog posts scraper...');
-    
+    console.log("Starting Blog posts scraper...");
+
     if (!CMS_KEY) {
-      throw new Error('CMS_KEY not found in environment variables');
+      throw new Error("CMS_KEY not found in environment variables");
     }
 
-    const headers = { 
-      headers: { 
-        Authorization: `Bearer ${CMS_KEY}` 
-      } 
+    const headers = {
+      headers: {
+        Authorization: `Bearer ${CMS_KEY}`,
+      },
     };
 
     let allPosts = [];
@@ -41,16 +45,16 @@ async function scrapeBlogPosts() {
     const pageSize = 100;
 
     // First, get all blog post summaries
-    console.log('📄 Fetching all blog post summaries...');
+    console.log("📄 Fetching all blog post summaries...");
     while (page <= maxPage) {
       console.log(`Fetching page ${page}...`);
-      
+
       const queries = [
         {
           query: "fields",
           values: {
             "[0]": "title",
-            "[1]": "slug", 
+            "[1]": "slug",
             "[2]": "publish_date",
           },
         },
@@ -76,28 +80,28 @@ async function scrapeBlogPosts() {
         .map((q) =>
           Object.keys(q.values)
             .map((key, j) => `${q.query}${key}=${q.values[key]}`)
-            .join("&")
+            .join("&"),
         )
         .join("&");
 
       const response = await axios.get(
         `https://api.davidasix.com/api/dasix-blog-posts?${queryStr}`,
-        headers
+        headers,
       );
 
       const posts = response.data.data;
       const meta = response.data.meta;
-      
+
       if (page === 1) {
         maxPage = Math.ceil(meta.pagination.total / meta.pagination.pageSize);
         console.log(`Total posts: ${meta.pagination.total}, Pages: ${maxPage}`);
       }
 
-      const postsFlattened = posts.map(post => ({
+      const postsFlattened = posts.map((post) => ({
         ...post.attributes,
-        header_image: post.attributes.header_image?.data?.attributes?.url
+        header_image: post.attributes.header_image?.data?.attributes?.url,
       }));
-      
+
       allPosts = allPosts.concat(postsFlattened);
       console.log(`Fetched ${posts.length} posts from page ${page}`);
       page++;
@@ -108,12 +112,14 @@ async function scrapeBlogPosts() {
       console.log(`${index + 1}. ${post.title} (${post.slug})`);
     });
 
-    console.log('\n🔄 Processing individual blog posts...');
-    
+    console.log("\n🔄 Processing individual blog posts...");
+
     for (let i = 0; i < allPosts.length; i++) {
       const postSummary = allPosts[i];
-      console.log(`\n[${i + 1}/${allPosts.length}] Processing: ${postSummary.title}`);
-      
+      console.log(
+        `\n[${i + 1}/${allPosts.length}] Processing: ${postSummary.title}`,
+      );
+
       // Get full post details
       const postQueries = [
         {
@@ -142,31 +148,37 @@ async function scrapeBlogPosts() {
         .map((q) =>
           Object.keys(q.values)
             .map((key, j) => `${q.query}${key}=${q.values[key]}`)
-            .join("&")
+            .join("&"),
         )
         .join("&");
 
       const postResponse = await axios.get(
         `https://api.davidasix.com/api/dasix-blog-posts?${postQueryStr}`,
-        headers
+        headers,
       );
 
       const post = postResponse.data.data[0]?.attributes;
       if (!post) {
-        console.log(`  ❌ Could not fetch full details for ${postSummary.slug}`);
+        console.log(
+          `  ❌ Could not fetch full details for ${postSummary.slug}`,
+        );
         continue;
       }
 
       // Download images
       const downloadedImages = {};
-      const imagesDir = path.join(__dirname, 'blog', 'images');
-      
+      const imagesDir = path.join(__dirname, "blog", "images");
+
       // Download header image
       if (post.header_image?.data?.attributes?.url) {
         const headerImageUrl = post.header_image.data.attributes.url;
         const headerFilename = extractImageFilename(headerImageUrl);
         if (headerFilename) {
-          const result = await downloadImage(headerImageUrl, headerFilename, imagesDir);
+          const result = await downloadImage(
+            headerImageUrl,
+            headerFilename,
+            imagesDir,
+          );
           if (result) {
             downloadedImages[headerImageUrl] = headerFilename;
           }
@@ -190,26 +202,26 @@ async function scrapeBlogPosts() {
       }
 
       // Generate markdown content
-      let markdownContent = '';
-      
+      let markdownContent = "";
+
       // Front matter
-      markdownContent += '---\n';
+      markdownContent += "---\n";
       markdownContent += `title: "${post.title}"\n`;
       markdownContent += `original_link: "https://davidasix.com/blog/${post.slug}"\n`;
       markdownContent += `publish_date: "${post.publish_date}"\n`;
       if (post.subtitle) {
         markdownContent += `subtitle: "${post.subtitle}"\n`;
       }
-      markdownContent += '---\n\n';
-      
+      markdownContent += "---\n\n";
+
       // Main title
       markdownContent += `# ${post.title}\n\n`;
-      
+
       // Subtitle if exists
       if (post.subtitle) {
         markdownContent += `## ${post.subtitle}\n\n`;
       }
-      
+
       // Header image
       if (post.header_image?.data?.attributes?.url) {
         const headerImageUrl = post.header_image.data.attributes.url;
@@ -218,29 +230,31 @@ async function scrapeBlogPosts() {
           markdownContent += `![Header image](./images/${headerFilename})\n\n`;
         }
       }
-      
+
       // Content blocks
       if (post.content_block && Array.isArray(post.content_block)) {
-        const contentMarkdown = processContentBlocks(post.content_block, downloadedImages);
+        const contentMarkdown = processContentBlocks(
+          post.content_block,
+          downloadedImages,
+        );
         markdownContent += contentMarkdown;
       }
-      
+
       // Write markdown file
-      const blogFilePath = path.join(__dirname, 'blog', `${post.slug}.md`);
-      fs.writeFileSync(blogFilePath, markdownContent, 'utf8');
-      
+      const blogFilePath = path.join(__dirname, "blog", `${post.slug}.md`);
+      fs.writeFileSync(blogFilePath, markdownContent, "utf8");
+
       console.log(`  ✅ Created: ${post.slug}.md`);
     }
 
     console.log(`\n🎉 Successfully processed ${allPosts.length} blog posts!`);
     console.log(`📁 Files created in: cms/blog/`);
     console.log(`🖼️  Images saved in: cms/blog/images/`);
-    
   } catch (error) {
-    console.error('❌ Error scraping blog posts:', error.message);
+    console.error("❌ Error scraping blog posts:", error.message);
     if (error.response) {
-      console.error('Response status:', error.response.status);
-      console.error('Response data:', error.response.data);
+      console.error("Response status:", error.response.status);
+      console.error("Response data:", error.response.data);
     }
     process.exit(1);
   }
