@@ -8,17 +8,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run dev` - Start development server with Turbo
 - `npm run build` - Build production application
 - `npm run start` - Start production server
-- `npm run preview` - Build and start production server
 
 ### Code Quality
-- `npm run check` - Run linting and type checking (combines lint + typecheck)
-- `npm run lint` - Run ESLint
-- `npm run lint:fix` - Run ESLint with auto-fix
-- `npm run typecheck` - Run TypeScript compiler without emitting files
+- `npm run check` - Run all checks (format, types, and lint)
+- `npm run check:format` - Check code formatting with Prettier
+- `npm run check:types` - Run TypeScript compiler without emitting files
+- `npm run check:lint` - Run ESLint
 
-### Formatting
-- `npm run format:check` - Check code formatting with Prettier
-- `npm run format:write` - Format code with Prettier
+### Code Fixes
+- `npm run fix:format` - Format code with Prettier
+- `npm run fix:lint` - Run ESLint with auto-fix
 
 ## Architecture
 
