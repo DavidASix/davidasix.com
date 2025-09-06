@@ -1,35 +1,29 @@
-# DavidASix Portfolio Website
+# Create T3 App
 
-Welcome to the repository of my portfolio website. This project is a combination of a front-end site and a Content Management System (CMS). The front-end is built with Next.js and the CMS is powered by FireCMS. Both parts are hosted through a single Firebase project.
+This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
 
-## Tech Stack
-### Front-End
-The front-end of the portfolio is built using [Next.js](# "https://nextjs.org/") in order to take advantage of the power of React as well as the simplicity of Server Side Rendering. The front-end code is located in the [`site`](# "site") directory.
+## What's next? How do I make an app with this?
 
-## License
+We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
 
-In short, if you're not DavidASix, please don't re-host these sites. This being said, feel free to use the code as reference.
-This project is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0) License - see the LICENSE.md file for details.
+If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
 
-## Contact
+- [Next.js](https://nextjs.org)
+- [NextAuth.js](https://next-auth.js.org)
+- [Prisma](https://prisma.io)
+- [Drizzle](https://orm.drizzle.team)
+- [Tailwind CSS](https://tailwindcss.com)
+- [tRPC](https://trpc.io)
 
-If you have any questions or feedback, feel free to reach out to me at [david@davidasix.com](# " mailto:david@davidasix.com?subject=Regarding%20DavidASix.com%20on%20Github ").
+## Learn More
 
-Thank you for visiting my portfolio repository!
+To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
 
-## Like my work? 
-[<img 
-    height='50' 
-    style='border:0px;height:50px;' 
-    src='https://storage.ko-fi.com/cdn/kofi5.png?v=3' 
-    border='0' 
-    alt='Buy Me a Coffee at ko-fi.com' />](https://ko-fi.com/davidasix)
+- [Documentation](https://create.t3.gg/)
+- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
 
-## I'm open to work!
+You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
 
-[<img 
-    height='50' 
-    style='border:0px;height:50px;' 
-    src='https://content.linkedin.com/content/dam/me/business/en-us/amp/brand-site/v2/bg/LI-Logo.svg.original.svg' 
-    border='0' 
-    alt='Connect with me on Linkedin' />](https://www.linkedin.com/in/davidasix/)
+## How do I deploy this?
+
+Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
