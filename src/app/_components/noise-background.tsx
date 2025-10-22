@@ -32,8 +32,8 @@ export function NoiseBackground() {
       const { data } = imageData;
 
       for (let i = 0; i < data.length; i += 4) {
-        // Generate random grayscale value (0-255)
-        const noise = Math.random() * 255;
+        // Generate random grayscale value (20% lighter - range 51-255 instead of 0-255)
+        const noise = 51 + Math.random() * 204;
 
         data[i] = noise; // Red
         data[i + 1] = noise; // Green
@@ -46,10 +46,10 @@ export function NoiseBackground() {
 
     const animate = () => {
       generateNoise();
-      // Throttle to ~20 FPS to reduce CPU usage
+      // Throttle to ~30 FPS to reduce CPU usage
       animationRef.current = setTimeout(() => {
         requestAnimationFrame(animate);
-      }, 50);
+      }, 17);
     };
 
     // Initialize

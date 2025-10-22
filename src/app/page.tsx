@@ -10,8 +10,23 @@ export default async function Home() {
 
   return (
     <HydrateClient>
-      <main className="flex min-h-screen flex-col items-center justify-center">
-        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
+      <main className="relative flex min-h-screen flex-col items-center justify-center">
+        {/* Background Video */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 h-full w-full object-cover z-[2]"
+        >
+          <source src="/videos/bg-02.webm" type="video/webm" />
+        </video>
+        
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 z-[3] bg-gradient-to-b from-transparent via-transparent to-purple-900/80" />
+        
+        {/* Content */}
+        <div className="relative z-[4] container flex flex-col items-center justify-center gap-12 px-4 py-16">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
           </h1>
