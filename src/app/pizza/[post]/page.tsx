@@ -1,14 +1,15 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { api } from "~/trpc/server";
-import Image from "next/image";
 import type { Components } from "react-markdown";
-import { PizzaRating } from "~/app/_components/pizza-rating";
+
+import { api } from "~/trpc/server";
+import { PizzaRating } from "../_components/pizza-rating";
 
 // Custom markdown components
 const markdownComponents: Components = {
-  img: ({ node, src, alt, ...props }) => {
+  img: ({ src, alt, ...props }) => {
     if (!src || typeof src !== "string") return null;
 
     // Handle local images (local/image-name.webp -> /cms/images/image-name.webp)
@@ -21,71 +22,71 @@ const markdownComponents: Components = {
         <img
           src={imageSrc}
           alt={alt ?? ""}
-          className="mx-auto rounded-lg shadow-lg"
-          style={{ maxWidth: "100%", height: "auto" }}
+          className="mx-auto max-h-[500px] rounded-lg object-contain shadow-lg"
+          style={{ maxWidth: "100%" }}
           {...props}
         />
         {alt && (
-          <span className="mt-2 block text-center text-sm italic text-gray-300">
+          <span className="text-muted-foreground mt-2 block text-center text-sm italic">
             {alt}
           </span>
         )}
       </span>
     );
   },
-  h1: ({ node, children, ...props }) => (
-    <h1 className="mb-6 text-4xl font-bold text-white" {...props}>
+  h1: ({ children, ...props }) => (
+    <h1 className="text-foreground mb-6 text-4xl font-bold" {...props}>
       {children}
     </h1>
   ),
-  h2: ({ node, children, ...props }) => (
-    <h2 className="mb-4 mt-8 text-3xl font-bold text-amber-300" {...props}>
+  h2: ({ children, ...props }) => (
+    <h2 className="mt-8 mb-4 text-3xl font-bold text-amber-700" {...props}>
       {children}
     </h2>
   ),
-  h3: ({ node, children, ...props }) => (
-    <h3 className="mb-3 mt-6 text-2xl font-semibold text-amber-200" {...props}>
+  h3: ({ children, ...props }) => (
+    <h3 className="mt-6 mb-3 text-2xl font-bold text-amber-700" {...props}>
       {children}
     </h3>
   ),
-  p: ({ node, children, ...props }) => (
-    <p className="mb-4 leading-relaxed text-gray-100" {...props}>
+  p: ({ children, ...props }) => (
+    <p className="text-foreground mb-4 leading-relaxed" {...props}>
       {children}
     </p>
   ),
-  ul: ({ node, children, ...props }) => (
-    <ul className="mb-4 ml-6 list-disc space-y-2 text-gray-100" {...props}>
+  ul: ({ children, ...props }) => (
+    <ul className="text-foreground mb-4 ml-6 list-disc space-y-2" {...props}>
       {children}
     </ul>
   ),
-  ol: ({ node, children, ...props }) => (
-    <ol className="mb-4 ml-6 list-decimal space-y-2 text-gray-100" {...props}>
+  ol: ({ children, ...props }) => (
+    <ol className="text-foreground mb-4 ml-6 list-decimal space-y-2" {...props}>
       {children}
     </ol>
   ),
-  a: ({ node, children, href, ...props }) => (
+  a: ({ children, href, ...props }) => (
     <a
       href={href}
-      className="text-amber-300 underline hover:text-amber-100"
+      className="text-amber-700 underline hover:text-amber-600"
       {...props}
     >
       {children}
     </a>
   ),
-  blockquote: ({ node, children, ...props }) => (
+  blockquote: ({ children, ...props }) => (
     <blockquote
-      className="my-4 border-l-4 border-amber-400 pl-4 italic text-gray-300"
+      className="text-muted-foreground my-4 border-l-4 border-amber-700 pl-4 italic"
       {...props}
     >
       {children}
     </blockquote>
   ),
-  code: ({ node, className, children, ...props }) => {
+  code: ({ className, children, ...props }) => {
     const isInline = !className;
     if (isInline) {
       return (
         <code
-          className="rounded bg-gray-800 px-1 py-0.5 font-mono text-sm text-amber-300"
+          className="bg-muted rounded px-1 py-0.5 font-mono text-sm text-amber-700"
           {...props}
         >
           {children}
@@ -94,7 +95,7 @@ const markdownComponents: Components = {
     }
     return (
       <code
-        className="my-4 block rounded bg-gray-800 p-4 font-mono text-sm text-amber-300"
+        className="bg-muted text-foreground my-4 block rounded p-4 font-mono text-sm"
         {...props}
       >
         {children}
@@ -112,26 +113,29 @@ export default async function PizzaPostPage({
   const post = await api.pizza.getPostBySlug({ slug });
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-red-900 via-orange-800 to-yellow-700">
+    <main className="bg-background min-h-screen">
       <div className="container mx-auto px-4 py-16">
         {/* Back Button */}
         <Link
           href="/pizza"
-          className="mb-8 inline-block text-amber-300 hover:text-white"
+          className="mb-8 inline-block text-amber-700 hover:text-amber-600"
         >
           ← Back to all reviews
         </Link>
 
         {/* Post Container */}
-        <article className="mx-auto max-w-4xl rounded-lg border-4 border-white/20 bg-white/10 p-8 backdrop-blur-sm shadow-2xl">
+        <article className="border-border bg-card mx-auto max-w-4xl rounded-lg border-2 p-8 shadow-xl">
           {/* Header Section */}
-          <header className="mb-8 border-b-2 border-amber-400/50 pb-6">
-            <h1 className="mb-4 text-5xl font-extrabold text-white">
+          <header className="mb-8 border-b-2 border-amber-700/30 pb-6">
+            <h1
+              className="text-foreground mb-4 text-6xl"
+              style={{ fontFamily: "var(--font-bagel-fat-one)" }}
+            >
               {post.frontMatter["pizza-shop"]}
             </h1>
 
             <div className="mb-4 flex flex-wrap items-center gap-4">
-              <span className="text-lg text-amber-200">
+              <span className="text-muted-foreground text-lg">
                 {new Date(post.frontMatter["purchase-date"]).toLocaleDateString(
                   "en-US",
                   {
@@ -142,34 +146,37 @@ export default async function PizzaPostPage({
                 )}
               </span>
 
-              {post.frontMatter["better-than-ginos"] ? (
-                <span className="rounded-full bg-green-600 px-4 py-1 text-sm font-bold text-white">
-                  ✓ Better than Gino's
-                </span>
-              ) : (
-                <span className="rounded-full bg-red-600 px-4 py-1 text-sm font-bold text-white">
-                  ✗ Not better than Gino's
-                </span>
-              )}
+              {post.frontMatter["better-than-ginos"] === true ? (
+                <div className="mb-4 inline-block rounded-full bg-green-600 px-3 py-1 text-xs font-bold text-white">
+                  ✓ Better than Gino&apos;s
+                </div>
+              ) : post.frontMatter["better-than-ginos"] === false ? (
+                <div className="mb-4 inline-block rounded-full bg-red-600 px-3 py-1 text-xs font-bold text-white">
+                  ✗ Not better than Gino&apos;s
+                </div>
+              ) : null}
             </div>
 
             <div className="mb-4">
               <PizzaRating rating={post.frontMatter.rating} size="large" />
             </div>
 
-            <div className="rounded-lg bg-amber-900/30 p-4">
-              <p className="text-sm uppercase tracking-wide text-amber-400">
+            <div className="rounded-lg border border-amber-700/20 bg-amber-700/10 p-4">
+              <p className="text-sm font-semibold tracking-wide text-amber-700 uppercase">
                 TL;DR
               </p>
-              <p className="text-lg italic text-white">
+              <p className="text-foreground text-lg italic">
                 {post.frontMatter.tldr}
               </p>
             </div>
           </header>
 
           {/* Markdown Content */}
-          <div className="prose prose-invert max-w-none">
-            <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+          <div className="prose max-w-none">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={markdownComponents}
+            >
               {post.content}
             </ReactMarkdown>
           </div>
@@ -179,7 +186,7 @@ export default async function PizzaPostPage({
         <div className="mt-8 text-center">
           <Link
             href="/pizza"
-            className="inline-block rounded-lg bg-amber-600 px-6 py-3 font-bold text-white transition-all hover:bg-amber-500 hover:shadow-lg"
+            className="inline-block rounded-lg bg-amber-700 px-6 py-3 font-bold text-white transition-all hover:bg-amber-600 hover:shadow-lg"
           >
             ← Back to all pizza reviews
           </Link>

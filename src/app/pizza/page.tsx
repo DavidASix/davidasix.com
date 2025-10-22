@@ -1,20 +1,23 @@
 import Link from "next/link";
 import { api } from "~/trpc/server";
-import { PizzaRating } from "~/app/_components/pizza-rating";
+import { PizzaRating } from "./_components/pizza-rating";
 
 export default async function PizzaListPage() {
   const posts = await api.pizza.getAllPosts();
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-red-900 via-orange-800 to-yellow-700">
+    <main className="min-h-screen">
       <div className="container mx-auto px-4 py-16">
         {/* Header */}
-        <div className="mb-12 text-center">
-          <h1 className="mb-4 text-6xl font-extrabold text-white drop-shadow-lg">
+        <div className="mb-16 text-center">
+          <h1
+            className="text-foreground mb-6 text-[7rem]"
+            style={{ fontFamily: "var(--font-bagel-fat-one)" }}
+          >
             🍕 Pizza Reviews
           </h1>
-          <p className="text-xl text-amber-100">
-            A tongue-in-cheek journey through pizza excellence (and mediocrity)
+          <p className="text-muted-foreground text-xl">
+            A journey through pizza excellence (and mediocrity)
           </p>
         </div>
 
@@ -24,16 +27,19 @@ export default async function PizzaListPage() {
             <Link
               key={post.slug}
               href={`/pizza/${post.slug}`}
-              className="group relative overflow-hidden rounded-lg border-4 border-white/20 bg-white/10 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-amber-400 hover:bg-white/20 hover:shadow-2xl"
+              className="group border-border bg-card/70 relative overflow-hidden rounded-lg border-2 transition-all duration-300 hover:scale-[1.01] hover:border-amber-700 hover:shadow-xl"
             >
               <div className="p-6">
                 {/* Shop Name */}
-                <h2 className="mb-2 text-2xl font-bold text-white group-hover:text-amber-300">
+                <h2
+                  className="text-foreground mb-3 text-3xl transition-all group-hover:text-amber-700"
+                  style={{ fontFamily: "var(--font-bagel-fat-one)" }}
+                >
                   {post.frontMatter["pizza-shop"]}
                 </h2>
 
                 {/* Purchase Date */}
-                <p className="mb-3 text-sm text-amber-200">
+                <p className="text-muted-foreground mb-4 text-sm">
                   {new Date(
                     post.frontMatter["purchase-date"],
                   ).toLocaleDateString("en-US", {
@@ -49,23 +55,23 @@ export default async function PizzaListPage() {
                 </div>
 
                 {/* Better than Gino's Badge */}
-                {post.frontMatter["better-than-ginos"] ? (
-                  <div className="mb-3 inline-block rounded-full bg-green-600 px-3 py-1 text-xs font-bold text-white">
-                    ✓ Better than Gino's
+                {post.frontMatter["better-than-ginos"] === true ? (
+                  <div className="mb-4 inline-block rounded-full bg-green-600 px-3 py-1 text-xs font-bold text-white">
+                    ✓ Better than Gino&apos;s
                   </div>
-                ) : (
-                  <div className="mb-3 inline-block rounded-full bg-red-600 px-3 py-1 text-xs font-bold text-white">
-                    ✗ Not better than Gino's
+                ) : post.frontMatter["better-than-ginos"] === false ? (
+                  <div className="mb-4 inline-block rounded-full bg-red-600 px-3 py-1 text-xs font-bold text-white">
+                    ✗ Not better than Gino&apos;s
                   </div>
-                )}
+                ) : null}
 
                 {/* TLDR */}
-                <p className="text-sm italic text-gray-200">
-                  "{post.frontMatter.tldr}"
+                <p className="text-muted-foreground text-sm italic">
+                  &quot;{post.frontMatter.tldr}&quot;
                 </p>
 
                 {/* Read More Indicator */}
-                <div className="mt-4 text-sm font-semibold text-amber-300 group-hover:text-white">
+                <div className="mt-4 text-sm font-semibold text-amber-700">
                   Read full review →
                 </div>
               </div>
@@ -76,7 +82,7 @@ export default async function PizzaListPage() {
         {/* Empty State */}
         {posts.length === 0 && (
           <div className="text-center">
-            <p className="text-xl text-white">
+            <p className="text-foreground text-xl">
               No pizza reviews yet. Time to eat some pizza! 🍕
             </p>
           </div>
