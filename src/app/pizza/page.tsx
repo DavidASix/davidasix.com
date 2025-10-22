@@ -11,7 +11,7 @@ export default async function PizzaListPage() {
         {/* Header */}
         <div className="mb-16 text-center">
           <h1
-            className="text-foreground mb-6 text-6xl md:text-7xl lg:text-[7rem] leading-none"
+            className="text-foreground mb-6 text-6xl leading-none md:text-7xl lg:text-[7rem]"
             style={{ fontFamily: "var(--font-bagel-fat-one)" }}
           >
             <span className="hidden lg:inline">🍕</span> Pizza Reviews

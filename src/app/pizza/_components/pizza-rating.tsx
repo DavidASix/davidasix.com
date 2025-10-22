@@ -36,7 +36,7 @@ export function PizzaRating({ rating, size = "small" }: PizzaRatingProps) {
               <span className="text-amber-700 opacity-20">🍕</span>
               {/* Overlay slice at 100% opacity, clipped to percentage */}
               <span
-                className="absolute left-0 top-0 overflow-hidden text-amber-700"
+                className="absolute top-0 left-0 overflow-hidden text-amber-700"
                 style={{ width: `${partialPercentage}%` }}
               >
                 🍕
@@ -52,7 +52,7 @@ export function PizzaRating({ rating, size = "small" }: PizzaRatingProps) {
           </span>
         );
       })}
-      <span className={`${marginSize} ${textSize} font-bold text-foreground`}>
+      <span className={`${marginSize} ${textSize} text-foreground font-bold`}>
         {rating}/10
       </span>
     </div>
