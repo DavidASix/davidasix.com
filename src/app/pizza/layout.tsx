@@ -1,5 +1,12 @@
+import { type Metadata } from "next";
 import { Lexend, Bagel_Fat_One } from "next/font/google";
 import Image from "next/image";
+
+export const metadata: Metadata = {
+  title: "Pizza with davidasix",
+  description: "All pizza is good, right?",
+  icons: [{ rel: "icon", url: "/favicon-pizza.ico" }],
+};
 
 const lexend = Lexend({
   subsets: ["latin"],
@@ -32,7 +39,7 @@ export default function PizzaLayout({
         alt="Pizza slice decoration"
         width={300}
         height={300}
-        className="pointer-events-none fixed right-10 bottom-10 z-10"
+        className="pointer-events-none absolute top-[70vh] right-10 z-10"
       />
       <div className="relative z-20">{children}</div>
     </div>

@@ -113,7 +113,7 @@ export default async function PizzaPostPage({
   const post = await api.pizza.getPostBySlug({ slug });
 
   return (
-    <main className="bg-background min-h-screen">
+    <main className="min-h-screen">
       <div className="container mx-auto px-4 py-16">
         {/* Back Button */}
         <Link
@@ -124,7 +124,7 @@ export default async function PizzaPostPage({
         </Link>
 
         {/* Post Container */}
-        <article className="border-border bg-card mx-auto max-w-4xl rounded-lg border-2 p-8 shadow-xl">
+        <article className="border-border bg-card/60 mx-auto max-w-4xl rounded-lg border-2 p-8 shadow-xl">
           {/* Header Section */}
           <header className="mb-8 border-b-2 border-amber-700/30 pb-6">
             <h1
