@@ -76,7 +76,7 @@ export function NoiseBackground() {
     <canvas
       ref={canvasRef}
       id="noise"
-      className="pointer-events-none fixed inset-0 z-[1] opacity-[0.7]"
+      className="pointer-events-none fixed inset-0 z-[1] opacity-20"
       style={{
         mixBlendMode: "multiply",
       }}

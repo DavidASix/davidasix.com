@@ -54,7 +54,7 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
+  --primary: oklch(52.257% 0.19323 302.602);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
@@ -121,5 +121,13 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Pizza blog custom fonts */
+  .font-bagel {
+    font-family: var(--font-bagel-fat-one), cursive;
+  }
+  .font-lexend {
+    font-family: var(--font-lexend), sans-serif;
   }
 }

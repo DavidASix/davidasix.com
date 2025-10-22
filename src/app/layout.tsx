@@ -21,8 +21,8 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geist.variable}`}>
-      <body className="min-h-screen bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
+    <html lang="en" className={`${geist.variable} bg-background`}>
+      <body className="min-h-screen bg-gradient-to-b to-primary/10 from-transparent text-foreground">
         <NoiseBackground />
         <div className="relative z-10">
           <TRPCReactProvider>{children}</TRPCReactProvider>
