@@ -158,7 +158,10 @@ export default async function PizzaPostPage({
             </div>
 
             <div className="mb-4">
-              <PizzaRating rating={post.frontMatter.rating} size="large" />
+              <PizzaRating
+                rating={post.frontMatter.rating}
+                className="text-3xl"
+              />
             </div>
 
             <div className="rounded-lg border border-amber-700/20 bg-amber-700/10 p-4">
