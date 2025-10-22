@@ -5,7 +5,10 @@ interface PizzaRatingProps {
   className?: string;
 }
 
-export function PizzaRating({ rating, className = "text-base" }: PizzaRatingProps) {
+export function PizzaRating({
+  rating,
+  className = "text-base",
+}: PizzaRatingProps) {
   const fullSlices = Math.floor(rating);
   const hasPartialSlice = rating % 1 > 0;
   const partialPercentage = (rating % 1) * 100;
