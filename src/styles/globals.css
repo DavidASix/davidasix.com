@@ -4,7 +4,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
+  --font-sans:
+    var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
@@ -121,6 +122,15 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-roboto-flex), sans-serif;
+  }
+
+  .font-roboto-flex {
+    font-family: var(--font-roboto-flex), sans-serif;
+  }
+
+  .font-jersey-10 {
+    font-family: var(--font-jersey-10), sans-serif;
   }
 
   /* Pizza blog custom fonts */
@@ -129,5 +139,28 @@
   }
   .font-lexend {
     font-family: var(--font-lexend), sans-serif;
+  }
+}
+
+@layer components {
+  .section {
+    @apply w-full px-4 md:px-4 lg:px-10;
+  }
+  .section-padding {
+    @apply py-12;
+  }
+  .content {
+    @apply mx-auto w-full max-w-[1240px];
+  }
+  .content-wide {
+    @apply mx-auto w-full max-w-[1600px];
+  }
+
+  .blur-li {
+    @apply transition-all duration-500 md:hover:scale-[1.01];
+  }
+
+  .blur-list:has(.blur-li:hover) .blur-li:not(:hover) {
+    @apply md:blur-[2px];
   }
 }
