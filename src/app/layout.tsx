@@ -2,6 +2,7 @@ import "~/styles/globals.css";
 
 import { type Metadata } from "next";
 import { Roboto_Flex, Jersey_10 } from "next/font/google";
+import HolyLoader from "holy-loader";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import { NoiseBackground } from "./_components/noise-background";
@@ -36,6 +37,7 @@ export default function RootLayout({
       className={`${roboto.variable} ${jersey10.variable} bg-background`}
     >
       <body className="text-foreground flex min-h-screen flex-col">
+        <HolyLoader color="#a855f7" height={6} />
         <NoiseBackground />
         <PageBackground>
           <Header />
