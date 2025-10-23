@@ -2,11 +2,8 @@
 title: "New Logo Design"
 original_link: "https://davidasix.com/blog/new-logo-design"
 publish_date: "2023-07-28"
+header_image: local/ROO_750px_cf6cc36026.jpg
 ---
-
-# New Logo Design
-
-![Header image](./images/ROO_750px_cf6cc36026.jpg)
 
 I am trying to design a logo for my website and personal brand.
 

@@ -3,17 +3,12 @@ title: "FireStack"
 original_link: "https://davidasix.com/blog/fire-stack"
 publish_date: "2023-08-03"
 subtitle: "My new webdesign tech stack"
+header_image: local/firecms_cccf231259.png
 ---
-
-# FireStack
-
-## My new webdesign tech stack
-
-![Header image](./images/firecms_cccf231259.png)
 
 I've been working on a new architecture for my web development built around Firebase. I'm using NextJS for my frontend, and FireCMS backed by Firebase for the backend.
 
-![Image](./images/Screenshot_from_2024_06_19_17_31_42_c42bbb0c84.png)
+![Image](local/Screenshot_from_2024_06_19_17_31_42_c42bbb0c84.png)
 
 This new setup allows me to create complex blog articles easily within FireCMS, and have their content automatically uploaded to Firebase.
 

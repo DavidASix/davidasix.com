@@ -3,13 +3,8 @@ title: "Stepping out of the 9 - 5, Week 0"
 original_link: "https://davidasix.com/blog/stepping-out-of-the-9-5-week-0"
 publish_date: "2023-08-07"
 subtitle: "FireStack Prepping"
+header_image: local/board_9871ce1b5b.jpg)
 ---
-
-# Stepping out of the 9 - 5, Week 0
-
-## FireStack Prepping
-
-![Header image](./images/board_9871ce1b5b.jpg)
 
 Well I've left my comfortable corporate position at Rogers in pursuit of loftier goals. On July 21st I effectively resigned from Rogers Communications, taking a package that would allow me to cover my bills comfortably for a few months. I plan on using this time to work for myself, and what better way to start a plan than writing out a plan. After a week of relaxing and housework, I bought a whiteboard and started to plan out my next few months.
 

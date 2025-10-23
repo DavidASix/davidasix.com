@@ -2,11 +2,8 @@
 title: "Desk Switches"
 original_link: "https://davidasix.com/blog/desk-switches"
 publish_date: "2023-08-02"
+header_image: local/switch_d86c4104f9.webp
 ---
-
-# Desk Switches
-
-![Header image](./images/switch_d86c4104f9.webp)
 
 I've wanted to replace the end-caps on my desk for quite a while, and now that I have a 3d printer I finally can.
 

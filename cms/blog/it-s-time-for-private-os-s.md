@@ -3,13 +3,8 @@ title: "It's time for private OS's"
 original_link: "https://davidasix.com/blog/it-s-time-for-private-os-s"
 publish_date: "2024-01-06"
 subtitle: "2024 is the year to start walking the walk when it comes to my privacy beliefs."
+header_image: local/neofetch_00d5c8e073.png
 ---
-
-# It's time for private OS's
-
-## 2024 is the year to start walking the walk when it comes to my privacy beliefs.
-
-![Header image](./images/neofetch_00d5c8e073.png)
 
 For many years I worked solely on linux. In fact my first "real" website I had planned to create a free-ware tutorial site. A desire to support and use FOSS was instilled in me a long time ago. Unfortunately through my adolescence I was seduced by the simplicity of windows, and not having to spend 3 hours debugging each time I tried a new piece of software. This sadly came at the cost of privacy, and with the rise of smart phones and homes, I think it's high time to pick up the mantle again and convert my devices to operating systems that don't spy on me.
 
