@@ -11,6 +11,7 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { label: "Home", href: "/" },
+  { label: "Blog", href: "/blog" },
   { label: "Pizza", href: "/pizza" },
   { label: "ROO", href: "https://redoxfordonline.com" },
 ];
