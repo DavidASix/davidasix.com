@@ -19,6 +19,12 @@ export default async function PizzaListPage() {
           <p className="text-muted-foreground text-xl">
             A journey through pizza in Kitchener Waterloo
           </p>
+
+          <p className="text-muted-foreground mx-auto mt-4 max-w-xl text-xl">
+            Gino&apos;s on Bridgeport is the benchmark, sitting at a 7/10. All
+            pizza is pretty good, so it&apos;s hard to score below a 5.5 or
+            above a 8.5.
+          </p>
         </div>
 
         {/* Pizza Cards Grid */}
