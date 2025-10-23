@@ -75,3 +75,8 @@ src/
 - ESLint configured with Next.js rules
 - Prettier with Tailwind CSS plugin for class sorting
 - Development includes artificial timing delays in tRPC middleware
+
+# Conventions
+
+## Styles
+- Don't use template strings when creating a className, instead prefer the `cn` utility.
