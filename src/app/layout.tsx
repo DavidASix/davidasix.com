@@ -5,6 +5,9 @@ import { Roboto_Flex, Jersey_10 } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import { NoiseBackground } from "./_components/noise-background";
+import { Header } from "~/components/structure/header";
+import { Footer } from "~/components/structure/footer";
+import { PageBackground } from "~/components/structure/page-background";
 
 export const metadata: Metadata = {
   title: "DavidASix",
@@ -32,11 +35,15 @@ export default function RootLayout({
       lang="en"
       className={`${roboto.variable} ${jersey10.variable} bg-background`}
     >
-      <body className="to-primary/10 text-foreground min-h-screen bg-gradient-to-b from-transparent">
+      <body className="text-foreground flex min-h-screen flex-col">
         <NoiseBackground />
-        <div className="relative z-10">
-          <TRPCReactProvider>{children}</TRPCReactProvider>
-        </div>
+        <PageBackground>
+          <Header />
+          <main className="flex-1">
+            <TRPCReactProvider>{children}</TRPCReactProvider>
+          </main>
+          <Footer />
+        </PageBackground>
       </body>
     </html>
   );

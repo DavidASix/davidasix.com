@@ -29,7 +29,7 @@ export default function PizzaLayout({
 }) {
   return (
     <div
-      className={`${lexend.variable} ${bagelFatOne.variable} bg-background/35 relative min-h-screen`}
+      className={`${lexend.variable} ${bagelFatOne.variable} relative min-h-screen`}
       style={{
         fontFamily: "var(--font-lexend), sans-serif",
       }}
