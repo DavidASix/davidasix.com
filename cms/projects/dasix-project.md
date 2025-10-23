@@ -10,7 +10,7 @@ short_description: "A project to manage your Etsy Thank-you's using Selenium."
 github_url: "https://github.com/DavidASix/etsy-messenger"
 has_privacy_policy: false
 has_data_delete: false
-logo: "./images/etsy_messenger_logo_d8db58d4f4.jpg"
+logo: "local/etsy_messenger_logo_d8db58d4f4.jpg"
 features:
   - "Browser Automation"
   - "2FA Support"
@@ -33,7 +33,7 @@ This script uses Selenium to log into your Etsy (with optional 2FA handling), ch
 
 As an Etsy seller, star seller status is very important. To be a star seller you need to reply to your customers messages in a timeline manner, and maintain a high review rating. But what if you could message your customers first to ensure you have always messaged them in time? And what if frustrated customers already had a conversation going with you, so they can resolve their issues before leaving a review? Enter the Etsy Messenger Program.
 
-![Image](./images/Screenshot_from_2024_06_25_12_23_24_fe426c95fe.png)
+![Image](local/Screenshot_from_2024_06_25_12_23_24_fe426c95fe.png)
 
 ## Usage
 

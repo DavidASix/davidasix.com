@@ -10,10 +10,10 @@ short_description: "Kate Urquhart runs a private psychotherapy practice, mostly 
 project_url: "https://kateurquhart.com/"
 has_privacy_policy: false
 has_data_delete: false
-logo: "./images/logo_048e9703c8.png"
+logo: "local/logo_048e9703c8.png"
 screenshots:
-  - "./images/Screenshot_from_2024_07_01_11_43_38_d28ea6d65f.png"
-  - "./images/Screenshot_from_2024_07_01_11_43_07_f026ec3fd6.png"
+  - "local/Screenshot_from_2024_07_01_11_43_38_d28ea6d65f.png"
+  - "local/Screenshot_from_2024_07_01_11_43_07_f026ec3fd6.png"
 features:
   - "Mobile Optimization"
   - "Client CMS"
@@ -41,7 +41,7 @@ The overarching design goal for kateurquhart.com was to make the simplest websit
 
 For the aesthetic we wanted a calming, flowing site. To achieve this we integrated wave transitions between each section, clearly defining separate thoughts to the users in a non-obtrusive way.
 
-![Image](./images/Screenshot_from_2024_07_01_11_44_52_6d5dbee99f.png)
+![Image](local/Screenshot_from_2024_07_01_11_44_52_6d5dbee99f.png)
 
 ## Content Management System
 

@@ -10,13 +10,13 @@ short_description: "A React Native app to control my real life stoplight, and th
 github_url: "https://github.com/DavidASix/stoplight-app"
 has_privacy_policy: false
 has_data_delete: false
-logo: "./images/App_Icon_1e5fa4aa53.png"
+logo: "local/App_Icon_1e5fa4aa53.png"
 screenshots:
-  - "./images/screenshot1_9d13f15428.png"
-  - "./images/Arduino_Circuit_0a9e03cac2.jpg"
-  - "./images/App_Image_7e4cae4b88.jpg"
-  - "./images/Internal_Close_2a323ad5c5.jpg"
-  - "./images/Internal_Far_2dbd133e1d.jpg"
+  - "local/screenshot1_9d13f15428.png"
+  - "local/Arduino_Circuit_0a9e03cac2.jpg"
+  - "local/App_Image_7e4cae4b88.jpg"
+  - "local/Internal_Close_2a323ad5c5.jpg"
+  - "local/Internal_Far_2dbd133e1d.jpg"
 features:
   - "BLE Integration"
   - "Accompanying Hardware"

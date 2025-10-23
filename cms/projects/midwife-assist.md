@@ -11,15 +11,15 @@ google_play_url: "https://play.google.com/store/apps/details?id=com.dave6.www.mi
 github_url: "https://github.com/DavidASix/midwife-assist-app"
 has_privacy_policy: true
 has_data_delete: false
-logo: "./images/App_Icon_697663ff9c.jpg"
+logo: "local/App_Icon_697663ff9c.jpg"
 screenshots:
-  - "./images/s1_1_f852aa91f3.jpg"
-  - "./images/s2_3ed169bffe.jpg"
-  - "./images/s3_59c9e22b95.jpg"
-  - "./images/s4_5928bfb846.jpg"
-  - "./images/s5_ae27fdaa36.jpg"
-  - "./images/s6_de1aec29e1.jpg"
-  - "./images/s7_d28c388789.jpg"
+  - "local/s1_1_f852aa91f3.jpg"
+  - "local/s2_3ed169bffe.jpg"
+  - "local/s3_59c9e22b95.jpg"
+  - "local/s4_5928bfb846.jpg"
+  - "local/s5_ae27fdaa36.jpg"
+  - "local/s6_de1aec29e1.jpg"
+  - "local/s7_d28c388789.jpg"
 features:
   - "100% Local"
   - "Biometric Security"

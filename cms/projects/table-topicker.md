@@ -11,12 +11,12 @@ github_url: "https://github.com/DavidASix/table-topicker"
 project_url: "https://tabletopicker.com/"
 has_privacy_policy: false
 has_data_delete: true
-logo: "./images/logo512_fdac354d06.png"
+logo: "local/logo512_fdac354d06.png"
 screenshots:
-  - "./images/Screenshot_from_2024_07_03_13_06_30_9e7d419401.png"
-  - "./images/Screenshot_from_2024_07_03_13_06_48_9ed3b47b64.png"
-  - "./images/Screenshot_from_2024_07_03_13_06_55_d5da47ff3c.png"
-  - "./images/Screenshot_from_2024_07_03_13_06_25_d7f865fff5.png"
+  - "local/Screenshot_from_2024_07_03_13_06_30_9e7d419401.png"
+  - "local/Screenshot_from_2024_07_03_13_06_48_9ed3b47b64.png"
+  - "local/Screenshot_from_2024_07_03_13_06_55_d5da47ff3c.png"
+  - "local/Screenshot_from_2024_07_03_13_06_25_d7f865fff5.png"
 features:
   - "AI Content Generation"
   - "Credit Card Billing"
@@ -37,7 +37,7 @@ My friend (who is a fellow Toastmaster) and I would practice table topics togeth
 
 The first version of the app was simply backed by a MongoDB database with a few hundred questions broken down by category. Users could roll for a random question, then time themselves as they performed a speech.
 
-![Image](./images/Screenshot_from_2024_07_05_15_28_24_374155d709.png)
+![Image](local/Screenshot_from_2024_07_05_15_28_24_374155d709.png)
 
 ## Scaling Up
 
@@ -57,6 +57,6 @@ I have a strong personal preference to one-time purchase lifetime or consumable 
 
 Once logged in, a user can go to the profile page and purchase AI credits. Each time they select an AI topic (from the two provided by thhe API) a credit is consumed. This is achieved by redirecting users to the Stripe checkout page, then capturing their checkout through a webhook. The webhook adds the credits to their account and redirects them back to the home page.
 
-![Image](./images/Screenshot_from_2024_07_05_15_41_10_e7bf168b07.png)
+![Image](local/Screenshot_from_2024_07_05_15_41_10_e7bf168b07.png)
 
-![Image](./images/Screenshot_from_2024_07_05_15_41_25_ece1387fe9.png)
+![Image](local/Screenshot_from_2024_07_05_15_41_25_ece1387fe9.png)

@@ -10,7 +10,7 @@ short_description: "A Python script utilizing Pandas and Obsidian to visualize V
 github_url: "https://github.com/DavidASix/vietnamese-language-graph"
 has_privacy_policy: false
 has_data_delete: false
-logo: "./images/viet_lang_graph_logo_ce7c5acacb.jpg"
+logo: "local/viet_lang_graph_logo_ce7c5acacb.jpg"
 features:
   - "Data Conversion"
   - "Data Visualization"
@@ -30,7 +30,7 @@ I'm in the process of learning Vietnamese, and something I want to focus on is e
 
 To see how this project was created, and get a glimpse of my problem-solving method, [check out the video here](https://www.youtube.com/watch?v=cTIb9MuCV0k)
 
-![Image](./images/thumbnail_fede44d034.jpg)
+![Image](local/thumbnail_fede44d034.jpg)
 
 ## Project Summary
 
@@ -55,7 +55,7 @@ These words are compared against a filtered dictionary DataFrame containing only
 
 After running the script, 23000 markdown files will be outputted, which can then be imported into an Obsidian Vault. This will result in a graph view like the following:
 
-![Image](./images/node_graph_21263b2e21.png)
+![Image](local/node_graph_21263b2e21.png)
 
 ## How to use
 

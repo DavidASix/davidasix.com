@@ -10,13 +10,13 @@ short_description: "Red Oxford Online is a web design business I founded. I beli
 project_url: "https://redoxfordonline.com"
 has_privacy_policy: false
 has_data_delete: false
-logo: "./images/ROO_ba1d3d1165.jpg"
+logo: "local/ROO_ba1d3d1165.jpg"
 screenshots:
-  - "./images/home_b872077a36.webp"
-  - "./images/pricing_580e7101f1.webp"
-  - "./images/projects_ead0065bf8.webp"
-  - "./images/about_c9885c2b81.webp"
-  - "./images/contact_344e2a1081.webp"
+  - "local/home_b872077a36.webp"
+  - "local/pricing_580e7101f1.webp"
+  - "local/projects_ead0065bf8.webp"
+  - "local/about_c9885c2b81.webp"
+  - "local/contact_344e2a1081.webp"
 features:
   - "Client CMS"
   - "Custom SVG's"

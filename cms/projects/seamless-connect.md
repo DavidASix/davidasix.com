@@ -11,14 +11,14 @@ google_play_url: "https://play.google.com/store/apps/details?id=com.modeinnovati
 apple_store_url: "https://appadvice.com/app/seamless-connect/1434496107"
 has_privacy_policy: false
 has_data_delete: false
-logo: "./images/web_hi_res_512_de7cedef83.png"
+logo: "local/web_hi_res_512_de7cedef83.png"
 screenshots:
-  - "./images/Contacts_2a6656745e.jpg"
-  - "./images/Discovery_cd1a2b7858.jpg"
-  - "./images/Incoming_Connections_e29e612abc.jpg"
-  - "./images/Incoming_Request_7213a1bb9c.jpg"
-  - "./images/Contact_Details_7f2e8e7b53.jpg"
-  - "./images/Profile_69c8ed0e70.jpg"
+  - "local/Contacts_2a6656745e.jpg"
+  - "local/Discovery_cd1a2b7858.jpg"
+  - "local/Incoming_Connections_e29e612abc.jpg"
+  - "local/Incoming_Request_7213a1bb9c.jpg"
+  - "local/Contact_Details_7f2e8e7b53.jpg"
+  - "local/Profile_69c8ed0e70.jpg"
 features:
   - "Security focused sharing"
   - "Constant BLE scanning"

@@ -11,12 +11,12 @@ google_play_url: "https://play.google.com/store/apps/details?id=com.dave6.stroll
 github_url: "https://github.com/DavidASix/justdogs-app"
 has_privacy_policy: true
 has_data_delete: true
-logo: "./images/ic_icon_2c93adcec9.png"
+logo: "local/ic_icon_2c93adcec9.png"
 screenshots:
-  - "./images/pawesome_26f0b455b0.jpg"
-  - "./images/videos_ea77c49af3.jpg"
-  - "./images/dogfix_40b8597d1c.jpg"
-  - "./images/justdogs_7aa10b6b5e.jpg"
+  - "local/pawesome_26f0b455b0.jpg"
+  - "local/videos_ea77c49af3.jpg"
+  - "local/dogfix_40b8597d1c.jpg"
+  - "local/justdogs_7aa10b6b5e.jpg"
 features:
   - "API Integration"
   - "Ads via AppLovin"

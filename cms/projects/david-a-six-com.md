@@ -11,11 +11,11 @@ github_url: "https://github.com/DavidASix/davidasix.com"
 project_url: "https://davidasix.com"
 has_privacy_policy: false
 has_data_delete: false
-logo: "./images/icon_750px_e6059c91eb.png"
+logo: "local/icon_750px_e6059c91eb.png"
 screenshots:
-  - "./images/Screenshot_from_2024_07_01_11_55_23_bda718820d.png"
-  - "./images/Screenshot_from_2024_07_01_11_55_45_04a1a92c78.png"
-  - "./images/Screenshot_from_2024_07_01_12_07_30_091a39207c.png"
+  - "local/Screenshot_from_2024_07_01_11_55_23_bda718820d.png"
+  - "local/Screenshot_from_2024_07_01_11_55_45_04a1a92c78.png"
+  - "local/Screenshot_from_2024_07_01_12_07_30_091a39207c.png"
 features:
   - "Client CMS"
   - "Nested Dynamic Routes"
@@ -33,7 +33,7 @@ DavidASix.com is my personal portfolio website, and it has gone through many ite
 
 Previously my site was named dave6.com, as I was gifted the domain from my father. With his encouragement I was introduced to web development, starting out with a simple HTML website. Through the years my site has evolved, spending a long while as a PHP site backed by MySQL, all the way to its current build as a NextJS site, backed by StrapiCMS running on a Digital Ocean droplet.
 
-![Image](./images/Screenshot_from_2024_07_01_12_11_36_f96f39db55.png)
+![Image](local/Screenshot_from_2024_07_01_12_11_36_f96f39db55.png)
 
 ## Concept
 
@@ -57,4 +57,4 @@ This site is meant to house my projects and portfolio, but also to serve as a po
 
 **Infinite Scroll Loader **- The Excel page contains an infinite scroll loader. Once the user reaches the end of the page, a skeleton component is shown and more content is collected from the server.
 
-![Image](./images/Screenshot_from_2024_07_01_12_24_00_35f79b9d9d.png)
+![Image](local/Screenshot_from_2024_07_01_12_24_00_35f79b9d9d.png)

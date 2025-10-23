@@ -10,11 +10,11 @@ short_description: "Ferry Halim created "Bugs", an Orisinal flash game in Novemb
 github_url: "https://github.com/DavidASix/bugs-orisinal-python"
 has_privacy_policy: false
 has_data_delete: false
-logo: "./images/bugs_218098620_bf4a9c0a1d.jpg"
+logo: "local/bugs_218098620_bf4a9c0a1d.jpg"
 screenshots:
-  - "./images/Screenshot_from_2024_07_09_17_42_21_f82ee273ae.png"
-  - "./images/Screenshot_from_2024_07_09_17_42_32_295bdb0a54.png"
-  - "./images/Screenshot_from_2024_07_09_17_43_04_4187428017.png"
+  - "local/Screenshot_from_2024_07_09_17_42_21_f82ee273ae.png"
+  - "local/Screenshot_from_2024_07_09_17_42_32_295bdb0a54.png"
+  - "local/Screenshot_from_2024_07_09_17_43_04_4187428017.png"
 features:
   - "User Interfaces"
   - "Hi-Score System"
@@ -32,7 +32,7 @@ If you've been on the internet for quite some time, you may remember Orisinal, a
 
 You may recall that in December 2020, Flash support was officially discontinued in Chrome, essentially killing all of these games. Orisinal opted not to move these games to a new platform, and instead let them live on in the memory of those who played them. Fortunately for anyone feeling particularily nostalgic, there are sites that still host these games through flash emulators, and **Bugs **can be played today, [here.](https://www.numuki.com/game/fh-bugs/)
 
-![Image](./images/Screenshot_from_2024_06_26_14_14_41_90e96052df.png)
+![Image](local/Screenshot_from_2024_06_26_14_14_41_90e96052df.png)
 
 ## Concept
 
@@ -46,9 +46,9 @@ The first step I wanted to tackle was getting the game assets ready. I was prepa
 
 I then discovered that you can open flash files in a decompiler, which will unpack all of the assets, and let you download them. Using JPEXS Flash Decompiler I was able to unpack the assets and pull them into my project.
 
-![Image](./images/Screenshot_from_2024_06_26_14_23_10_3a625a166d.png)
+![Image](local/Screenshot_from_2024_06_26_14_23_10_3a625a166d.png)
 
-![Image](./images/Screenshot_from_2024_06_26_12_00_29_5af1b88aea.png)
+![Image](local/Screenshot_from_2024_06_26_12_00_29_5af1b88aea.png)
 
 ## Writing the code
 
@@ -66,7 +66,7 @@ The game loop runs ever 1 tick (set at 60FPS that's 0.01⅓ seconds) and perform
 
 After a player has completed a game if they've achieved a new high score, the score is saved in a pickle file. A final screen is shown displaying their score and the total highscore; Players can then start a new game.
 
-![Image](./images/Screenshot_from_2024_06_26_12_10_02_7c80cd9c0e.png)
+![Image](local/Screenshot_from_2024_06_26_12_10_02_7c80cd9c0e.png)
 
 ## Project Status
 

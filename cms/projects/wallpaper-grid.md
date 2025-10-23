@@ -10,14 +10,14 @@ short_description: "A full-stack wallpaper provider app with web-scrapping"
 github_url: "https://github.com/DavidASix/wallpaper-grid-app"
 has_privacy_policy: false
 has_data_delete: false
-logo: "./images/app_Icon_223a2727e4.jpg"
+logo: "local/app_Icon_223a2727e4.jpg"
 screenshots:
-  - "./images/categories_3d14114d09.jpg"
-  - "./images/random_65fa9c8012.png"
-  - "./images/image_List_eb8fb6c61c.jpg"
-  - "./images/categories_7fcad7c35f.jpg"
-  - "./images/random_783c54a518.jpg"
-  - "./images/image_View_52a5619379.jpg"
+  - "local/categories_3d14114d09.jpg"
+  - "local/random_65fa9c8012.png"
+  - "local/image_List_eb8fb6c61c.jpg"
+  - "local/categories_7fcad7c35f.jpg"
+  - "local/random_783c54a518.jpg"
+  - "local/image_View_52a5619379.jpg"
 features:
   - "LEMN Stack"
   - "Web Scrapping"
