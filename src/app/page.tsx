@@ -11,7 +11,7 @@ const SocialLink = (props: (typeof socials)[number]) => {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="bg-background/30 flex h-12 w-12 items-center justify-center rounded-2xl backdrop-blur-sm"
+      className="bg-background/30 flex h-12 w-12 items-center justify-center rounded-2xl backdrop-blur-sm blur-li"
     >
       <SocialIcon className="text-foreground/80 h-8 w-8" />
     </a>
@@ -44,7 +44,7 @@ export default async function Home() {
               alt="A headshot of David wearing an unbuttoned white collared shirt."
               className="z-10 max-h-[60vh]"
             />
-            <div className="absolute -bottom-5 z-20 flex h-min gap-2">
+            <div className="absolute -bottom-5 z-20 flex h-min gap-2 blur-list">
               {socials.map((social, i) => (
                 <SocialLink key={i} {...social} />
               ))}

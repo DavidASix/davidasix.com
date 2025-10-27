@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${roboto.variable} ${jersey10.variable} bg-background`}
+      className={`${roboto.variable} ${jersey10.variable} bg-background scroll-smooth`}
     >
       <body className="text-foreground flex min-h-screen flex-col">
         <HolyLoader color="#a855f7" height={6} />

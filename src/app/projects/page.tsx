@@ -41,7 +41,7 @@ function ProjectCard({ project }: { project: Project }) {
   return (
     <Link
       href={`/projects/${project.slug}`}
-      className="group border-border bg-background/40 hover:border-primary relative overflow-hidden rounded-lg border-2 transition-all duration-300 hover:scale-[1.01] hover:shadow-xl"
+      className="group border-border bg-background/40 hover:border-primary blur-li relative overflow-hidden rounded-lg border-2 transition-all duration-300 hover:scale-[1.01] hover:shadow-xl"
     >
       <div className="flex gap-4 p-6">
         {/* Logo */}
@@ -112,23 +112,24 @@ export default async function ProjectsListPage() {
           </p>
         </div>
 
-        {/* Projects by Category */}
-        {categories.map((category) => (
-          <div key={category} className="mb-10">
-            {/* Category Header */}
-            <h2 className="text-foreground font-jersey-10 mb-4 text-4xl">
-              {category}
-            </h2>
+        <div className="blur-list">
+          {/* Projects by Category */}
+          {categories.map((category) => (
+            <div key={category} className="mb-10">
+              {/* Category Header */}
+              <h2 className="text-foreground font-jersey-10 mb-4 text-4xl">
+                {category}
+              </h2>
 
-            {/* Projects Grid */}
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {projectsByCategory[category]?.map((project) => (
-                <ProjectCard key={project.slug} project={project} />
-              ))}
+              {/* Projects Grid */}
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {projectsByCategory[category]?.map((project) => (
+                  <ProjectCard key={project.slug} project={project} />
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
-
+          ))}
+        </div>
         {/* Empty State */}
         {projects.length === 0 && (
           <div className="text-center">
