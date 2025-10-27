@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { api } from "~/trpc/server";
-import { Badge } from "~/components/ui/badge";
 
 interface Project {
   slug: string;
