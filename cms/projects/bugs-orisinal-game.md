@@ -6,7 +6,7 @@ original_link: "https://davidasix.com/projects/bugs-orisinal-game"
 start_date: "2024-02-26"
 completed_date: "2024-03-05"
 active_development: false
-short_description: "Ferry Halim created "Bugs", an Orisinal flash game in November 2005. In December 2020, flash was disabled. I spent a lot of time on this game in my youth and so I've recreated it in Python."
+short_description: "Ferry Halim created 'Bugs', an Orisinal flash game in November 2005. In December 2020, flash was disabled. I spent a lot of time on this game in my youth and so I've recreated it in Python."
 github_url: "https://github.com/DavidASix/bugs-orisinal-python"
 has_privacy_policy: false
 has_data_delete: false
