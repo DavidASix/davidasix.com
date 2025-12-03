@@ -26,21 +26,34 @@ const navItems: NavItem[] = [
   { label: "ROO", href: "https://redoxfordonline.com" },
 ];
 
-function DesktopNav() {
+function useNavigation() {
   const pathname = usePathname();
 
   const isActive = (href: string) => {
     return pathname === href || pathname.startsWith(href + "/");
   };
 
+  return { isActive };
+}
+
+type NavLinksProps = {
+  onLinkClick?: () => void;
+  textSize?: string;
+};
+
+function NavLinks({ onLinkClick, textSize = "text-2xl" }: NavLinksProps) {
+  const { isActive } = useNavigation();
+
   return (
-    <nav className="bg-background/40 hover:bg-background/60 border-primary/20 hidden items-center gap-8 rounded-full border px-10 py-1 shadow-xs transition-all duration-300 md:flex">
+    <>
       {navItems.map((item) => (
         <Link
           key={item.href}
           href={item.href}
+          onClick={onLinkClick}
           className={cn(
-            "font-jersey-10 text-2xl transition-colors",
+            "font-jersey-10 transition-colors",
+            textSize,
             isActive(item.href)
               ? "text-primary hover:cursor-default"
               : "text-foreground hover:text-primary/80",
@@ -50,17 +63,20 @@ function DesktopNav() {
           {item.label}
         </Link>
       ))}
+    </>
+  );
+}
+
+function DesktopNav() {
+  return (
+    <nav className="bg-background/40 hover:bg-background/60 border-primary/20 hidden items-center gap-8 rounded-full border px-10 py-1 shadow-xs transition-all duration-300 md:flex">
+      <NavLinks />
     </nav>
   );
 }
 
 function MobileNav() {
-  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-
-  const isActive = (href: string) => {
-    return pathname === href || pathname.startsWith(href + "/");
-  };
 
   const handleLinkClick = () => {
     setIsOpen(false);
@@ -85,22 +101,7 @@ function MobileNav() {
         >
           <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
           <nav className="flex flex-col items-center gap-6">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={handleLinkClick}
-                className={cn(
-                  "font-jersey-10 text-5xl transition-colors",
-                  isActive(item.href)
-                    ? "text-primary hover:cursor-default"
-                    : "text-foreground hover:text-primary/80",
-                )}
-                target={item.href.startsWith("http") ? "_blank" : ""}
-              >
-                {item.label}
-              </Link>
-            ))}
+            <NavLinks onLinkClick={handleLinkClick} textSize="text-5xl" />
           </nav>
         </SheetContent>
       </Sheet>
