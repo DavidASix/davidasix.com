@@ -3,20 +3,7 @@
 import { HydrateClient } from "~/trpc/server";
 
 import { socials } from "~/lib/constants";
-
-const SocialLink = (props: (typeof socials)[number]) => {
-  const { url, icon: SocialIcon } = props;
-  return (
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="bg-background/30 blur-li flex h-12 w-12 items-center justify-center rounded-2xl backdrop-blur-sm"
-    >
-      <SocialIcon className="text-foreground/80 h-8 w-8" />
-    </a>
-  );
-};
+import { SocialLink } from "./_components/social-link";
 
 export default async function Home() {
   return (
@@ -46,7 +33,7 @@ export default async function Home() {
             />
             <div className="blur-list absolute -bottom-5 z-20 flex h-min gap-2">
               {socials.map((social, i) => (
-                <SocialLink key={i} {...social} />
+                <SocialLink key={i} social={social} />
               ))}
             </div>
           </div>
