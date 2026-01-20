@@ -2,7 +2,7 @@
 // TODO: Switch to using Image when I re-write this page
 import { HydrateClient } from "~/trpc/server";
 
-import { socials } from "~/lib/constants";
+import { socials } from "./_components/socials";
 import { SocialLink } from "./_components/social-link";
 
 export default async function Home() {

@@ -1,14 +1,27 @@
 "use client";
 
 import posthog from "posthog-js";
-import type { socials } from "~/lib/constants";
+import {
+  Instagram,
+  Github,
+  Mail,
+  Linkedin,
+  Youtube,
+  type LucideIcon,
+} from "lucide-react";
+import type { socials } from "./socials";
 
-interface SocialLinkProps {
-  social: (typeof socials)[number];
-}
+const iconMap: Record<string, LucideIcon> = {
+  instagram: Instagram,
+  email: Mail,
+  github: Github,
+  linkedin: Linkedin,
+  youtube: Youtube,
+};
 
-export function SocialLink({ social }: SocialLinkProps) {
-  const { url, icon: SocialIcon, socialMedia, displayName } = social;
+export function SocialLink({ social }: { social: (typeof socials)[number] }) {
+  const { url, socialMedia, displayName } = social;
+  const SocialIcon = iconMap[socialMedia];
 
   const handleClick = () => {
     posthog.capture("social_link_clicked", {
@@ -17,6 +30,8 @@ export function SocialLink({ social }: SocialLinkProps) {
       url: url,
     });
   };
+
+  if (!SocialIcon) return null;
 
   return (
     <a
