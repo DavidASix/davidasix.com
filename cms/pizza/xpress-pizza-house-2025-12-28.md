@@ -1,7 +1,7 @@
 ---
 purchase-date: 2025-12-28
 pizza-shop: Xpress Pizza House
-rating: 5.0
+rating: 5.5
 better-than-ginos: false
 tldr: Xpress Pizza House, experts in leveraging technical marketing, not so much in pizza making.
 ---
