@@ -72,6 +72,11 @@ export interface RRIFRow {
    * Equals `payment` when `calculateTax` is false.
    */
   netPayment: number;
+  /**
+   * Combined annual OAS + CPP pension income received this year.
+   * 0 when neither pension is active or both are disabled.
+   */
+  pensionIncome: number;
 }
 
 /** All inputs required to run the RRIF payment schedule calculation. */
@@ -150,6 +155,19 @@ export interface RRIFParams {
    * e.g. pass `0.30` for 30%.
    */
   manualTaxRate: number;
+  /** When true, OAS payments are factored in starting at age 65. */
+  includeOas: boolean;
+  /** Monthly OAS payment in dollars. Only used when `includeOas` is true. */
+  oasMonthly: number;
+  /** When true, CPP payments are factored in starting at `cppStartAge`. */
+  includeCpp: boolean;
+  /** Monthly CPP payment in dollars. Only used when `includeCpp` is true. */
+  cppMonthly: number;
+  /**
+   * Age at which CPP payments begin (60–70).
+   * Only used when `includeCpp` is true.
+   */
+  cppStartAge: number;
 }
 
 /**
@@ -247,6 +265,15 @@ export function calculateRRIF(params: RRIFParams): RRIFRow[] {
     const minRate = getMinWithdrawalRate(calcAge);
     const minPayment = balance * minRate;
 
+    // Pension income received this year
+    const oasYearly =
+      params.includeOas && age >= 65 ? params.oasMonthly * 12 : 0;
+    const cppYearly =
+      params.includeCpp && age >= params.cppStartAge
+        ? params.cppMonthly * 12
+        : 0;
+    const pensionIncome = oasYearly + cppYearly;
+
     let payment = 0;
     let withdrawalPercent = 0;
 
@@ -259,16 +286,19 @@ export function calculateRRIF(params: RRIFParams): RRIFRow[] {
           params.fixedPayment * Math.pow(1 + params.inflationRate, paymentYear);
 
         if (params.paymentType === "fixed-after-tax" && params.calculateTax) {
-          // Gross up the target net amount to find the required RRIF withdrawal
+          // Gross up the net target minus pension income (pension covers part of the need)
+          const netFromRrif = Math.max(0, inflatedTarget - pensionIncome);
           const { gross } = grossUpPayment(
-            inflatedTarget,
+            netFromRrif,
             params.taxMode,
             params.manualTaxRate,
             params.province,
           );
           payment = Math.max(minPayment, gross);
         } else {
-          payment = Math.max(minPayment, inflatedTarget);
+          // Reduce the gross target by pension income, floored at minimum
+          const grossTarget = Math.max(0, inflatedTarget - pensionIncome);
+          payment = Math.max(minPayment, grossTarget);
         }
 
         withdrawalPercent = balance > 0 ? payment / balance : 0;
@@ -300,6 +330,7 @@ export function calculateRRIF(params: RRIFParams): RRIFRow[] {
       taxRate,
       taxAmount,
       netPayment,
+      pensionIncome,
     });
 
     balance = endValue;

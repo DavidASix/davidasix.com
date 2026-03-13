@@ -13,6 +13,7 @@ interface PaymentScheduleProps {
   finalAge: number;
   finalValue: number;
   calculateTax: boolean;
+  showPension: boolean;
 }
 
 export function PaymentSchedule({
@@ -20,6 +21,7 @@ export function PaymentSchedule({
   finalAge,
   finalValue,
   calculateTax,
+  showPension,
 }: PaymentScheduleProps) {
   return (
     <div className="border-border bg-background/40 min-w-0 space-y-4 rounded-xl border p-6">
@@ -55,6 +57,9 @@ export function PaymentSchedule({
                   </TableHead>
                 </>
               )}
+              {showPension && (
+                <TableHead className="text-right">Pension Income</TableHead>
+              )}
               <TableHead className="text-right">Value at End of Year</TableHead>
             </TableRow>
           </TableHeader>
@@ -85,6 +90,11 @@ export function PaymentSchedule({
                       {formatCurrency(row.netPayment)}
                     </TableCell>
                   </>
+                )}
+                {showPension && (
+                  <TableCell className="text-right">
+                    {formatCurrency(row.pensionIncome)}
+                  </TableCell>
                 )}
                 <TableCell className="text-right">
                   {formatCurrency(row.endValue)}

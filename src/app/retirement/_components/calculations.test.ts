@@ -51,6 +51,11 @@ const baseParams = {
   province: "ON" as const,
   taxMode: "manual" as const,
   manualTaxRate: 0,
+  includeOas: false,
+  oasMonthly: 0,
+  includeCpp: false,
+  cppMonthly: 0,
+  cppStartAge: 65,
 };
 
 describe("calculateRRIF — minimum payment, no tax", () => {

@@ -28,6 +28,11 @@ export default function RetirementPage() {
   const [province, setProvince] = useState<Province>("ON");
   const [taxMode, setTaxMode] = useState<"automatic" | "manual">("automatic");
   const [manualTaxRate, setManualTaxRate] = useState(30.0);
+  const [includeOas, setIncludeOas] = useState(false);
+  const [oasMonthly, setOasMonthly] = useState(700);
+  const [includeCpp, setIncludeCpp] = useState(false);
+  const [cppMonthly, setCppMonthly] = useState(800);
+  const [cppStartAge, setCppStartAge] = useState(65);
 
   function handleCalculateTax(v: boolean) {
     if (!v && paymentType === "fixed-after-tax") {
@@ -62,6 +67,11 @@ export default function RetirementPage() {
         province,
         taxMode,
         manualTaxRate: manualTaxRate / 100,
+        includeOas,
+        oasMonthly,
+        includeCpp,
+        cppMonthly,
+        cppStartAge,
       }),
     [
       rrifValue,
@@ -78,6 +88,11 @@ export default function RetirementPage() {
       province,
       taxMode,
       manualTaxRate,
+      includeOas,
+      oasMonthly,
+      includeCpp,
+      cppMonthly,
+      cppStartAge,
     ],
   );
 
@@ -260,9 +275,85 @@ export default function RetirementPage() {
                 />
               </div>
 
-              {calculateTax && (
+              <Divider />
+
+              <div className="flex items-center justify-between gap-4">
+                <Label
+                  htmlFor="include-oas"
+                  className="text-foreground text-sm font-medium"
+                >
+                  Include OAS
+                </Label>
+                <Switch
+                  id="include-oas"
+                  checked={includeOas}
+                  onCheckedChange={setIncludeOas}
+                />
+              </div>
+
+              {includeOas && (
                 <>
                   <Divider />
+                  <SliderField
+                    label="OAS monthly amount"
+                    value={oasMonthly}
+                    min={0}
+                    max={2000}
+                    step={10}
+                    onChange={setOasMonthly}
+                    format="currency"
+                    tooltip="Old Age Security begins at age 65. Enter your expected monthly OAS payment."
+                  />
+                </>
+              )}
+
+              <Divider />
+
+              <div className="flex items-center justify-between gap-4">
+                <Label
+                  htmlFor="include-cpp"
+                  className="text-foreground text-sm font-medium"
+                >
+                  Include CPP
+                </Label>
+                <Switch
+                  id="include-cpp"
+                  checked={includeCpp}
+                  onCheckedChange={setIncludeCpp}
+                />
+              </div>
+
+              {includeCpp && (
+                <>
+                  <Divider />
+                  <SliderField
+                    label="CPP monthly amount"
+                    value={cppMonthly}
+                    min={0}
+                    max={2000}
+                    step={10}
+                    onChange={setCppMonthly}
+                    format="currency"
+                    tooltip="Enter your expected monthly CPP payment at the age you plan to start."
+                  />
+                  <Divider />
+                  <SliderField
+                    label="CPP starting age"
+                    value={cppStartAge}
+                    min={60}
+                    max={70}
+                    step={1}
+                    onChange={setCppStartAge}
+                    format="age"
+                    tooltip="You can start CPP as early as age 60 (reduced) or as late as age 70 (enhanced)."
+                  />
+                </>
+              )}
+
+              <Divider />
+
+              {calculateTax && (
+                <>
                   <SelectField
                     label="Province"
                     value={province}
@@ -317,6 +408,7 @@ export default function RetirementPage() {
               finalAge={finalAge}
               finalValue={finalValue}
               calculateTax={calculateTax}
+              showPension={includeOas || includeCpp}
             />
           </div>
         </div>
