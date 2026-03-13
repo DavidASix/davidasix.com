@@ -60,6 +60,7 @@ export function PaymentSchedule({
               {showPension && (
                 <TableHead className="text-right">Pension Income</TableHead>
               )}
+              <TableHead className="text-right">Total Income</TableHead>
               <TableHead className="text-right">Value at End of Year</TableHead>
             </TableRow>
           </TableHeader>
@@ -96,6 +97,9 @@ export function PaymentSchedule({
                     {formatCurrency(row.pensionIncome)}
                   </TableCell>
                 )}
+                <TableCell className="text-right">
+                  {formatCurrency(row.netPayment + row.pensionIncome)}
+                </TableCell>
                 <TableCell className="text-right">
                   {formatCurrency(row.endValue)}
                 </TableCell>
