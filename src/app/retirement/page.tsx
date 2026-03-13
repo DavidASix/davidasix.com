@@ -2,6 +2,8 @@
 
 import { useState, useMemo } from "react";
 import { TooltipProvider } from "~/components/ui/tooltip";
+import { Switch } from "~/components/ui/switch";
+import { Label } from "~/components/ui/label";
 import { calculateRRIF } from "./_components/calculations";
 import { Divider } from "./_components/divider";
 import { SliderField } from "./_components/slider-field";
@@ -21,6 +23,9 @@ export default function RetirementPage() {
   );
   const [fixedPayment, setFixedPayment] = useState(12000);
   const [inflationRate, setInflationRate] = useState(1.5);
+  const [calculateTax, setCalculateTax] = useState(false);
+  const [taxMode, setTaxMode] = useState<"automatic" | "manual">("automatic");
+  const [manualTaxRate, setManualTaxRate] = useState(30.0);
 
   function handleStartAge(v: number) {
     setStartAge(v);
@@ -44,6 +49,9 @@ export default function RetirementPage() {
         paymentType,
         fixedPayment,
         inflationRate: inflationRate / 100,
+        calculateTax,
+        taxMode,
+        manualTaxRate: manualTaxRate / 100,
       }),
     [
       rrifValue,
@@ -56,6 +64,9 @@ export default function RetirementPage() {
       paymentType,
       fixedPayment,
       inflationRate,
+      calculateTax,
+      taxMode,
+      manualTaxRate,
     ],
   );
 
@@ -209,6 +220,52 @@ export default function RetirementPage() {
                   />
                 </>
               )}
+
+              <Divider />
+
+              <div className="flex items-center justify-between gap-4">
+                <Label
+                  htmlFor="calculate-tax"
+                  className="text-foreground text-sm font-medium"
+                >
+                  Estimate income tax
+                </Label>
+                <Switch
+                  id="calculate-tax"
+                  checked={calculateTax}
+                  onCheckedChange={setCalculateTax}
+                />
+              </div>
+
+              {calculateTax && (
+                <>
+                  <Divider />
+                  <SelectField
+                    label="Tax assumption"
+                    value={taxMode}
+                    options={[
+                      { value: "automatic", label: "Automatic" },
+                      { value: "manual", label: "Manual" },
+                    ]}
+                    onChange={(v) => setTaxMode(v as "automatic" | "manual")}
+                    tooltip="Automatic uses Ontario combined federal + provincial marginal rates based on the withdrawal amount. Manual lets you enter a flat rate."
+                  />
+                  {taxMode === "manual" && (
+                    <>
+                      <Divider />
+                      <SliderField
+                        label="Tax rate (max 60%)"
+                        value={manualTaxRate}
+                        min={0}
+                        max={60}
+                        step={0.5}
+                        onChange={setManualTaxRate}
+                        format="percent"
+                      />
+                    </>
+                  )}
+                </>
+              )}
             </div>
 
             {/* Results panel */}
@@ -216,6 +273,7 @@ export default function RetirementPage() {
               rows={rows}
               finalAge={finalAge}
               finalValue={finalValue}
+              calculateTax={calculateTax}
             />
           </div>
         </div>

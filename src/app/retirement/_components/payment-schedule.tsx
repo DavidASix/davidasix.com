@@ -12,12 +12,14 @@ interface PaymentScheduleProps {
   rows: RRIFRow[];
   finalAge: number;
   finalValue: number;
+  calculateTax: boolean;
 }
 
 export function PaymentSchedule({
   rows,
   finalAge,
   finalValue,
+  calculateTax,
 }: PaymentScheduleProps) {
   return (
     <div className="border-border bg-background/40 min-w-0 space-y-4 rounded-xl border p-6">
@@ -44,6 +46,15 @@ export function PaymentSchedule({
               </TableHead>
               <TableHead className="text-right">Annual Payment</TableHead>
               <TableHead className="text-right">Withdrawal %</TableHead>
+              {calculateTax && (
+                <>
+                  <TableHead className="text-right">Tax Rate</TableHead>
+                  <TableHead className="text-right">Est. Tax</TableHead>
+                  <TableHead className="text-right">
+                    After-tax Payment
+                  </TableHead>
+                </>
+              )}
               <TableHead className="text-right">Value at End of Year</TableHead>
             </TableRow>
           </TableHeader>
@@ -62,6 +73,19 @@ export function PaymentSchedule({
                 <TableCell className="text-right">
                   {formatPercent(row.withdrawalPercent)}
                 </TableCell>
+                {calculateTax && (
+                  <>
+                    <TableCell className="text-right">
+                      {formatPercent(row.taxRate)}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {formatCurrency(row.taxAmount)}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {formatCurrency(row.netPayment)}
+                    </TableCell>
+                  </>
+                )}
                 <TableCell className="text-right">
                   {formatCurrency(row.endValue)}
                 </TableCell>
@@ -75,7 +99,9 @@ export function PaymentSchedule({
         <p>
           <strong className="text-foreground">Assumptions:</strong> Annual RRIF
           payments are made at the start of the year. Annual payments are before
-          taxes.
+          taxes.{" "}
+          {calculateTax &&
+            "Tax estimates use Ontario combined federal + provincial marginal rates applied to the full withdrawal amount and are approximate only."}
         </p>
         <p>
           <strong className="text-foreground">Disclaimer:</strong> Information

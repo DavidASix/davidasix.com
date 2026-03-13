@@ -26,12 +26,23 @@ const PRESCRIBED_RATES: Record<number, number> = {
   94: 0.1879,
 };
 
+// Ontario combined federal + provincial marginal rate brackets (simplified)
+const ONTARIO_BRACKETS: [number, number][] = [
+  [55_000, 0.22],
+  [110_000, 0.3],
+  [173_000, 0.4],
+  [Infinity, 0.5],
+];
+
 export interface RRIFRow {
   age: number;
   startValue: number;
   payment: number;
   withdrawalPercent: number;
   endValue: number;
+  taxRate: number;
+  taxAmount: number;
+  netPayment: number;
 }
 
 export interface RRIFParams {
@@ -47,12 +58,23 @@ export interface RRIFParams {
   fixedPayment: number;
   /** Already divided by 100 (e.g. 0.015 for 1.5%) */
   inflationRate: number;
+  calculateTax: boolean;
+  taxMode: "automatic" | "manual";
+  /** Already divided by 100 (e.g. 0.30 for 30%) */
+  manualTaxRate: number;
 }
 
 export function getMinWithdrawalRate(age: number): number {
   if (age < 71) return 1 / (90 - age);
   if (age >= 95) return 0.2;
   return PRESCRIBED_RATES[age] ?? 0.2;
+}
+
+export function getOntarioMarginalRate(income: number): number {
+  for (const [threshold, rate] of ONTARIO_BRACKETS) {
+    if (income <= threshold) return rate;
+  }
+  return 0.5;
 }
 
 export function calculateRRIF(params: RRIFParams): RRIFRow[] {
@@ -86,6 +108,19 @@ export function calculateRRIF(params: RRIFParams): RRIFRow[] {
       paymentYear++;
     }
 
+    let taxRate = 0;
+    let taxAmount = 0;
+    let netPayment = payment;
+
+    if (params.calculateTax && payment > 0) {
+      taxRate =
+        params.taxMode === "automatic"
+          ? getOntarioMarginalRate(payment)
+          : params.manualTaxRate;
+      taxAmount = payment * taxRate;
+      netPayment = payment - taxAmount;
+    }
+
     const endValue = Math.max(0, (balance - payment) * (1 + params.returnRate));
 
     rows.push({
@@ -94,6 +129,9 @@ export function calculateRRIF(params: RRIFParams): RRIFRow[] {
       payment,
       withdrawalPercent,
       endValue,
+      taxRate,
+      taxAmount,
+      netPayment,
     });
 
     balance = endValue;
