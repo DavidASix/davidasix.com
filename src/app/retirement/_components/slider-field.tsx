@@ -51,7 +51,7 @@ export function SliderField({
   }
 
   return (
-    <div className="space-y-2">
+    <div className="min-w-0 space-y-2">
       <div className="flex items-center gap-1">
         <span className="text-foreground text-sm font-medium">{label}</span>
         {tooltip && (
@@ -67,7 +67,7 @@ export function SliderField({
           </Tooltip>
         )}
       </div>
-      <div className="flex items-center gap-3">
+      <div className="flex min-w-0 items-center gap-3">
         <Slider
           min={min}
           max={max}
@@ -76,7 +76,7 @@ export function SliderField({
           onValueChange={([v]) => {
             if (v !== undefined) onChange(v);
           }}
-          className="flex-1"
+          className="min-w-0 flex-1"
         />
         <input
           type="text"
@@ -88,7 +88,7 @@ export function SliderField({
               commitInput((e.target as HTMLInputElement).value);
           }}
           className={cn(
-            "border-border bg-background text-foreground w-24 rounded-md border px-2 py-1 text-right text-sm",
+            "border-border bg-background text-foreground w-24 shrink-0 rounded-md border px-2 py-1 text-right text-sm",
             "focus:ring-primary focus:ring-1 focus:outline-none",
           )}
         />

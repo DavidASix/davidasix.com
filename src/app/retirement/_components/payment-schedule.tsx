@@ -20,7 +20,7 @@ export function PaymentSchedule({
   finalValue,
 }: PaymentScheduleProps) {
   return (
-    <div className="border-border bg-background/40 space-y-4 rounded-xl border p-6">
+    <div className="border-border bg-background/40 min-w-0 space-y-4 rounded-xl border p-6">
       <div>
         <h2 className="text-foreground font-jersey-10 text-2xl">
           RRIF Payment Schedule

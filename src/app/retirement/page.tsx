@@ -78,7 +78,7 @@ export default function RetirementPage() {
 
           <div className="grid gap-8 lg:grid-cols-[380px_1fr]">
             {/* Inputs panel */}
-            <div className="border-border bg-background/40 space-y-5 rounded-xl border p-6">
+            <div className="border-border bg-background/40 min-w-0 space-y-5 rounded-xl border p-6">
               <h2 className="text-foreground font-jersey-10 text-2xl">
                 Inputs
               </h2>
