@@ -5,6 +5,7 @@ import { TooltipProvider } from "~/components/ui/tooltip";
 import { Switch } from "~/components/ui/switch";
 import { Label } from "~/components/ui/label";
 import { calculateRRIF } from "./_components/calculations";
+import { type Province } from "./_components/taxes";
 import { Divider } from "./_components/divider";
 import { SliderField } from "./_components/slider-field";
 import { SelectField } from "./_components/select-field";
@@ -24,6 +25,7 @@ export default function RetirementPage() {
   const [fixedPayment, setFixedPayment] = useState(12000);
   const [inflationRate, setInflationRate] = useState(1.5);
   const [calculateTax, setCalculateTax] = useState(false);
+  const [province, setProvince] = useState<Province>("ON");
   const [taxMode, setTaxMode] = useState<"automatic" | "manual">("automatic");
   const [manualTaxRate, setManualTaxRate] = useState(30.0);
 
@@ -57,6 +59,7 @@ export default function RetirementPage() {
         fixedPayment,
         inflationRate: inflationRate / 100,
         calculateTax,
+        province,
         taxMode,
         manualTaxRate: manualTaxRate / 100,
       }),
@@ -72,6 +75,7 @@ export default function RetirementPage() {
       fixedPayment,
       inflationRate,
       calculateTax,
+      province,
       taxMode,
       manualTaxRate,
     ],
@@ -258,6 +262,26 @@ export default function RetirementPage() {
 
               {calculateTax && (
                 <>
+                  <Divider />
+                  <SelectField
+                    label="Province"
+                    value={province}
+                    options={[
+                      { value: "AB", label: "Alberta" },
+                      { value: "BC", label: "British Columbia" },
+                      { value: "MB", label: "Manitoba" },
+                      { value: "NB", label: "New Brunswick" },
+                      { value: "NL", label: "Newfoundland and Labrador" },
+                      { value: "NS", label: "Nova Scotia" },
+                      { value: "NT", label: "Northwest Territories" },
+                      { value: "NU", label: "Nunavut" },
+                      { value: "ON", label: "Ontario" },
+                      { value: "PE", label: "Prince Edward Island" },
+                      { value: "SK", label: "Saskatchewan" },
+                      { value: "YT", label: "Yukon" },
+                    ]}
+                    onChange={(v) => setProvince(v as Province)}
+                  />
                   <Divider />
                   <SelectField
                     label="Tax assumption"

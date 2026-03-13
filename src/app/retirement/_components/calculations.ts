@@ -1,3 +1,5 @@
+import { getTaxRate, type Province } from "./taxes";
+
 // CRA prescribed RRIF minimum withdrawal factors (ages 71–94)
 const PRESCRIBED_RATES: Record<number, number> = {
   71: 0.0528,
@@ -25,14 +27,6 @@ const PRESCRIBED_RATES: Record<number, number> = {
   93: 0.1634,
   94: 0.1879,
 };
-
-// Ontario combined federal + provincial marginal rate brackets (simplified)
-const ONTARIO_BRACKETS: [number, number][] = [
-  [55_000, 0.22],
-  [110_000, 0.3],
-  [173_000, 0.4],
-  [Infinity, 0.5],
-];
 
 export interface RRIFRow {
   age: number;
@@ -62,6 +56,7 @@ export interface RRIFParams {
   taxMode: "automatic" | "manual";
   /** Already divided by 100 (e.g. 0.30 for 30%) */
   manualTaxRate: number;
+  province: Province;
 }
 
 export function getMinWithdrawalRate(age: number): number {
@@ -70,25 +65,18 @@ export function getMinWithdrawalRate(age: number): number {
   return PRESCRIBED_RATES[age] ?? 0.2;
 }
 
-export function getOntarioMarginalRate(income: number): number {
-  for (const [threshold, rate] of ONTARIO_BRACKETS) {
-    if (income <= threshold) return rate;
-  }
-  return 0.5;
-}
-
 /**
  * Given a desired after-tax (net) amount, find the gross RRIF withdrawal
  * needed to produce it after applying the appropriate tax rate.
  *
- * For automatic brackets this finds the self-consistent bracket: the bracket
- * whose rate, when applied to the grossed-up amount, keeps that amount within
- * the same bracket.
+ * For automatic mode, binary search finds the gross amount whose effective
+ * provincial+federal rate produces the desired net.
  */
 function grossUpPayment(
   netDesired: number,
   taxMode: "automatic" | "manual",
   manualTaxRate: number,
+  province: Province,
 ): { gross: number; taxRate: number } {
   if (taxMode === "manual") {
     return {
@@ -96,13 +84,18 @@ function grossUpPayment(
       taxRate: manualTaxRate,
     };
   }
-  for (const [threshold, rate] of ONTARIO_BRACKETS) {
-    const gross = netDesired / (1 - rate);
-    if (gross <= threshold) {
-      return { gross, taxRate: rate };
-    }
+
+  // Binary search: gross * (1 - getTaxRate(province, gross)) = netDesired
+  let lo = netDesired;
+  let hi = netDesired * 3;
+  for (let i = 0; i < 50; i++) {
+    const mid = (lo + hi) / 2;
+    const afterTax = mid * (1 - getTaxRate(province, mid));
+    if (afterTax < netDesired) lo = mid;
+    else hi = mid;
   }
-  return { gross: netDesired / 0.5, taxRate: 0.5 };
+  const gross = (lo + hi) / 2;
+  return { gross, taxRate: getTaxRate(province, gross) };
 }
 
 export function calculateRRIF(params: RRIFParams): RRIFRow[] {
@@ -137,6 +130,7 @@ export function calculateRRIF(params: RRIFParams): RRIFRow[] {
             inflatedTarget,
             params.taxMode,
             params.manualTaxRate,
+            params.province,
           );
           payment = Math.max(minPayment, gross);
         } else {
@@ -155,7 +149,7 @@ export function calculateRRIF(params: RRIFParams): RRIFRow[] {
     if (params.calculateTax && payment > 0) {
       taxRate =
         params.taxMode === "automatic"
-          ? getOntarioMarginalRate(payment)
+          ? getTaxRate(params.province, payment)
           : params.manualTaxRate;
       taxAmount = payment * taxRate;
       netPayment = payment - taxAmount;
