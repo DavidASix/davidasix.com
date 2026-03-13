@@ -1,11 +1,22 @@
 // 2026 Canadian federal and provincial income tax brackets
 // Source: CRA — Canadian income tax rates for individuals
 
+/**
+ * A single income tax bracket.
+ * Brackets are applied progressively: only the income within this band
+ * (from the previous bracket's upper bound up to `upTo`) is taxed at `rate`.
+ */
 interface Bracket {
-  upTo: number; // upper bound of this bracket (Infinity for the last)
-  rate: number; // marginal rate for income within this bracket
+  /** Upper bound of this bracket in dollars. Use `Infinity` for the top bracket. */
+  upTo: number;
+  /** Marginal rate applied to income within this bracket, as a decimal. */
+  rate: number;
 }
 
+/**
+ * Two-letter province/territory code for the twelve jurisdictions whose
+ * 2026 brackets are included in this module. Quebec is not included.
+ */
 export type Province =
   | "AB"
   | "BC"
@@ -20,15 +31,35 @@ export type Province =
   | "SK"
   | "YT";
 
+/**
+ * The breakdown of federal, provincial, and combined tax for a given income.
+ * All rates are effective (average) rates — total tax divided by total income —
+ * not marginal rates.
+ */
 export interface TaxResult {
+  /** Federal tax owed in dollars. */
   federalTax: number;
+  /** Provincial/territorial tax owed in dollars. */
   provincialTax: number;
+  /** Combined federal + provincial tax owed in dollars. */
   totalTax: number;
+  /** Effective federal rate as a decimal (e.g. `0.17` for 17%). */
   federalRate: number;
+  /** Effective provincial rate as a decimal (e.g. `0.072` for 7.2%). */
   provincialRate: number;
+  /** Combined effective rate as a decimal (e.g. `0.242` for 24.2%). */
   totalRate: number;
 }
 
+/**
+ * Applies a progressive bracket table to a given income and returns the
+ * total tax owed. Each bracket's marginal rate is applied only to the portion
+ * of income that falls within that band.
+ *
+ * @param income - Annual income in dollars.
+ * @param brackets - Ordered list of brackets from lowest to highest.
+ * @returns Total tax owed in dollars.
+ */
 function calcTax(income: number, brackets: Bracket[]): number {
   let tax = 0;
   let prev = 0;
@@ -40,6 +71,10 @@ function calcTax(income: number, brackets: Bracket[]): number {
   return tax;
 }
 
+/**
+ * 2026 federal income tax brackets.
+ * Applied to the same income regardless of province.
+ */
 const FEDERAL_BRACKETS: Bracket[] = [
   { upTo: 58_523, rate: 0.14 },
   { upTo: 117_045, rate: 0.205 },
@@ -48,6 +83,10 @@ const FEDERAL_BRACKETS: Bracket[] = [
   { upTo: Infinity, rate: 0.33 },
 ];
 
+/**
+ * 2026 provincial and territorial income tax brackets, keyed by province code.
+ * Combined with `FEDERAL_BRACKETS` to produce a total effective tax rate.
+ */
 const PROVINCIAL_BRACKETS: Record<Province, Bracket[]> = {
   NL: [
     { upTo: 44_678, rate: 0.087 },
@@ -135,11 +174,21 @@ const PROVINCIAL_BRACKETS: Record<Province, Bracket[]> = {
 };
 
 /**
- * Calculates the effective federal and provincial income tax rates for a given
- * province and annual income using 2026 progressive brackets.
+ * Calculates the full federal and provincial tax breakdown for a given province
+ * and annual income using 2026 progressive brackets.
  *
- * Note: does not include the basic personal amount, surtaxes, or other credits.
- * Results represent the effective (average) rate, not the marginal rate.
+ * The income is treated as the sole taxable amount — other income sources,
+ * the basic personal amount, surtaxes, and credits are not modelled. Results
+ * are therefore estimates suitable for planning purposes, not filing.
+ *
+ * @param province - Two-letter province/territory code.
+ * @param income - Annual taxable income in dollars. Returns all zeros if ≤ 0.
+ * @returns A {@link TaxResult} containing dollar amounts and effective rates
+ *   for federal, provincial, and combined tax.
+ *
+ * @example
+ * // Ontario, $110,000 income → ~17% federal + ~7.2% provincial = ~24.2% total
+ * getTaxDetails("ON", 110_000);
  */
 export function getTaxDetails(province: Province, income: number): TaxResult {
   if (income <= 0) {
@@ -167,6 +216,17 @@ export function getTaxDetails(province: Province, income: number): TaxResult {
   };
 }
 
+/**
+ * Returns the combined effective income tax rate (federal + provincial) for a
+ * given province and annual income.
+ *
+ * Convenience wrapper around {@link getTaxDetails} for callers that only need
+ * a single rate value.
+ *
+ * @param province - Two-letter province/territory code.
+ * @param income - Annual taxable income in dollars.
+ * @returns Combined effective rate as a decimal (e.g. `0.242` for 24.2%).
+ */
 export function getTaxRate(province: Province, income: number): number {
   return getTaxDetails(province, income).totalRate;
 }
