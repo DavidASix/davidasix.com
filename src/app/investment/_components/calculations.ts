@@ -27,7 +27,10 @@ export interface InvestmentRow {
   endValue: number;
 }
 
-const PERIODS_PER_YEAR: Record<InvestmentParams["contributionFrequency"], number> = {
+const PERIODS_PER_YEAR: Record<
+  InvestmentParams["contributionFrequency"],
+  number
+> = {
   monthly: 12,
   quarterly: 4,
   semiannually: 2,

@@ -92,7 +92,9 @@ export function PaymentSchedule({
                   </>
                 )}
                 <TableCell className="text-right">
-                  {formatCurrency(row.netPayment + row.pensionIncome * (1 - row.taxRate))}
+                  {formatCurrency(
+                    row.netPayment + row.pensionIncome * (1 - row.taxRate),
+                  )}
                 </TableCell>
                 <TableCell className="text-right">
                   {formatCurrency(row.endValue)}

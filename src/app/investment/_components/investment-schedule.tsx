@@ -41,7 +41,9 @@ export function InvestmentSchedule({
           <TableHeader>
             <TableRow>
               <TableHead className="text-center">Age</TableHead>
-              <TableHead className="text-right">Value at Start of Year</TableHead>
+              <TableHead className="text-right">
+                Value at Start of Year
+              </TableHead>
               <TableHead className="text-right">Contributions</TableHead>
               {hasLumpSums && (
                 <TableHead className="text-right">Lump Sum</TableHead>
@@ -81,10 +83,11 @@ export function InvestmentSchedule({
 
       <div className="border-border text-muted-foreground mt-4 space-y-2 border-t pt-4 text-xs">
         <p>
-          <strong className="text-foreground">Assumptions:</strong> Contributions
-          are made at the start of each period using an annuity-due formula.
-          Lump sums are added at the start of the year. Returns are compounded
-          annually. All values are in nominal (non-inflation-adjusted) dollars.
+          <strong className="text-foreground">Assumptions:</strong>{" "}
+          Contributions are made at the start of each period using an
+          annuity-due formula. Lump sums are added at the start of the year.
+          Returns are compounded annually. All values are in nominal
+          (non-inflation-adjusted) dollars.
         </p>
         <p>
           <strong className="text-foreground">Disclaimer:</strong> Information
