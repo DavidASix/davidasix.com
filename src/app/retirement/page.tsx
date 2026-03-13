@@ -18,14 +18,21 @@ export default function RetirementPage() {
   const [spouseAge, setSpouseAge] = useState(65);
   const [returnRate, setReturnRate] = useState(6.0);
   const [startPaymentsIn, setStartPaymentsIn] = useState<"1" | "2">("2");
-  const [paymentType, setPaymentType] = useState<"minimum" | "fixed">(
-    "minimum",
-  );
+  const [paymentType, setPaymentType] = useState<
+    "minimum" | "fixed-pre-tax" | "fixed-after-tax"
+  >("minimum");
   const [fixedPayment, setFixedPayment] = useState(12000);
   const [inflationRate, setInflationRate] = useState(1.5);
   const [calculateTax, setCalculateTax] = useState(false);
   const [taxMode, setTaxMode] = useState<"automatic" | "manual">("automatic");
   const [manualTaxRate, setManualTaxRate] = useState(30.0);
+
+  function handleCalculateTax(v: boolean) {
+    if (!v && paymentType === "fixed-after-tax") {
+      setPaymentType("fixed-pre-tax");
+    }
+    setCalculateTax(v);
+  }
 
   function handleStartAge(v: number) {
     setStartAge(v);
@@ -190,16 +197,28 @@ export default function RetirementPage() {
                 value={paymentType}
                 options={[
                   { value: "minimum", label: "Minimum" },
-                  { value: "fixed", label: "Fixed" },
+                  { value: "fixed-pre-tax", label: "Fixed (pre-tax)" },
+                  ...(calculateTax
+                    ? [{ value: "fixed-after-tax", label: "Fixed (after-tax)" }]
+                    : []),
                 ]}
-                onChange={(v) => setPaymentType(v as "minimum" | "fixed")}
+                onChange={(v) =>
+                  setPaymentType(
+                    v as "minimum" | "fixed-pre-tax" | "fixed-after-tax",
+                  )
+                }
               />
 
-              {paymentType === "fixed" && (
+              {(paymentType === "fixed-pre-tax" ||
+                paymentType === "fixed-after-tax") && (
                 <>
                   <Divider />
                   <SliderField
-                    label="Fixed annual payment (max $200,000)"
+                    label={
+                      paymentType === "fixed-after-tax"
+                        ? "Target after-tax payment (max $200,000)"
+                        : "Fixed annual payment (max $200,000)"
+                    }
                     value={fixedPayment}
                     min={0}
                     max={200000}
@@ -233,7 +252,7 @@ export default function RetirementPage() {
                 <Switch
                   id="calculate-tax"
                   checked={calculateTax}
-                  onCheckedChange={setCalculateTax}
+                  onCheckedChange={handleCalculateTax}
                 />
               </div>
 

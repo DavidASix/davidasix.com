@@ -54,7 +54,7 @@ export interface RRIFParams {
   /** Already divided by 100 (e.g. 0.06 for 6%) */
   returnRate: number;
   startPaymentsIn: "1" | "2";
-  paymentType: "minimum" | "fixed";
+  paymentType: "minimum" | "fixed-pre-tax" | "fixed-after-tax";
   fixedPayment: number;
   /** Already divided by 100 (e.g. 0.015 for 1.5%) */
   inflationRate: number;
@@ -75,6 +75,34 @@ export function getOntarioMarginalRate(income: number): number {
     if (income <= threshold) return rate;
   }
   return 0.5;
+}
+
+/**
+ * Given a desired after-tax (net) amount, find the gross RRIF withdrawal
+ * needed to produce it after applying the appropriate tax rate.
+ *
+ * For automatic brackets this finds the self-consistent bracket: the bracket
+ * whose rate, when applied to the grossed-up amount, keeps that amount within
+ * the same bracket.
+ */
+function grossUpPayment(
+  netDesired: number,
+  taxMode: "automatic" | "manual",
+  manualTaxRate: number,
+): { gross: number; taxRate: number } {
+  if (taxMode === "manual") {
+    return {
+      gross: netDesired / (1 - manualTaxRate),
+      taxRate: manualTaxRate,
+    };
+  }
+  for (const [threshold, rate] of ONTARIO_BRACKETS) {
+    const gross = netDesired / (1 - rate);
+    if (gross <= threshold) {
+      return { gross, taxRate: rate };
+    }
+  }
+  return { gross: netDesired / 0.5, taxRate: 0.5 };
 }
 
 export function calculateRRIF(params: RRIFParams): RRIFRow[] {
@@ -100,9 +128,21 @@ export function calculateRRIF(params: RRIFParams): RRIFRow[] {
         payment = minPayment;
         withdrawalPercent = minRate;
       } else {
-        const inflated =
+        const inflatedTarget =
           params.fixedPayment * Math.pow(1 + params.inflationRate, paymentYear);
-        payment = Math.max(minPayment, inflated);
+
+        if (params.paymentType === "fixed-after-tax" && params.calculateTax) {
+          // Gross up the target net amount to find the required RRIF withdrawal
+          const { gross } = grossUpPayment(
+            inflatedTarget,
+            params.taxMode,
+            params.manualTaxRate,
+          );
+          payment = Math.max(minPayment, gross);
+        } else {
+          payment = Math.max(minPayment, inflatedTarget);
+        }
+
         withdrawalPercent = balance > 0 ? payment / balance : 0;
       }
       paymentYear++;
