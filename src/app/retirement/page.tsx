@@ -12,26 +12,26 @@ import { SelectField } from "./_components/select-field";
 import { PaymentSchedule } from "./_components/payment-schedule";
 
 export default function RetirementPage() {
-  const [rrifValue, setRrifValue] = useState(200000);
-  const [startAge, setStartAge] = useState(71);
+  const [rrifValue, setRrifValue] = useState(2_000_000);
+  const [startAge, setStartAge] = useState(65);
   const [endAge, setEndAge] = useState(90);
   const [useSpouseAge, setUseSpouseAge] = useState("0");
   const [spouseAge, setSpouseAge] = useState(65);
-  const [returnRate, setReturnRate] = useState(6.0);
-  const [startPaymentsIn, setStartPaymentsIn] = useState<"1" | "2">("2");
+  const [returnRate, setReturnRate] = useState(4.5);
+  const [startPaymentsIn, setStartPaymentsIn] = useState<"1" | "2">("1");
   const [paymentType, setPaymentType] = useState<
     "minimum" | "fixed-pre-tax" | "fixed-after-tax"
-  >("minimum");
-  const [fixedPayment, setFixedPayment] = useState(12000);
+  >("fixed-after-tax");
+  const [fixedPayment, setFixedPayment] = useState(120_000);
   const [inflationRate, setInflationRate] = useState(1.5);
-  const [calculateTax, setCalculateTax] = useState(false);
+  const [calculateTax, setCalculateTax] = useState(true);
   const [province, setProvince] = useState<Province>("ON");
   const [taxMode, setTaxMode] = useState<"automatic" | "manual">("automatic");
   const [manualTaxRate, setManualTaxRate] = useState(30.0);
   const [includeOas, setIncludeOas] = useState(false);
-  const [oasMonthly, setOasMonthly] = useState(700);
+  const [oasMonthly, setOasMonthly] = useState(740);
   const [includeCpp, setIncludeCpp] = useState(false);
-  const [cppMonthly, setCppMonthly] = useState(800);
+  const [cppMonthly, setCppMonthly] = useState(720);
   const [cppStartAge, setCppStartAge] = useState(65);
 
   function handleCalculateTax(v: boolean) {
