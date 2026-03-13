@@ -48,17 +48,14 @@ export function PaymentSchedule({
               </TableHead>
               <TableHead className="text-right">Annual Payment</TableHead>
               <TableHead className="text-right">Withdrawal %</TableHead>
+              {showPension && (
+                <TableHead className="text-right">Pension Income</TableHead>
+              )}
               {calculateTax && (
                 <>
                   <TableHead className="text-right">Tax Rate</TableHead>
                   <TableHead className="text-right">Est. Tax</TableHead>
-                  <TableHead className="text-right">
-                    After-tax Payment
-                  </TableHead>
                 </>
-              )}
-              {showPension && (
-                <TableHead className="text-right">Pension Income</TableHead>
               )}
               <TableHead className="text-right">Total Income</TableHead>
               <TableHead className="text-right">Value at End of Year</TableHead>
@@ -79,6 +76,11 @@ export function PaymentSchedule({
                 <TableCell className="text-right">
                   {formatPercent(row.withdrawalPercent)}
                 </TableCell>
+                {showPension && (
+                  <TableCell className="text-right">
+                    {formatCurrency(row.pensionIncome)}
+                  </TableCell>
+                )}
                 {calculateTax && (
                   <>
                     <TableCell className="text-right">
@@ -87,18 +89,10 @@ export function PaymentSchedule({
                     <TableCell className="text-right">
                       {formatCurrency(row.taxAmount)}
                     </TableCell>
-                    <TableCell className="text-right">
-                      {formatCurrency(row.netPayment)}
-                    </TableCell>
                   </>
                 )}
-                {showPension && (
-                  <TableCell className="text-right">
-                    {formatCurrency(row.pensionIncome)}
-                  </TableCell>
-                )}
                 <TableCell className="text-right">
-                  {formatCurrency(row.netPayment + row.pensionIncome)}
+                  {formatCurrency(row.netPayment + row.pensionIncome * (1 - row.taxRate))}
                 </TableCell>
                 <TableCell className="text-right">
                   {formatCurrency(row.endValue)}

@@ -204,29 +204,36 @@ export function getMinWithdrawalRate(age: number): number {
  * @returns The required gross withdrawal and the effective tax rate that applies to it.
  */
 function grossUpPayment(
-  netDesired: number,
+  netDesiredTotal: number,
+  otherIncome: number,
   taxMode: "automatic" | "manual",
   manualTaxRate: number,
   province: Province,
 ): { gross: number; taxRate: number } {
+  // Solve for the RRIF gross amount such that total after-tax income equals netDesiredTotal.
+  // Total gross = rrif_gross + otherIncome; net = totalGross * (1 - taxRate(totalGross)).
   if (taxMode === "manual") {
+    const totalGross = netDesiredTotal / (1 - manualTaxRate);
     return {
-      gross: netDesired / (1 - manualTaxRate),
+      gross: Math.max(0, totalGross - otherIncome),
       taxRate: manualTaxRate,
     };
   }
 
-  // Binary search: gross * (1 - getTaxRate(province, gross)) = netDesired
-  let lo = netDesired;
-  let hi = netDesired * 3;
+  // Binary search: totalGross * (1 - getTaxRate(province, totalGross)) = netDesiredTotal
+  let lo = netDesiredTotal;
+  let hi = netDesiredTotal * 3;
   for (let i = 0; i < 50; i++) {
     const mid = (lo + hi) / 2;
     const afterTax = mid * (1 - getTaxRate(province, mid));
-    if (afterTax < netDesired) lo = mid;
+    if (afterTax < netDesiredTotal) lo = mid;
     else hi = mid;
   }
-  const gross = (lo + hi) / 2;
-  return { gross, taxRate: getTaxRate(province, gross) };
+  const totalGross = (lo + hi) / 2;
+  return {
+    gross: Math.max(0, totalGross - otherIncome),
+    taxRate: getTaxRate(province, totalGross),
+  };
 }
 
 /**
@@ -286,10 +293,10 @@ export function calculateRRIF(params: RRIFParams): RRIFRow[] {
           params.fixedPayment * Math.pow(1 + params.inflationRate, paymentYear);
 
         if (params.paymentType === "fixed-after-tax" && params.calculateTax) {
-          // Gross up the net target minus pension income (pension covers part of the need)
-          const netFromRrif = Math.max(0, inflatedTarget - pensionIncome);
+          // Gross up so that total after-tax income (RRIF + pension) equals inflatedTarget.
           const { gross } = grossUpPayment(
-            netFromRrif,
+            inflatedTarget,
+            pensionIncome,
             params.taxMode,
             params.manualTaxRate,
             params.province,
@@ -310,13 +317,14 @@ export function calculateRRIF(params: RRIFParams): RRIFRow[] {
     let taxAmount = 0;
     let netPayment = payment;
 
-    if (params.calculateTax && payment > 0) {
+    if (params.calculateTax && (payment > 0 || pensionIncome > 0)) {
+      const totalIncome = payment + pensionIncome;
       taxRate =
         params.taxMode === "automatic"
-          ? getTaxRate(params.province, payment)
+          ? getTaxRate(params.province, totalIncome)
           : params.manualTaxRate;
-      taxAmount = payment * taxRate;
-      netPayment = payment - taxAmount;
+      taxAmount = totalIncome * taxRate;
+      netPayment = payment * (1 - taxRate);
     }
 
     const endValue = Math.max(0, (balance - payment) * (1 + params.returnRate));
