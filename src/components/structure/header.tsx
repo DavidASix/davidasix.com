@@ -23,6 +23,7 @@ const navItems: NavItem[] = [
   { label: "Blog", href: "/blog" },
   { label: "Pizza", href: "/pizza" },
   { label: "Projects", href: "/projects" },
+  { label: "Tools", href: "/tools" },
   { label: "ROO", href: "https://redoxfordonline.com" },
 ];
 
