@@ -10,6 +10,9 @@ import { Divider } from "./_components/divider";
 import { SliderField } from "./_components/slider-field";
 import { SelectField } from "./_components/select-field";
 import { PaymentSchedule } from "./_components/payment-schedule";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { metadata } from "./_metadata";
 
 export default function RetirementPage() {
   const [rrifValue, setRrifValue] = useState(2_000_000);
@@ -106,11 +109,13 @@ export default function RetirementPage() {
         <div className="container mx-auto px-4 py-16">
           <div className="mb-12 text-center">
             <h1 className="text-foreground font-jersey-10 mb-4 text-6xl leading-none md:text-7xl lg:text-[7rem]">
-              RRIF Calculator
+              {metadata.title}
             </h1>
-            <p className="text-muted-foreground text-xl">
-              Registered Retirement Income Fund payment planner
-            </p>
+            <div className="text-muted-foreground prose prose-invert mx-auto">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {metadata.description}
+              </ReactMarkdown>
+            </div>
           </div>
 
           <div className="grid gap-8 lg:grid-cols-[380px_1fr]">

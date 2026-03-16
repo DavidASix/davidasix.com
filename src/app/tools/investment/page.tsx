@@ -7,6 +7,9 @@ import { Divider } from "~/app/tools/retirement/_components/divider";
 import { SliderField } from "~/app/tools/retirement/_components/slider-field";
 import { SelectField } from "~/app/tools/retirement/_components/select-field";
 import { InvestmentSchedule } from "./_components/investment-schedule";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { metadata } from "./_metadata";
 
 export default function InvestmentPage() {
   const [currentAge, setCurrentAge] = useState(30);
@@ -86,11 +89,13 @@ export default function InvestmentPage() {
         <div className="container mx-auto px-4 py-16">
           <div className="mb-12 text-center">
             <h1 className="text-foreground font-jersey-10 mb-4 text-6xl leading-none md:text-7xl lg:text-[7rem]">
-              Investment Calculator
+              {metadata.title}
             </h1>
-            <p className="text-muted-foreground text-xl">
-              Tax-free compound growth planner
-            </p>
+            <div className="text-muted-foreground prose prose-invert mx-auto">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {metadata.description}
+              </ReactMarkdown>
+            </div>
           </div>
 
           <div className="grid gap-8 lg:grid-cols-[380px_1fr]">
