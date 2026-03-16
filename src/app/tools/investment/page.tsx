@@ -3,9 +3,9 @@
 import { useState, useMemo } from "react";
 import { TooltipProvider } from "~/components/ui/tooltip";
 import { calculateInvestment, type LumpSum } from "./_components/calculations";
-import { Divider } from "~/app/retirement/_components/divider";
-import { SliderField } from "~/app/retirement/_components/slider-field";
-import { SelectField } from "~/app/retirement/_components/select-field";
+import { Divider } from "~/app/tools/retirement/_components/divider";
+import { SliderField } from "~/app/tools/retirement/_components/slider-field";
+import { SelectField } from "~/app/tools/retirement/_components/select-field";
 import { InvestmentSchedule } from "./_components/investment-schedule";
 
 export default function InvestmentPage() {
