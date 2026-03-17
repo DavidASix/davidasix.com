@@ -39,7 +39,10 @@ describe("tool-directory", () => {
     for (const tool of toolDirectory) {
       expect(tool.route, `${tool.title} missing route`).toBeTruthy();
       expect(tool.title, `entry missing title`).toBeTruthy();
-      expect(tool.description, `${tool.title} missing description`).toBeTruthy();
+      expect(
+        tool.description,
+        `${tool.title} missing description`,
+      ).toBeTruthy();
       expect(tool.image, `${tool.title} missing image`).toBeTruthy();
       expect(
         tool.route,

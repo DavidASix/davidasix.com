@@ -45,10 +45,10 @@ export default function ToolsPage() {
                   <span className="text-primary/60 font-jersey-10 text-8xl leading-none select-none">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <h2 className="text-foreground font-jersey-10 text-4xl leading-none transition-colors group-hover:text-primary">
+                  <h2 className="text-foreground font-jersey-10 group-hover:text-primary text-4xl leading-none transition-colors">
                     {tool.title}
                   </h2>
-                  <div className="max-w-none text-foreground/80">
+                  <div className="text-foreground/80 max-w-none">
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>
                       {tool.short_description}
                     </ReactMarkdown>
