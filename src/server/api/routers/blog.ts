@@ -11,6 +11,7 @@ interface BlogFrontMatter {
   publish_date: string;
   subtitle?: string;
   header_image?: string;
+  hidden?: boolean;
 }
 
 interface BlogPost {
@@ -38,7 +39,8 @@ function getAllBlogPosts(): BlogPost[] {
           frontMatter: data as BlogFrontMatter,
           content,
         };
-      });
+      })
+      .filter((post) => !post.frontMatter.hidden);
 
     // Sort by publish_date (most recent first)
     posts.sort((a, b) => {

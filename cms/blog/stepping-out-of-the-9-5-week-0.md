@@ -2,6 +2,7 @@
 title: "Stepping out of the 9 - 5, Week 0"
 original_link: "https://davidasix.com/blog/stepping-out-of-the-9-5-week-0"
 publish_date: "2023-08-07"
+hidden: true
 subtitle: "FireStack Prepping"
 header_image: local/board_9871ce1b5b.jpg)
 ---
