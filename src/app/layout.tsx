@@ -14,6 +14,9 @@ export const metadata: Metadata = {
   title: "DavidASix",
   description: "David A Six - Developer, Maker, Tech Enthusiast",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
+  openGraph: {
+    images: [{ url: "/images/og-image.png" }],
+  },
 };
 
 const roboto = Roboto_Flex({
