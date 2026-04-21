@@ -1,7 +1,10 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { createTRPCRouter, passkeyProcedure } from "~/server/api/trpc";
-import { YoutubeTranscript, YoutubeTranscriptError } from "youtube-transcript";
+import {
+  fetchTranscript,
+  TranscriptFetchError,
+} from "~/lib/youtube-transcript";
 import { generateText, Output } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { extractVideoId } from "~/lib/youtube-payoff";
@@ -72,10 +75,10 @@ export const youtubePayoffRouter = createTRPCRouter({
 
       let transcriptText = "";
       try {
-        const transcript = await YoutubeTranscript.fetchTranscript(videoId);
+        const transcript = await fetchTranscript(videoId);
         transcriptText = transcript.map((t) => t.text).join(" ");
       } catch (e) {
-        if (e instanceof YoutubeTranscriptError) {
+        if (e instanceof TranscriptFetchError) {
           console.error(
             "Transcript unavailable for video ID:",
             videoId,
