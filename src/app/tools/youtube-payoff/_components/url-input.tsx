@@ -9,41 +9,39 @@ export function UrlInput({
   onUrlChange,
   onSubmit,
   isLoading,
-  error,
+  hasPasskey,
 }: {
   url: string;
   onUrlChange: (url: string) => void;
   onSubmit: () => void;
   isLoading: boolean;
-  error: string | null;
+  hasPasskey: boolean;
 }) {
   return (
-    <div className="mx-auto max-w-4xl space-y-3">
-      <div className="flex gap-2">
-        <Input
-          type="url"
-          placeholder="https://www.youtube.com/watch?v=..."
-          value={url}
-          onChange={(e) => onUrlChange(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && url.trim() && !isLoading) onSubmit();
-          }}
-          disabled={isLoading}
-        />
-        <Button
-          onClick={onSubmit}
-          disabled={!url.trim() || isLoading}
-          size="default"
-        >
-          {isLoading ? (
-            <Loader2 className="size-4 animate-spin" />
-          ) : (
-            <Search className="size-4" />
-          )}
-          Analyze
-        </Button>
-      </div>
-      {error && <p className="text-destructive text-sm">{error}</p>}
+    <div className="flex gap-2">
+      <Input
+        type="url"
+        placeholder="https://www.youtube.com/watch?v=..."
+        value={url}
+        onChange={(e) => onUrlChange(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && url.trim() && hasPasskey && !isLoading)
+            onSubmit();
+        }}
+        disabled={isLoading || !hasPasskey}
+      />
+      <Button
+        onClick={onSubmit}
+        disabled={!url.trim() || !hasPasskey || isLoading}
+        size="default"
+      >
+        {isLoading ? (
+          <Loader2 className="size-4 animate-spin" />
+        ) : (
+          <Search className="size-4" />
+        )}
+        Analyze
+      </Button>
     </div>
   );
 }
