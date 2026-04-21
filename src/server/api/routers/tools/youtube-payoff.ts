@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { createTRPCRouter, passkeyProcedure } from "~/server/api/trpc";
-import { YoutubeTranscript } from "youtube-transcript";
+import { YoutubeTranscript, YoutubeTranscriptError } from "youtube-transcript";
 import { generateText, Output } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { extractVideoId } from "~/lib/youtube-payoff";
@@ -74,18 +74,33 @@ export const youtubePayoffRouter = createTRPCRouter({
       try {
         const transcript = await YoutubeTranscript.fetchTranscript(videoId);
         transcriptText = transcript.map((t) => t.text).join(" ");
-      } catch {
-        console.error("Failed to fetch transcript for video ID:", videoId);
-        return {
-          title: oEmbed.title,
-          author: oEmbed.author_name,
-          link: input.url,
-          thumbnail_url: oEmbed.thumbnail_url,
-          short_summary: "",
-          payoff: "",
-          structure: "",
-          transcript_unavailable: true,
-        };
+      } catch (e) {
+        if (e instanceof YoutubeTranscriptError) {
+          console.error(
+            "Transcript unavailable for video ID:",
+            videoId,
+            e.message,
+          );
+          return {
+            title: oEmbed.title,
+            author: oEmbed.author_name,
+            link: input.url,
+            thumbnail_url: oEmbed.thumbnail_url,
+            short_summary: "",
+            payoff: "",
+            structure: "",
+            transcript_unavailable: true,
+          };
+        }
+        console.error(
+          "Unexpected error fetching transcript for video ID:",
+          videoId,
+          e,
+        );
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to fetch transcript. Please try again.",
+        });
       }
 
       const wordCount = transcriptText.split(/\s+/).length;
