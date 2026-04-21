@@ -8,6 +8,9 @@ export const env = createEnv({
    */
   server: {
     NODE_ENV: z.enum(["development", "test", "production"]),
+    OPENAI_API_KEY: z.string().min(1),
+    PASSKEY: z.string().min(16),
+    PASSKEY_ENCRYPTION_KEY: z.string().min(1),
   },
 
   /**
@@ -26,6 +29,9 @@ export const env = createEnv({
    */
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+    PASSKEY: process.env.PASSKEY,
+    PASSKEY_ENCRYPTION_KEY: process.env.PASSKEY_ENCRYPTION_KEY,
     NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
     NEXT_PUBLIC_POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,
   },
