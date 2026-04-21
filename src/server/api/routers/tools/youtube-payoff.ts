@@ -4,6 +4,7 @@ import { createTRPCRouter, passkeyProcedure } from "~/server/api/trpc";
 import { YoutubeTranscript } from "youtube-transcript";
 import { generateText, Output } from "ai";
 import { openai } from "@ai-sdk/openai";
+import { extractVideoId } from "~/lib/youtube-payoff";
 
 const MAX_TRANSCRIPT_WORDS = 6000;
 
@@ -13,32 +14,6 @@ const systemPrompt = [
   '- "payoff": A markdown-formatted analysis of whether the video\'s title and thumbnail deliver on their promise. Explain what clickbait elements exist (if any) and whether the content justifies them.',
   '- "structure": A markdown-formatted breakdown of the video\'s key points. If the video lists steps, bullet points, or numbered items, reproduce them concisely.',
 ].join("\n");
-
-function extractVideoId(url: string): string | null {
-  try {
-    const parsed = new URL(url);
-    if (
-      parsed.hostname === "www.youtube.com" ||
-      parsed.hostname === "youtube.com"
-    ) {
-      if (parsed.pathname === "/watch") {
-        return parsed.searchParams.get("v");
-      }
-      if (parsed.pathname.startsWith("/shorts/")) {
-        return parsed.pathname.slice(8);
-      }
-      if (parsed.pathname.startsWith("/embed/")) {
-        return parsed.pathname.slice(7);
-      }
-    }
-    if (parsed.hostname === "youtu.be") {
-      return parsed.pathname.slice(1);
-    }
-    return null;
-  } catch {
-    return null;
-  }
-}
 
 const oEmbedResponseSchema = z.object({
   title: z.string(),
