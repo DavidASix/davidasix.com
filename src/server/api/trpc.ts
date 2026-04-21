@@ -11,6 +11,7 @@ import superjson from "superjson";
 import { ZodError, z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { env } from "~/env";
+import { decrypt } from "~/lib/server-crypto";
 
 /**
  * 1. CONTEXT
@@ -109,8 +110,9 @@ export const publicProcedure = t.procedure.use(timingMiddleware);
  */
 export const passkeyProcedure = publicProcedure
   .input(z.object({ passkey: z.string() }))
-  .use(async ({ next, input, ctx }) => {
-    if (input.passkey !== env.PASSKEY) {
+  .use(async ({ next, ctx, input }) => {
+    const decrypted = decrypt(input.passkey, env.PASSKEY_ENCRYPTION_KEY);
+    if (decrypted !== env.PASSKEY) {
       throw new TRPCError({
         code: "UNAUTHORIZED",
         message: "Invalid passkey",
