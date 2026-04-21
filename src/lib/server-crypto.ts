@@ -4,8 +4,14 @@ const ALGORITHM = "aes-256-gcm";
 const IV_LENGTH = 12;
 const AUTH_TAG_LENGTH = 16;
 
+const derivedKeyCache = new Map<string, Buffer>();
+
 function deriveKey(secret: string): Buffer {
-  return crypto.scryptSync(secret, "youtube-payoff-salt", 32);
+  const cached = derivedKeyCache.get(secret);
+  if (cached) return cached;
+  const key = crypto.scryptSync(secret, "youtube-payoff-salt", 32);
+  derivedKeyCache.set(secret, key);
+  return key;
 }
 
 export function encrypt(text: string, secret: string): string {
