@@ -10,6 +10,7 @@ import { type RouterOutputs } from "~/trpc/react";
 
 const markdownComponents = createMarkdownComponents({
   h2: "mt-0",
+  h3: "mt-0",
 });
 
 export function AnalysisResults({
