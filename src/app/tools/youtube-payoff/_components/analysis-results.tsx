@@ -1,6 +1,5 @@
 "use client";
 
-import { cn } from "~/lib/utils";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { createMarkdownComponents } from "~/lib/markdown-components";
@@ -95,7 +94,7 @@ export function AnalysisResults({
 
       <Card className="bg-background/40 h-min">
         <CardHeader>
-          <CardTitle className={cn("text-foreground font-jersey-10 text-2xl")}>
+          <CardTitle className="text-foreground font-jersey-10 text-2xl">
             Payoff
           </CardTitle>
         </CardHeader>
@@ -113,7 +112,7 @@ export function AnalysisResults({
 
       <Card className="bg-background/40 h-min">
         <CardHeader>
-          <CardTitle className={cn("text-foreground font-jersey-10 text-2xl")}>
+          <CardTitle className="text-foreground font-jersey-10 text-2xl">
             Structure
           </CardTitle>
         </CardHeader>
