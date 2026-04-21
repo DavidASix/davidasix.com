@@ -70,7 +70,7 @@ export const youtubePayoffRouter = createTRPCRouter({
         });
       }
 
-      let transcriptText: string | null = null;
+      let transcriptText = "";
       try {
         const transcript = await YoutubeTranscript.fetchTranscript(videoId);
         transcriptText = transcript.map((t) => t.text).join(" ");
