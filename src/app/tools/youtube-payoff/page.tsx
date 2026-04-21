@@ -18,7 +18,7 @@ export default function YoutubePayoffPage() {
 
   function handleSubmit() {
     if (!url.trim() || analyze.isPending) return;
-    analyze.mutate({ url: url.trim() });
+    analyze.mutate({ url: url.trim(), passkey: "foobar" });
   }
 
   return (

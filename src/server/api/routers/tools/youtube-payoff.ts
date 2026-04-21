@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { createTRPCRouter, passkeyProcedure } from "~/server/api/trpc";
 import { YoutubeTranscript } from "youtube-transcript";
 import { generateText, Output } from "ai";
 import { openai } from "@ai-sdk/openai";
@@ -55,7 +55,7 @@ const analysisSchema = z.object({
 });
 
 export const youtubePayoffRouter = createTRPCRouter({
-  analyze: publicProcedure
+  analyze: passkeyProcedure
     .input(z.object({ url: z.string().url() }))
     .mutation(async ({ input }) => {
       const videoId = extractVideoId(input.url);

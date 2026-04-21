@@ -8,7 +8,9 @@
  */
 import { initTRPC } from "@trpc/server";
 import superjson from "superjson";
-import { ZodError } from "zod";
+import { ZodError, z } from "zod";
+import { TRPCError } from "@trpc/server";
+import { env } from "~/env";
 
 /**
  * 1. CONTEXT
@@ -101,3 +103,18 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
  * are logged in.
  */
 export const publicProcedure = t.procedure.use(timingMiddleware);
+
+/**
+ * Endpoints that should allow access with my passkey. D6 is the only person with a passkey, so it's just an envvar
+ */
+export const passkeyProcedure = publicProcedure
+  .input(z.object({ passkey: z.string() }))
+  .use(async ({ next, input, ctx }) => {
+    if (input.passkey !== env.PASSKEY) {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "Invalid passkey",
+      });
+    }
+    return next({ ctx });
+  });
