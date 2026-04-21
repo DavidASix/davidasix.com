@@ -9,7 +9,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Skeleton } from "~/components/ui/skeleton";
 import { type RouterOutputs } from "~/trpc/react";
 
-const markdownComponents = createMarkdownComponents();
+const markdownComponents = createMarkdownComponents({
+  h2: "mt-0",
+});
 
 export function AnalysisResults({
   result,
@@ -91,14 +93,14 @@ export function AnalysisResults({
         </CardContent>
       </Card>
 
-      <Card className="bg-background/40">
+      <Card className="bg-background/40 h-min">
         <CardHeader>
-          <CardTitle className={cn("text-foreground font-jersey-10 text-xl")}>
+          <CardTitle className={cn("text-foreground font-jersey-10 text-2xl")}>
             Payoff
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="prose max-w-none">
+          <div className="max-w-none">
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               components={markdownComponents}
@@ -109,14 +111,14 @@ export function AnalysisResults({
         </CardContent>
       </Card>
 
-      <Card className="bg-background/40">
+      <Card className="bg-background/40 h-min">
         <CardHeader>
-          <CardTitle className={cn("text-foreground font-jersey-10 text-xl")}>
+          <CardTitle className={cn("text-foreground font-jersey-10 text-2xl")}>
             Structure
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="prose max-w-none">
+          <div className="max-w-none">
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               components={markdownComponents}
