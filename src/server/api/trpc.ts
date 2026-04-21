@@ -112,11 +112,20 @@ export const passkeyProcedure = publicProcedure
   .input(z.object({ passkey: z.string() }))
   .use(async ({ next, ctx, input }) => {
     const decrypted = decrypt(input.passkey, env.PASSKEY_ENCRYPTION_KEY);
-    if (decrypted !== env.PASSKEY) {
+    const a = decrypted ?? "";
+    const b = env.PASSKEY;
+    let diff = a.length ^ b.length;
+    const len = Math.max(a.length, b.length);
+    for (let i = 0; i < len; i++) {
+      diff |= (a.charCodeAt(i) || 0) ^ (b.charCodeAt(i) || 0);
+    }
+    const isValid = diff === 0;
+    if (!isValid) {
       throw new TRPCError({
         code: "UNAUTHORIZED",
         message: "Invalid passkey",
       });
     }
+
     return next({ ctx });
   });
