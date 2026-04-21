@@ -109,7 +109,15 @@ export const publicProcedure = t.procedure.use(timingMiddleware);
  * Endpoints that should allow access with my passkey. D6 is the only person with a passkey, so it's just an envvar
  */
 export const passkeyProcedure = publicProcedure
-  .input(z.object({ passkey: z.string() }))
+  .input(
+    z.object({
+      passkey: z
+        .string()
+        .min(1)
+        .max(512)
+        .regex(/^[A-Za-z0-9+/]+=*$/, "Invalid passkey format"),
+    }),
+  )
   .use(async ({ next, ctx, input }) => {
     const decrypted = decrypt(input.passkey, env.PASSKEY_ENCRYPTION_KEY);
     const a = decrypted ?? "";
