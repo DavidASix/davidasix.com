@@ -15,6 +15,12 @@ describe("extractVideoId", () => {
       );
     });
 
+    it("extracts video ID from mobile watch URL", () => {
+      expect(extractVideoId("https://m.youtube.com/watch?v=dQw4w9WgXcQ")).toBe(
+        "dQw4w9WgXcQ",
+      );
+    });
+
     it("extracts video ID from watch URL with extra params", () => {
       expect(
         extractVideoId("https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=42s"),

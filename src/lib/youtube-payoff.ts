@@ -3,7 +3,8 @@ export function extractVideoId(url: string): string | null {
     const parsed = new URL(url);
     if (
       parsed.hostname === "www.youtube.com" ||
-      parsed.hostname === "youtube.com"
+      parsed.hostname === "youtube.com" ||
+      parsed.hostname === "m.youtube.com"
     ) {
       if (parsed.pathname === "/watch") {
         return parsed.searchParams.get("v");
