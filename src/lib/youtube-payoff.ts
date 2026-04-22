@@ -1,3 +1,6 @@
+/**
+ * Extracts the YouTube video ID from a given URL or returns the input if it's already a valid video ID.
+ */
 export function extractVideoId(url: string): string | null {
   try {
     const parsed = new URL(url);
@@ -21,6 +24,10 @@ export function extractVideoId(url: string): string | null {
     }
     return null;
   } catch {
+    // Fallback to testing if the input itself is a video ID
+    if (/^[a-zA-Z0-9_-]{11}$/.test(url)) {
+      return url;
+    }
     return null;
   }
 }

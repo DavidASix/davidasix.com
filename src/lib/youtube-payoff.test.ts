@@ -113,6 +113,22 @@ describe("extractVideoId", () => {
       expect(extractVideoId("just some text")).toBeNull();
     });
 
+    it("returns the ID if input is a bare 11-character video ID", () => {
+      expect(extractVideoId("dQw4w9WgXcQ")).toBe("dQw4w9WgXcQ");
+    });
+
+    it("returns the ID for bare video ID with underscores and hyphens", () => {
+      expect(extractVideoId("abc_DEF-123")).toBe("abc_DEF-123");
+    });
+
+    it("returns null for string that is too short to be a video ID", () => {
+      expect(extractVideoId("abc123")).toBeNull();
+    });
+
+    it("returns null for string that is too long to be a video ID", () => {
+      expect(extractVideoId("dQw4w9WgXcQextra")).toBeNull();
+    });
+
     it("returns null for youtube.com with unrecognized path", () => {
       expect(
         extractVideoId("https://www.youtube.com/feed/trending"),
