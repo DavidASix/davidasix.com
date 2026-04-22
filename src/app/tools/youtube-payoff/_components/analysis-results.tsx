@@ -73,7 +73,7 @@ export function AnalysisResults({
               alt={result.title}
               className="h-24 w-40 shrink-0 rounded-md object-cover"
             />
-            <div className="min-w-0">
+            <div className="flex min-w-0 flex-col justify-center sm:justify-start">
               <a
                 href={result.link}
                 target="_blank"
@@ -85,11 +85,14 @@ export function AnalysisResults({
               <p className="text-muted-foreground mt-1 text-xs">
                 {result.author}
               </p>
-              <p className="text-foreground/90 mt-2 text-sm leading-relaxed">
+              <p className="text-foreground/90 mt-2 hidden text-sm leading-relaxed sm:block">
                 {result.short_summary}
               </p>
             </div>
           </div>
+          <p className="text-foreground/90 mt-4 block text-sm leading-relaxed sm:hidden">
+            {result.short_summary}
+          </p>
         </CardContent>
       </Card>
 
