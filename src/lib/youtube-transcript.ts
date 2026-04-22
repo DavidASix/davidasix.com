@@ -7,7 +7,7 @@ const rapidApiResponseSchema = z.object({
   success: z.boolean(),
   transcript: z.array(
     z.object({
-      text: z.string(),
+      text: z.string().or(z.number()).or(z.boolean()),
       duration: z.string(),
       offset: z.string(),
       lang: z.string(),

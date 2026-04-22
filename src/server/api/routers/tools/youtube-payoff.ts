@@ -76,7 +76,7 @@ export const youtubePayoffRouter = createTRPCRouter({
       let transcriptText = "";
       try {
         const transcript = await fetchTranscript(videoId);
-        transcriptText = transcript.map((t) => t.text).join(" ");
+        transcriptText = transcript.map((t) => String(t.text)).join(" ");
       } catch (e) {
         if (e instanceof TranscriptFetchError) {
           console.error(
