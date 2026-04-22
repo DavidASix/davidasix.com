@@ -34,7 +34,7 @@ const analysisSchema = z.object({
 
 export const youtubePayoffRouter = createTRPCRouter({
   analyze: passkeyProcedure
-    .input(z.object({ url: z.string().url() }))
+    .input(z.object({ url: z.string().min(11, "Please enter a YouTube URL or video ID") }))
     .mutation(async ({ input }) => {
       const videoId = extractVideoId(input.url);
       if (!videoId) {
@@ -44,10 +44,12 @@ export const youtubePayoffRouter = createTRPCRouter({
         });
       }
 
+      const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+
       let oEmbed: OEmbedResponse;
       try {
         const res = await fetch(
-          `https://www.youtube.com/oembed?url=${encodeURIComponent(input.url)}&format=json`,
+          `https://www.youtube.com/oembed?url=${encodeURIComponent(videoUrl)}&format=json`,
         );
         if (!res.ok) {
           throw new TRPCError({
@@ -87,7 +89,7 @@ export const youtubePayoffRouter = createTRPCRouter({
           return {
             title: oEmbed.title,
             author: oEmbed.author_name,
-            link: input.url,
+            link: videoUrl,
             thumbnail_url: oEmbed.thumbnail_url,
             short_summary: "",
             payoff: "",
@@ -126,7 +128,7 @@ export const youtubePayoffRouter = createTRPCRouter({
         return {
           title: oEmbed.title,
           author: oEmbed.author_name,
-          link: input.url,
+          link: videoUrl,
           thumbnail_url: oEmbed.thumbnail_url,
           short_summary: output.short_summary,
           payoff: output.payoff,
