@@ -3,7 +3,7 @@ purchase-date: 2026-04-03
 pizza-shop: Pizza Bite
 rating: 7.6
 better-than-ginos: true
-tldr: \"Well ah... the Spartans weren't really big on amenities\" and neither is Pizza Bite, but it slaps
+tldr: "Well ah... the Spartans weren't really big on amenities\";  \"Neither is Pizza Bite, and it slaps"
 ---
 
 I went for a really long run today. Well maybe not really long, but it was 15K and 1400 calories. And that means I should get some pizza. 
@@ -20,7 +20,7 @@ When I got there I was surprised that the pizza shop was within an *Esso*.
 
  That definitely didn't deter me as I hoped this was a diamond in the rough. I went in (to the gas station) and the back half of it was a full Pizza Shop! Unfortunately I had about a 7-minute wait for the pizza after I arrived (despite arriving 30 minutes after the order); fortunately there was lots to look at in the gas station, so I browsed the overpriced chips and motor oil. When my order was ready I was informed they didn't have the diet Dr.Pepper I ordered, but that I could pick something else. In a neat turn of events, the Esso and Pizza Bite share a POS system (or have a handshake agreement, or they don't care), so I was able to swap for *anything in the gas station fridge* (of the same price, or pay to upgrade).
  
- ![The gas station fridge which contained the best energy drinks (Ghost) as well as Flying Monkey beers (not pictured)](local/pizza-bit-energy-drinks.webp)
+ ![The gas station fridge which contained the best energy drinks (Ghost) as well as Flying Monkey beers (not pictured)](local/pizza-bite-energy-drinks.webp)
 
  One downside of this drink switch up was an incorrect bill. During the long wait-time I decided to make sure I knew what the total was going to be. So when they handed me the POS system I knew that they had accidentally included the charge for multiple drinks (my original drink, and my new one), overcharging me for the can that they didn't have available. I corrected them and they remedied the mistake. 
 
@@ -30,7 +30,7 @@ I got some gas and headed back with my pizza (I didn't actually get gas I just t
 
 First impressions as opened the boxes is that everything looked very promising. The first bite had me immediately impressed. It's light on sauce and heavy on cheese, but both have notable flavor. This sauce to cheese ratio is a big hit for me (a cheese lover) but a miss for my wife (a sauce lover). The crust is thin and greasy, but not too greasy. It's the ideal "this is fast food pizza" level of crust grease. The bottom of the pie was coated in a healthy dose cornmeal, which also had surprising flavor depth.
 
-![Planet Pizza / Wingza storefront](local/pizz-bite-topdown.webp)
+![The Pizza Bite Pickle Pie](local/pizza-bite-topdown.webp)
 
 I purchased three dips for this pizza, and they gave me Belvario creamy garlic dips. As much as it's always nice to get a handmade dip Belvario is an acceptable alternative, especially for stores located within gas stations. Interestingly, I had **one of the dips** with the **first half of the pizza**; this is an unheard of ratio for me, as normally I like to eat much more dip. What I'm realizing is that the pizza is tasty enough to stand on its own without additional dip, which is quite the achievement.
 
