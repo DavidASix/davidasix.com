@@ -34,7 +34,11 @@ const analysisSchema = z.object({
 
 export const youtubePayoffRouter = createTRPCRouter({
   analyze: passkeyProcedure
-    .input(z.object({ url: z.string().min(11, "Please enter a YouTube URL or video ID") }))
+    .input(
+      z.object({
+        url: z.string().min(11, "Please enter a YouTube URL or video ID"),
+      }),
+    )
     .mutation(async ({ input }) => {
       const videoId = extractVideoId(input.url);
       if (!videoId) {
