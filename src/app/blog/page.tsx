@@ -9,9 +9,9 @@ type BlogPost = RouterOutputs["blog"]["getAllPosts"][number];
 function BlogListItem({ post }: { post: BlogPost }) {
   // Truncate content to 164 characters
   const contentPreview =
-    post.content.length > 164
-      ? post.content.substring(0, 164) + "..."
-      : post.content;
+    post.plainText.length > 164
+      ? post.plainText.substring(0, 164) + "..."
+      : post.plainText;
 
   // Handle header image path
   const headerImage = post.frontMatter.header_image
