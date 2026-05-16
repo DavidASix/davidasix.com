@@ -38,7 +38,7 @@ export default async function BlogPostPage({
         </Link>
 
         {/* Post Container */}
-        <article className="border-border bg-card/60 mx-auto max-w-4xl rounded-lg border-2 p-8 shadow-xl">
+        <article className="border-border bg-card/60 mx-auto max-w-5xl rounded-lg border-2 p-8 shadow-xl">
           {/* Header Section */}
           <header className="border-border mb-8 border-b-2 pb-6">
             <h1
@@ -81,7 +81,7 @@ export default async function BlogPostPage({
           </header>
 
           {/* Markdown Content */}
-          <div className="prose max-w-none">
+          <div className="max-w-none">
             <ReactMarkdown
               remarkPlugins={[remarkGfm, remarkGithubAlerts]}
               components={markdownComponents}
