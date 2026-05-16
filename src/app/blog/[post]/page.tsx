@@ -73,7 +73,7 @@ export default async function BlogPostPage({
                 <img
                   src={headerImage}
                   alt={post.frontMatter.title}
-                  className="w-full rounded-lg object-cover shadow-lg"
+                  className="w-full object-contain"
                   style={{ maxHeight: "500px" }}
                 />
               </div>
