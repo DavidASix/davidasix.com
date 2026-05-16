@@ -4,7 +4,10 @@ import remarkGfm from "remark-gfm";
 
 import { api } from "~/trpc/server";
 import { PizzaRating } from "../_components/pizza-rating";
-import { createMarkdownComponents } from "~/lib/markdown-components";
+import {
+  createMarkdownComponents,
+  remarkGithubAlerts,
+} from "~/lib/markdown-components";
 
 // Custom markdown components for pizza (amber theme)
 const markdownComponents = createMarkdownComponents({
@@ -89,7 +92,7 @@ export default async function PizzaPostPage({
           {/* Markdown Content */}
           <div className="prose max-w-none">
             <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
+              remarkPlugins={[remarkGfm, remarkGithubAlerts]}
               components={markdownComponents}
             >
               {post.content}

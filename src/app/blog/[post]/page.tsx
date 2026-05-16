@@ -4,7 +4,10 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 import { api } from "~/trpc/server";
-import { createMarkdownComponents } from "~/lib/markdown-components";
+import {
+  createMarkdownComponents,
+  remarkGithubAlerts,
+} from "~/lib/markdown-components";
 
 const markdownComponents = createMarkdownComponents();
 
@@ -80,7 +83,7 @@ export default async function BlogPostPage({
           {/* Markdown Content */}
           <div className="prose max-w-none">
             <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
+              remarkPlugins={[remarkGfm, remarkGithubAlerts]}
               components={markdownComponents}
             >
               {post.content}

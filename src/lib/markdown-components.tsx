@@ -1,6 +1,105 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Components } from "react-markdown";
+import {
+  CircleAlert,
+  Info,
+  Lightbulb,
+  OctagonAlert,
+  TriangleAlert,
+} from "lucide-react";
 import { cn } from "./utils";
+
+type MdastNode = {
+  type: string;
+  value?: string;
+  children?: MdastNode[];
+  data?: Record<string, unknown>;
+};
+
+// Matches [!TYPE] at the start of a text value, followed by optional whitespace/newline
+const ALERT_PREFIX_REGEX = /^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*\n?/i;
+
+function processBlockquoteNode(node: MdastNode) {
+  if (node.type === "blockquote" && node.children) {
+    const firstChild = node.children[0];
+    if (firstChild?.type === "paragraph" && firstChild.children?.length) {
+      const firstInline = firstChild.children[0];
+      // remark emits a single text node: "[!NOTE]\nContent..."
+      if (firstInline?.type === "text" && firstInline.value) {
+        const match = ALERT_PREFIX_REGEX.exec(firstInline.value);
+        if (match) {
+          node.data = node.data ?? {};
+          node.data.hProperties = {
+            ...(typeof node.data.hProperties === "object"
+              ? node.data.hProperties
+              : {}),
+            "data-alert": match[1]!.toLowerCase(),
+          };
+          firstInline.value = firstInline.value.slice(match[0].length);
+          if (!firstInline.value) {
+            firstChild.children.shift();
+          }
+          if (firstChild.children.length === 0) {
+            node.children.shift();
+          }
+        }
+      }
+    }
+  }
+  if (node.children) {
+    for (const child of node.children) {
+      processBlockquoteNode(child);
+    }
+  }
+}
+
+export function remarkGithubAlerts() {
+  return (tree: MdastNode) => {
+    if (tree.children) {
+      for (const node of tree.children) {
+        processBlockquoteNode(node);
+      }
+    }
+  };
+}
+
+const alertConfig = {
+  note: {
+    label: "Note",
+    Icon: Info,
+    containerClass: "border-blue-500 bg-blue-500/10",
+    headerClass: "text-blue-600 dark:text-blue-400",
+    iconClass: "text-blue-500",
+  },
+  tip: {
+    label: "Tip",
+    Icon: Lightbulb,
+    containerClass: "border-green-500 bg-green-500/10",
+    headerClass: "text-green-600 dark:text-green-400",
+    iconClass: "text-green-500",
+  },
+  important: {
+    label: "Important",
+    Icon: CircleAlert,
+    containerClass: "border-purple-500 bg-purple-500/10",
+    headerClass: "text-purple-600 dark:text-purple-400",
+    iconClass: "text-purple-500",
+  },
+  warning: {
+    label: "Warning",
+    Icon: TriangleAlert,
+    containerClass: "border-amber-500 bg-amber-500/10",
+    headerClass: "text-amber-600 dark:text-amber-400",
+    iconClass: "text-amber-500",
+  },
+  caution: {
+    label: "Caution",
+    Icon: OctagonAlert,
+    containerClass: "border-red-500 bg-red-500/10",
+    headerClass: "text-red-600 dark:text-red-400",
+    iconClass: "text-red-500",
+  },
+} as const;
 
 export interface MarkdownComponentOptions {
   h2?: string;
@@ -91,17 +190,52 @@ export function createMarkdownComponents(
         {children}
       </a>
     ),
-    blockquote: ({ children, ...props }) => (
-      <blockquote
-        className={cn(
-          "text-muted-foreground my-4 border-l-4 pl-4 italic",
-          blockquoteBorderColor,
-        )}
-        {...props}
-      >
-        {children}
-      </blockquote>
-    ),
+    blockquote: ({ children, node, ...props }) => {
+      const alertType = (
+        node as { properties?: Record<string, unknown> } | undefined
+      )?.properties?.["data-alert"] as string | undefined;
+
+      const config = alertType
+        ? alertConfig[alertType as keyof typeof alertConfig]
+        : undefined;
+
+      if (config) {
+        const { label, Icon, containerClass, headerClass, iconClass } = config;
+        return (
+          <div
+            className={cn(
+              "my-4 rounded-lg border-l-4 px-4 py-3",
+              containerClass,
+            )}
+          >
+            <div
+              className={cn(
+                "mb-1 flex items-center gap-1.5 font-semibold",
+                headerClass,
+              )}
+            >
+              <Icon className={cn("size-4", iconClass)} />
+              {label}
+            </div>
+            <div className="text-foreground [&>p:last-child]:mb-0">
+              {children}
+            </div>
+          </div>
+        );
+      }
+
+      return (
+        <blockquote
+          className={cn(
+            "text-muted-foreground my-4 border-l-4 pl-4 italic",
+            blockquoteBorderColor,
+          )}
+          {...props}
+        >
+          {children}
+        </blockquote>
+      );
+    },
     code: ({ className, children, ...props }) => {
       const isInline = !className;
       if (isInline) {
