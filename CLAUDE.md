@@ -77,6 +77,9 @@ src/
 - Development includes artificial timing delays in tRPC middleware
 
 # Conventions
+## TypeScript
+- Avoid using `any` or `unknown` types. Always prefer specific types or generics.
+- Avoid using `as` for type assertions unless absolutely necessary. Instead, try to refine types through control flow or helper functions.
 
 ## Styles
 - Don't use template strings when creating a className, instead prefer the `cn` utility.
