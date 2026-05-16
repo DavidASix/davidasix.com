@@ -1,18 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import { api } from "~/trpc/server";
 
-interface BlogPost {
-  slug: string;
-  frontMatter: {
-    title: string;
-    original_link?: string;
-    publish_date: string;
-    subtitle?: string;
-    header_image?: string;
-  };
-  content: string;
-}
+import { api } from "~/trpc/server";
+import type { RouterOutputs } from "~/trpc/react";
+
+type BlogPost = RouterOutputs["blog"]["getAllPosts"][number];
 
 function BlogListItem({ post }: { post: BlogPost }) {
   // Truncate content to 164 characters
