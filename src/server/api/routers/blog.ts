@@ -2,9 +2,9 @@ import { z } from "zod";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import removeMd from "remove-markdown";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { toPlainText } from "~/lib/markdown";
 
 // Define the blog post front matter type
 interface BlogFrontMatter {
@@ -41,7 +41,7 @@ function getAllBlogPosts(): BlogPost[] {
           slug,
           frontMatter: data as BlogFrontMatter,
           content,
-          plainText: removeMd(content),
+          plainText: toPlainText(content),
         };
       })
       .filter((post) => !post.frontMatter.hidden);
@@ -75,7 +75,7 @@ function getBlogPostBySlug(slug: string): BlogPost | null {
       slug,
       frontMatter: data as BlogFrontMatter,
       content,
-      plainText: removeMd(content),
+      plainText: toPlainText(content),
     };
   } catch (error) {
     console.error("Error reading blog post:", error);
