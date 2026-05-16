@@ -8,6 +8,7 @@ import {
   createMarkdownComponents,
   remarkGithubAlerts,
 } from "~/lib/markdown-components";
+import { Button } from "~/components/ui/button";
 
 const markdownComponents = createMarkdownComponents();
 
@@ -27,78 +28,80 @@ export default async function BlogPostPage({
     : null;
 
   return (
-    <main className="min-h-screen">
-      <div className="container mx-auto px-4 py-16">
+    <main className="min-h-screen" id="top">
+      <div className="container mx-auto px-4 py-4">
         {/* Back Button */}
-        <Link
-          href="/blog"
-          className="text-primary hover:text-primary/80 mb-2 inline-block"
-        >
-          ← Back to all posts
-        </Link>
-
-        {/* Post Container */}
-        <article className="border-border bg-card/60 mx-auto max-w-5xl rounded-lg border-2 p-8 shadow-xl">
-          {/* Header Section */}
-          <header className="border-border mb-8 border-b-2 pb-6">
-            <h1
-              className="text-foreground mb-4 text-6xl"
-              style={{ fontFamily: "var(--font-jersey-10)" }}
-            >
-              {post.frontMatter.title}
-            </h1>
-
-            {post.frontMatter.subtitle && (
-              <p className="text-muted-foreground mb-4 text-xl">
-                {post.frontMatter.subtitle}
-              </p>
-            )}
-
-            <div className="mb-4 flex flex-wrap items-center gap-4">
-              <span className="text-muted-foreground text-lg">
-                {new Date(post.frontMatter.publish_date).toLocaleDateString(
-                  "en-US",
-                  {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  },
-                )}
-              </span>
-            </div>
-
-            {/* Header Image */}
-            {headerImage && (
-              <div className="mt-6">
-                <img
-                  src={headerImage}
-                  alt={post.frontMatter.title}
-                  className="w-full object-contain"
-                  style={{ maxHeight: "500px" }}
-                />
-              </div>
-            )}
-          </header>
-
-          {/* Markdown Content */}
-          <div className="max-w-none">
-            <ReactMarkdown
-              remarkPlugins={[remarkGfm, remarkGithubAlerts]}
-              components={markdownComponents}
-            >
-              {post.content}
-            </ReactMarkdown>
-          </div>
-        </article>
-
-        {/* Back Button (Bottom) */}
-        <div className="mt-8 text-center">
-          <Link
-            href="/blog"
-            className="bg-primary text-primary-foreground hover:bg-primary/90 inline-block rounded-lg px-6 py-3 font-bold transition-all hover:shadow-lg"
+        <Button asChild variant="link">
+          <Link href="/blog">← Back to all posts</Link>
+        </Button>
+      </div>
+      <div className="border-muted-foreground h-10 w-full border-y-1">
+        <div className="mx-auto flex h-full max-w-5xl items-center gap-4 py-2 pl-1">
+          <span className="text-muted-foreground text-sm font-light tracking-tighter">
+            /davidasix/blog/{slug}.md
+          </span>
+        </div>
+      </div>
+      {/* Post Container */}
+      <article className="border-muted-foreground bg-card/20 mx-auto max-w-5xl border-x-1">
+        {/* Header Section */}
+        <header className="border-muted-foreground border-b-2 p-8">
+          <h1
+            className="text-foreground mb-4 text-6xl"
+            style={{ fontFamily: "var(--font-jersey-10)" }}
           >
-            ← Back to all posts
-          </Link>
+            {post.frontMatter.title}
+          </h1>
+
+          {post.frontMatter.subtitle && (
+            <p className="text-muted-foreground mb-4 text-xl">
+              {post.frontMatter.subtitle}
+            </p>
+          )}
+
+          <div className="mb-4 flex flex-wrap items-center gap-4">
+            <span className="text-muted-foreground text-lg">
+              {new Date(post.frontMatter.publish_date).toLocaleDateString(
+                "en-US",
+                {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                },
+              )}
+            </span>
+          </div>
+
+          {/* Header Image */}
+          {headerImage && (
+            <div className="mt-6">
+              <img
+                src={headerImage}
+                alt={post.frontMatter.title}
+                className="w-full object-contain"
+                style={{ maxHeight: "500px" }}
+              />
+            </div>
+          )}
+        </header>
+
+        {/* Markdown Content */}
+        <div className="max-w-none p-8">
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm, remarkGithubAlerts]}
+            components={markdownComponents}
+          >
+            {post.content}
+          </ReactMarkdown>
+        </div>
+      </article>
+
+      {/* Back Button (Bottom) */}
+      <div className="border-muted-foreground border-t py-4 text-center">
+        <div className="mx-auto flex max-w-5xl justify-start">
+          <Button asChild variant="link">
+            <a href="#top">Scroll to top</a>
+          </Button>
         </div>
       </div>
     </main>
