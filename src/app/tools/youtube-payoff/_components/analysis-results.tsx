@@ -7,6 +7,11 @@ import { createMarkdownComponents } from "~/lib/markdown-components";
 import { AlertCircle, Check, Copy } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "~/components/ui/hover-card";
 import { Skeleton } from "~/components/ui/skeleton";
 import { type RouterOutputs } from "~/trpc/react";
 
@@ -40,6 +45,53 @@ function CopyTranscriptButton({ transcript }: { transcript: string }) {
   );
 }
 
+function ThumbnailAnalysis({
+  thumbnailUrl,
+  title,
+  description,
+  text,
+}: {
+  thumbnailUrl: string;
+  title: string;
+  description: string;
+  text: string;
+}) {
+  return (
+    <HoverCard openDelay={250} closeDelay={100}>
+      <HoverCardTrigger asChild>
+        <button
+          type="button"
+          aria-label="View thumbnail analysis"
+          className="focus-visible:ring-ring h-24 w-40 shrink-0 cursor-help overflow-hidden rounded-md focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={thumbnailUrl}
+            alt={title}
+            className="h-full w-full object-cover"
+          />
+        </button>
+      </HoverCardTrigger>
+      <HoverCardContent align="start" className="w-80 space-y-3">
+        <div>
+          <p className="text-sm font-semibold">Thumbnail analysis</p>
+          <p className="text-muted-foreground mt-1 text-sm leading-relaxed">
+            {description}
+          </p>
+        </div>
+        {text && (
+          <div className="border-border border-t pt-3">
+            <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
+              Text in thumbnail
+            </p>
+            <p className="mt-1 text-sm">{text}</p>
+          </div>
+        )}
+      </HoverCardContent>
+    </HoverCard>
+  );
+}
+
 export function AnalysisResults({
   result,
 }: {
@@ -50,11 +102,11 @@ export function AnalysisResults({
       <div className="space-y-4">
         <Card className="bg-background/40">
           <CardContent className="flex gap-4 pt-0">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={result.thumbnail_url}
-              alt={result.title}
-              className="h-24 w-40 shrink-0 rounded-md object-cover"
+            <ThumbnailAnalysis
+              thumbnailUrl={result.thumbnail_url}
+              title={result.title}
+              description={result.thumbnail_description}
+              text={result.thumbnail_text}
             />
             <div className="min-w-0">
               <a
@@ -94,11 +146,11 @@ export function AnalysisResults({
       <Card className="bg-background/40 md:col-span-2">
         <CardContent className="pt-0">
           <div className="flex gap-4">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={result.thumbnail_url}
-              alt={result.title}
-              className="h-24 w-40 shrink-0 rounded-md object-cover"
+            <ThumbnailAnalysis
+              thumbnailUrl={result.thumbnail_url}
+              title={result.title}
+              description={result.thumbnail_description}
+              text={result.thumbnail_text}
             />
             <div className="flex min-w-0 flex-col justify-center sm:justify-start">
               <a
