@@ -16,7 +16,7 @@ const systemPrompt = [
   "The Promise contains the expectation created by the video's title and thumbnail. The Content contains the video's transcript.",
   "Compare the two and produce a JSON object with exactly these fields:\n",
   '- "short_summary": A 2-3 sentence plain-text summary based only on The Content.',
-  '- "payoff": A markdown-formatted analysis of whether The Content delivers The Promise. Begin with one of these clear verdicts: "Not Clickbait", "Click-baity", or "Clickbait". Lean more heavily to either "Not Clickbait" or "Clickbait", saving "Click-baity" for videos where the promise was fully kept but the thumbnail or title are very sensational. In your analysis describe which promises were or were not fulfilled, citing relevant details from the title, thumbnail, and content. Identify clickbait or misleading framing when present.',
+  '- "analysis": A markdown-formatted analysis of whether The Content delivers The Promise. Begin with one of these clear verdicts: "Not Clickbait", "Click-baity", or "Clickbait". Lean more heavily to either "Not Clickbait" or "Clickbait", saving "Click-baity" for videos where the promise was fully kept but the thumbnail or title are very sensational. In your analysis describe which promises were or were not fulfilled, citing relevant details from the title, thumbnail, and content. Identify clickbait or misleading framing when present.',
   '- "structure": A markdown-formatted breakdown of the key points in The Content. If the video lists steps, bullet points, or numbered items, reproduce them concisely.',
 ].join("\n");
 
@@ -30,7 +30,7 @@ type OEmbedResponse = z.infer<typeof oEmbedResponseSchema>;
 
 const analysisSchema = z.object({
   short_summary: z.string(),
-  payoff: z.string(),
+  analysis: z.string(),
   structure: z.string(),
 });
 
@@ -164,7 +164,7 @@ export const youtubePayoffRouter = createTRPCRouter({
             link: videoUrl,
             thumbnail_url: oEmbed.thumbnail_url,
             short_summary: "",
-            payoff: "",
+            analysis: "",
             structure: "",
             transcript: "",
             thumbnail_description: thumbnailAnalysis.description,
@@ -216,7 +216,7 @@ export const youtubePayoffRouter = createTRPCRouter({
           link: videoUrl,
           thumbnail_url: oEmbed.thumbnail_url,
           short_summary: output.short_summary,
-          payoff: output.payoff,
+          analysis: output.analysis,
           structure: output.structure,
           transcript: transcriptText,
           thumbnail_description: thumbnailAnalysis.description,

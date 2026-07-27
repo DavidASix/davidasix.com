@@ -154,7 +154,7 @@ export function AnalysisResults({
               remarkPlugins={[remarkGfm]}
               components={markdownComponents}
             >
-              {result.payoff}
+              {result.analysis}
             </ReactMarkdown>
           </div>
         </CardContent>
