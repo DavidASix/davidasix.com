@@ -37,6 +37,10 @@ const thumbnailAnalysisSchema = z.object({
   text: z.string(),
 });
 
+const promiseSchema = z.object({
+  promise: z.string(),
+});
+
 export const youtubePayoffRouter = createTRPCRouter({
   analyze: passkeyProcedure
     .input(
@@ -117,6 +121,30 @@ export const youtubePayoffRouter = createTRPCRouter({
         });
       }
 
+      let videoPromise: string;
+      try {
+        const { output } = await generateText({
+          model: openai("gpt-5.4-mini"),
+          output: Output.object({ schema: promiseSchema }),
+          system: [
+            "Determine the promise a YouTube video makes to its viewer using only its title and thumbnail analysis.",
+            "Describe what outcome, revelation, answer, or experience the packaging implies the viewer will receive.",
+            "Be specific and concise. Respond with no more than three sentences.",
+          ].join(" "),
+          prompt: [
+            `Video title: ${oEmbed.title}`,
+            `Thumbnail description: ${thumbnailAnalysis.description}`,
+            `Text visible in thumbnail: ${thumbnailAnalysis.text || "(none)"}`,
+          ].join("\n"),
+        });
+        videoPromise = output.promise;
+      } catch {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to determine the video promise. Please try again.",
+        });
+      }
+
       let transcriptText = "";
       try {
         const transcript = await fetchTranscript(videoId);
@@ -139,6 +167,7 @@ export const youtubePayoffRouter = createTRPCRouter({
             transcript: "",
             thumbnail_description: thumbnailAnalysis.description,
             thumbnail_text: thumbnailAnalysis.text,
+            promise: videoPromise,
             transcript_unavailable: true,
           };
         }
@@ -181,6 +210,7 @@ export const youtubePayoffRouter = createTRPCRouter({
           transcript: transcriptText,
           thumbnail_description: thumbnailAnalysis.description,
           thumbnail_text: thumbnailAnalysis.text,
+          promise: videoPromise,
           transcript_unavailable: false,
         };
       } catch {
