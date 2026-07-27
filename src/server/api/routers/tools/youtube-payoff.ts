@@ -32,6 +32,11 @@ const analysisSchema = z.object({
   structure: z.string(),
 });
 
+const thumbnailAnalysisSchema = z.object({
+  description: z.string(),
+  text: z.string(),
+});
+
 export const youtubePayoffRouter = createTRPCRouter({
   analyze: passkeyProcedure
     .input(
@@ -79,6 +84,39 @@ export const youtubePayoffRouter = createTRPCRouter({
         });
       }
 
+      let thumbnailAnalysis: z.infer<typeof thumbnailAnalysisSchema>;
+      try {
+        const { output } = await generateText({
+          model: openai("gpt-5.4-mini"),
+          output: Output.object({ schema: thumbnailAnalysisSchema }),
+          messages: [
+            {
+              role: "user",
+              content: [
+                {
+                  type: "text",
+                  text: [
+                    "Analyze this YouTube thumbnail.",
+                    "Describe the people, objects, setting, actions, and other notable visual elements shown.",
+                    'Transcribe all visible text exactly in the "text" field. If there is no visible text, return an empty string.',
+                  ].join(" "),
+                },
+                {
+                  type: "image",
+                  image: new URL(oEmbed.thumbnail_url),
+                },
+              ],
+            },
+          ],
+        });
+        thumbnailAnalysis = output;
+      } catch {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Failed to analyze video thumbnail. Please try again.",
+        });
+      }
+
       let transcriptText = "";
       try {
         const transcript = await fetchTranscript(videoId);
@@ -99,6 +137,8 @@ export const youtubePayoffRouter = createTRPCRouter({
             payoff: "",
             structure: "",
             transcript: "",
+            thumbnail_description: thumbnailAnalysis.description,
+            thumbnail_text: thumbnailAnalysis.text,
             transcript_unavailable: true,
           };
         }
@@ -139,6 +179,8 @@ export const youtubePayoffRouter = createTRPCRouter({
           payoff: output.payoff,
           structure: output.structure,
           transcript: transcriptText,
+          thumbnail_description: thumbnailAnalysis.description,
+          thumbnail_text: thumbnailAnalysis.text,
           transcript_unavailable: false,
         };
       } catch {
