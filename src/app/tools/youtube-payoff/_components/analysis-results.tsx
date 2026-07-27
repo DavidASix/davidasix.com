@@ -99,24 +99,6 @@ export function AnalysisResults({
       <Card className="bg-background/40 h-min">
         <CardHeader>
           <CardTitle className="text-foreground font-jersey-10 text-2xl">
-            Payoff
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="max-w-none">
-            <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
-              components={markdownComponents}
-            >
-              {result.payoff}
-            </ReactMarkdown>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="bg-background/40 h-min">
-        <CardHeader>
-          <CardTitle className="text-foreground font-jersey-10 text-2xl">
             Structure
           </CardTitle>
         </CardHeader>
@@ -127,6 +109,24 @@ export function AnalysisResults({
               components={markdownComponents}
             >
               {result.structure}
+            </ReactMarkdown>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="bg-background/40 h-min">
+        <CardHeader>
+          <CardTitle className="text-foreground font-jersey-10 text-2xl">
+            Analysis
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="max-w-none">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={markdownComponents}
+            >
+              {result.payoff}
             </ReactMarkdown>
           </div>
         </CardContent>
@@ -153,7 +153,7 @@ export function SkeletonResults() {
       </Card>
       <Card className="bg-background/40">
         <CardHeader>
-          <CardTitle className="font-jersey-10 text-xl">Payoff</CardTitle>
+          <CardTitle className="font-jersey-10 text-xl">Structure</CardTitle>
         </CardHeader>
         <CardContent className="space-y-2">
           <Skeleton className="h-4 w-full" />
@@ -163,7 +163,7 @@ export function SkeletonResults() {
       </Card>
       <Card className="bg-background/40">
         <CardHeader>
-          <CardTitle className="font-jersey-10 text-xl">Structure</CardTitle>
+          <CardTitle className="font-jersey-10 text-xl">Analysis</CardTitle>
         </CardHeader>
         <CardContent className="space-y-2">
           <Skeleton className="h-4 w-full" />
