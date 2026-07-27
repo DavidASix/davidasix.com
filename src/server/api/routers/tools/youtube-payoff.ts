@@ -12,10 +12,12 @@ import { extractVideoId } from "~/lib/youtube-payoff";
 const MAX_TRANSCRIPT_WORDS = 6000;
 
 const systemPrompt = [
-  "You are a concise video analyst. Given a YouTube video title and transcript, produce a JSON object with exactly these fields:\n",
-  '- "short_summary": A 2-3 sentence plain-text summary of the video content.',
-  '- "payoff": A markdown-formatted analysis of whether the video\'s title and thumbnail deliver on their promise. Explain what clickbait elements exist (if any) and whether the content justifies them.',
-  '- "structure": A markdown-formatted breakdown of the video\'s key points. If the video lists steps, bullet points, or numbered items, reproduce them concisely.',
+  "You are a concise video analyst. You will receive two clearly labeled sections: The Promise and The Content.",
+  "The Promise contains the expectation created by the video's title and thumbnail. The Content contains the video's transcript.",
+  "Compare the two and produce a JSON object with exactly these fields:\n",
+  '- "short_summary": A 2-3 sentence plain-text summary based only on The Content.',
+  '- "payoff": A markdown-formatted analysis of whether The Content delivers The Promise. Begin with one of these clear verdicts: "Not Clickbait", "Click-baity", or "Clickbait". Lean more heavily to either "Not Clickbait" or "Clickbait", saving "Click-baity" for videos where the promise was fully kept but the thumbnail or title are very sensational. In your analysis describe which promises were or were not fulfilled, citing relevant details from the title, thumbnail, and content. Identify clickbait or misleading framing when present.',
+  '- "structure": A markdown-formatted breakdown of the key points in The Content. If the video lists steps, bullet points, or numbered items, reproduce them concisely.',
 ].join("\n");
 
 const oEmbedResponseSchema = z.object({
@@ -196,7 +198,16 @@ export const youtubePayoffRouter = createTRPCRouter({
           model: openai("gpt-5.4-mini"),
           output: Output.object({ schema: analysisSchema }),
           system: systemPrompt,
-          prompt: `Video title: ${oEmbed.title}\nVideo transcript: ${transcriptText}`,
+          prompt: [
+            "## The Promise",
+            `Promise: ${videoPromise}`,
+            `Video title: ${oEmbed.title}`,
+            `Thumbnail description: ${thumbnailAnalysis.description}`,
+            `Text visible in thumbnail: ${thumbnailAnalysis.text || "(none)"}`,
+            "",
+            "## The Content",
+            transcriptText,
+          ].join("\n"),
         });
 
         return {
