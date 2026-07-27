@@ -98,6 +98,7 @@ export const youtubePayoffRouter = createTRPCRouter({
             short_summary: "",
             payoff: "",
             structure: "",
+            transcript: "",
             transcript_unavailable: true,
           };
         }
@@ -137,6 +138,7 @@ export const youtubePayoffRouter = createTRPCRouter({
           short_summary: output.short_summary,
           payoff: output.payoff,
           structure: output.structure,
+          transcript: transcriptText,
           transcript_unavailable: false,
         };
       } catch {

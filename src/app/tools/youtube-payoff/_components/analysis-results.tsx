@@ -1,9 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { createMarkdownComponents } from "~/lib/markdown-components";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Check, Copy } from "lucide-react";
+import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Skeleton } from "~/components/ui/skeleton";
 import { type RouterOutputs } from "~/trpc/react";
@@ -12,6 +14,31 @@ const markdownComponents = createMarkdownComponents({
   h2: "mt-0",
   h3: "mt-0",
 });
+
+function CopyTranscriptButton({ transcript }: { transcript: string }) {
+  const [copied, setCopied] = useState(false);
+
+  async function handleCopy() {
+    const decoder = document.createElement("textarea");
+    decoder.innerHTML = transcript;
+    await navigator.clipboard.writeText(decoder.value);
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 2000);
+  }
+
+  return (
+    <Button
+      type="button"
+      variant="outline"
+      size="sm"
+      onClick={handleCopy}
+      className="mt-3 w-fit"
+    >
+      {copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
+      {copied ? "Copied" : "Copy transcript"}
+    </Button>
+  );
+}
 
 export function AnalysisResults({
   result,
@@ -85,6 +112,7 @@ export function AnalysisResults({
               <p className="text-muted-foreground mt-1 text-xs">
                 {result.author}
               </p>
+              <CopyTranscriptButton transcript={result.transcript} />
               <p className="text-foreground/90 mt-2 hidden text-sm leading-relaxed sm:block">
                 {result.short_summary}
               </p>
