@@ -176,23 +176,38 @@ export function AnalysisResults({
         </CardContent>
       </Card>
 
-      <Card className="bg-background/40 h-min">
-        <CardHeader>
-          <CardTitle className="text-foreground font-jersey-10 text-2xl">
-            Structure
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="max-w-none">
-            <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
-              components={markdownComponents}
-            >
-              {result.structure}
-            </ReactMarkdown>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="space-y-4">
+        <Card className="bg-background/40 h-min">
+          <CardHeader>
+            <CardTitle className="text-foreground font-jersey-10 text-2xl">
+              The Promise
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-foreground text-sm leading-relaxed">
+              {result.promise}
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-background/40 h-min">
+          <CardHeader>
+            <CardTitle className="text-foreground font-jersey-10 text-2xl">
+              Structure
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="max-w-none">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={markdownComponents}
+              >
+                {result.structure}
+              </ReactMarkdown>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
 
       <Card className="bg-background/40 h-min">
         <CardHeader>
@@ -231,16 +246,29 @@ export function SkeletonResults() {
           </div>
         </CardContent>
       </Card>
-      <Card className="bg-background/40">
-        <CardHeader>
-          <CardTitle className="font-jersey-10 text-xl">Structure</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-2">
-          <Skeleton className="h-4 w-full" />
-          <Skeleton className="h-4 w-5/6" />
-          <Skeleton className="h-4 w-2/3" />
-        </CardContent>
-      </Card>
+      <div className="space-y-4">
+        <Card className="bg-background/40">
+          <CardHeader>
+            <CardTitle className="font-jersey-10 text-xl">
+              The Promise
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-4/5" />
+          </CardContent>
+        </Card>
+        <Card className="bg-background/40">
+          <CardHeader>
+            <CardTitle className="font-jersey-10 text-xl">Structure</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-5/6" />
+            <Skeleton className="h-4 w-2/3" />
+          </CardContent>
+        </Card>
+      </div>
       <Card className="bg-background/40">
         <CardHeader>
           <CardTitle className="font-jersey-10 text-xl">Analysis</CardTitle>
