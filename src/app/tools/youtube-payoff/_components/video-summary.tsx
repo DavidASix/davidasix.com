@@ -2,6 +2,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { Skeleton } from "~/components/ui/skeleton";
 import { createMarkdownComponents } from "~/lib/markdown-components";
 import { type RouterOutputs } from "~/trpc/react";
 
@@ -66,6 +67,46 @@ export function VideoSummary({ video }: { video: YoutubeVideo }) {
               {video.analysis}
             </ReactMarkdown>
           </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+export function VideoSummarySkeleton() {
+  return (
+    <div className="grid gap-4 md:grid-cols-2">
+      <div className="space-y-4">
+        <Card className="bg-background/40">
+          <CardHeader>
+            <CardTitle className="font-jersey-10 text-xl">
+              The Promise
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-4/5" />
+          </CardContent>
+        </Card>
+        <Card className="bg-background/40">
+          <CardHeader>
+            <CardTitle className="font-jersey-10 text-xl">Structure</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-5/6" />
+            <Skeleton className="h-4 w-2/3" />
+          </CardContent>
+        </Card>
+      </div>
+      <Card className="bg-background/40">
+        <CardHeader>
+          <CardTitle className="font-jersey-10 text-xl">Analysis</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-2">
+          <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-5/6" />
+          <Skeleton className="h-4 w-2/3" />
         </CardContent>
       </Card>
     </div>

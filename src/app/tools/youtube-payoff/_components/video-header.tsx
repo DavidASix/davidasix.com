@@ -10,6 +10,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "~/components/ui/hover-card";
+import { Skeleton } from "~/components/ui/skeleton";
 import { cn } from "~/lib/utils";
 import { type RouterOutputs } from "~/trpc/react";
 
@@ -137,6 +138,24 @@ export function VideoHeader({
             {video.shortSummary}
           </p>
         )}
+      </CardContent>
+    </Card>
+  );
+}
+
+export function VideoHeaderSkeleton() {
+  return (
+    <Card className="bg-background/40">
+      <CardContent className="pt-0">
+        <div className="flex gap-4">
+          <Skeleton className="h-24 w-40 shrink-0 rounded-md" />
+          <div className="min-w-0 flex-1 space-y-2 pt-2">
+            <Skeleton className="h-4 w-3/4" />
+            <Skeleton className="h-3 w-1/3" />
+            <Skeleton className="mt-2 h-4 w-full" />
+            <Skeleton className="h-4 w-5/6" />
+          </div>
+        </div>
       </CardContent>
     </Card>
   );
