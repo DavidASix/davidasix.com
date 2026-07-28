@@ -67,9 +67,12 @@
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --dialog: oklch(0.205 0 0 / 88%);
-  --dialog-foreground: oklch(0.985 0 0);
-  --dialog-border: oklch(1 0 0 / 15%);
+  --dialog: oklch(0.8 0.012 302 / 90%);
+  --dialog-card: oklch(0.96 0.006 302 / 92%);
+  --dialog-foreground: oklch(0.18 0.01 302);
+  --dialog-muted-foreground: oklch(0.44 0.015 302);
+  --dialog-accent: oklch(0.85 0.025 302);
+  --dialog-border: oklch(0.25 0.02 302 / 14%);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
@@ -104,8 +107,11 @@
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
-  --dialog: oklch(0.145 0 0 / 88%);
+  --dialog: oklch(0.12 0 0 / 96%);
+  --dialog-card: oklch(0.19 0 0);
   --dialog-foreground: oklch(0.985 0 0);
+  --dialog-muted-foreground: oklch(0.72 0 0);
+  --dialog-accent: oklch(0.27 0 0);
   --dialog-border: oklch(1 0 0 / 10%);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
@@ -152,6 +158,21 @@
 }
 
 @layer components {
+  .dialog-surface {
+    --background: var(--dialog);
+    --foreground: var(--dialog-foreground);
+    --card: var(--dialog-card);
+    --card-foreground: var(--dialog-foreground);
+    --popover: var(--dialog-card);
+    --popover-foreground: var(--dialog-foreground);
+    --muted-foreground: var(--dialog-muted-foreground);
+    --accent: var(--dialog-accent);
+    --accent-foreground: var(--dialog-foreground);
+    --border: var(--dialog-border);
+    --input: var(--dialog-border);
+    --ring: var(--dialog-muted-foreground);
+  }
+
   .section {
     @apply w-full px-4 md:px-4 lg:px-10;
   }

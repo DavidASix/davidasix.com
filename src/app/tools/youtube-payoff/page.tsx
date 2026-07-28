@@ -2,10 +2,17 @@
 
 import { Suspense, useCallback, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { X } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-import { Dialog, DialogContent, DialogTitle } from "~/components/ui/dialog";
+import { Button } from "~/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+} from "~/components/ui/dialog";
 import { api } from "~/trpc/react";
 
 import { metadata } from "./_metadata";
@@ -129,30 +136,48 @@ function YoutubePayoffContent() {
           if (!open) handleSelectedVideoChange(null);
         }}
       >
-        <DialogContent className="border-dialog-border bg-dialog text-dialog-foreground max-h-[calc(100vh-2rem)] overflow-y-auto backdrop-blur-md sm:max-w-6xl">
-          <DialogTitle className="sr-only">
-            {selectedVideo.data?.title ?? "Video analysis"}
-          </DialogTitle>
+        <DialogContent
+          showCloseButton={false}
+          className="dialog-surface border-dialog-border bg-dialog text-dialog-foreground ring-primary/20 max-h-[calc(100dvh-1rem)] max-w-[calc(100%-2rem)] grid-cols-[minmax(0,1fr)] grid-rows-[auto_minmax(0,1fr)] gap-0 overflow-hidden p-0 shadow-2xl ring-1 backdrop-blur-sm sm:max-h-[90dvh] sm:max-w-5xl"
+        >
+          <div className="border-border flex shrink-0 items-center gap-3 border-b px-4 py-3 sm:px-6">
+            <DialogTitle className="min-w-0 flex-1 truncate text-sm font-bold sm:text-base">
+              {selectedVideo.data?.title ?? "Video analysis"}
+            </DialogTitle>
+            <DialogClose asChild>
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="size-10 focus-visible:ring-1"
+                aria-label="Close video analysis"
+              >
+                <X className="size-5" />
+              </Button>
+            </DialogClose>
+          </div>
 
-          {selectedVideo.isPending && (
-            <div className="space-y-4">
-              <VideoHeaderSkeleton />
-              <VideoSummarySkeleton />
-            </div>
-          )}
+          <div className="min-h-0 overflow-y-auto p-4 sm:p-6">
+            {selectedVideo.isPending && (
+              <div className="space-y-4">
+                <VideoHeaderSkeleton surface="dialog" />
+                <VideoSummarySkeleton surface="dialog" />
+              </div>
+            )}
 
-          {selectedVideo.isError && (
-            <p className="text-destructive py-8 text-center text-sm">
-              {selectedVideo.error.message}
-            </p>
-          )}
+            {selectedVideo.isError && (
+              <p className="text-destructive py-8 text-center text-sm">
+                {selectedVideo.error.message}
+              </p>
+            )}
 
-          {selectedVideo.data && (
-            <div className="space-y-4">
-              <VideoHeader video={selectedVideo.data} />
-              <VideoSummary video={selectedVideo.data} />
-            </div>
-          )}
+            {selectedVideo.data && (
+              <div className="space-y-4">
+                <VideoHeader video={selectedVideo.data} surface="dialog" />
+                <VideoSummary video={selectedVideo.data} surface="dialog" />
+              </div>
+            )}
+          </div>
         </DialogContent>
       </Dialog>
     </>

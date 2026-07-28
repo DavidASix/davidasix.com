@@ -13,6 +13,7 @@ import {
 import { Skeleton } from "~/components/ui/skeleton";
 import { cn } from "~/lib/utils";
 import { type RouterOutputs } from "~/trpc/react";
+import type { SurfaceType } from "./types";
 
 type YoutubeVideo =
   RouterOutputs["tools"]["youtubePayoff"]["selectVideos"][number];
@@ -35,7 +36,7 @@ function CopyTranscriptButton({ transcript }: { transcript: string }) {
       variant="outline"
       size="sm"
       onClick={handleCopy}
-      className="mt-3 w-fit"
+      className="mt-3 w-full"
     >
       {copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
       {copied ? "Copied" : "Copy transcript"}
@@ -99,21 +100,29 @@ export function VideoHeader({
   video,
   className,
   showCopyTranscriptButton = true,
+  surface = "default",
 }: {
   video: YoutubeVideo;
   className?: string;
   showCopyTranscriptButton?: boolean;
+  surface?: SurfaceType;
 }) {
+  const isDialog = surface === "dialog";
   return (
-    <Card className={cn("bg-background/40", className)}>
+    <Card className={cn(!isDialog && "bg-background/40", className)}>
       <CardContent className="pt-0">
         <div className="flex gap-4">
-          <ThumbnailAnalysis
-            thumbnailUrl={video.thumbnailUrl}
-            title={video.title}
-            description={video.thumbnailAnalysis ?? ""}
-            text={video.thumbnailText ?? ""}
-          />
+          <div className="flex flex-col items-center">
+            <ThumbnailAnalysis
+              thumbnailUrl={video.thumbnailUrl}
+              title={video.title}
+              description={video.thumbnailAnalysis ?? ""}
+              text={video.thumbnailText ?? ""}
+            />
+            {showCopyTranscriptButton && (
+              <CopyTranscriptButton transcript={video.transcript ?? ""} />
+            )}
+          </div>
           <div className="flex min-w-0 flex-col justify-center sm:justify-start">
             <a
               href={video.url}
@@ -127,9 +136,6 @@ export function VideoHeader({
             <p className="text-muted-foreground mt-1 text-xs">{video.author}</p>
             {!video.transcriptUnavailable && (
               <>
-                {showCopyTranscriptButton && (
-                  <CopyTranscriptButton transcript={video.transcript ?? ""} />
-                )}
                 <p className="text-foreground/90 mt-2 hidden text-sm leading-relaxed sm:block">
                   {video.shortSummary}
                 </p>
@@ -147,9 +153,13 @@ export function VideoHeader({
   );
 }
 
-export function VideoHeaderSkeleton() {
+export function VideoHeaderSkeleton({
+  surface = "default",
+}: {
+  surface?: SurfaceType;
+}) {
   return (
-    <Card className="bg-background/40">
+    <Card className={cn(surface !== "dialog" && "bg-background/40")}>
       <CardContent className="pt-0">
         <div className="flex gap-4">
           <Skeleton className="h-24 w-40 shrink-0 rounded-md" />

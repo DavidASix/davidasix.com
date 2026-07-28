@@ -5,6 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Skeleton } from "~/components/ui/skeleton";
 import { createMarkdownComponents } from "~/lib/markdown-components";
 import { type RouterOutputs } from "~/trpc/react";
+import type { SurfaceType } from "./types";
+import { cn } from "~/lib/utils";
 
 const markdownComponents = createMarkdownComponents({
   h2: "mt-0",
@@ -14,13 +16,23 @@ const markdownComponents = createMarkdownComponents({
 type YoutubeVideo =
   RouterOutputs["tools"]["youtubePayoff"]["selectVideos"][number];
 
-export function VideoSummary({ video }: { video: YoutubeVideo }) {
+export function VideoSummary({
+  video,
+  surface = "default",
+}: {
+  video: YoutubeVideo;
+  surface?: SurfaceType;
+}) {
   if (video.transcriptUnavailable) return null;
-
+  const isDialog = surface === "dialog";
+  const OuterContainer = isDialog ? Card : "div";
+  const InnerContainer = isDialog ? "div" : Card;
   return (
-    <div className="grid gap-4 md:grid-cols-2">
+    <OuterContainer className="grid gap-4 md:grid-cols-2">
       <div className="space-y-4">
-        <Card className="bg-background/40 h-min">
+        <InnerContainer
+          className={cn(!isDialog && "bg-background/40", "h-min")}
+        >
           <CardHeader>
             <CardTitle className="text-foreground font-jersey-10 text-2xl">
               The Promise
@@ -31,9 +43,11 @@ export function VideoSummary({ video }: { video: YoutubeVideo }) {
               {video.promise}
             </p>
           </CardContent>
-        </Card>
+        </InnerContainer>
 
-        <Card className="bg-background/40 h-min">
+        <InnerContainer
+          className={cn(!isDialog && "bg-background/40", "h-min")}
+        >
           <CardHeader>
             <CardTitle className="text-foreground font-jersey-10 text-2xl">
               Structure
@@ -49,10 +63,15 @@ export function VideoSummary({ video }: { video: YoutubeVideo }) {
               </ReactMarkdown>
             </div>
           </CardContent>
-        </Card>
+        </InnerContainer>
       </div>
 
-      <Card className="bg-background/40 h-min">
+      <InnerContainer
+        className={cn(
+          !isDialog ? "bg-background/40" : "border-border border-s-1",
+          "h-min",
+        )}
+      >
         <CardHeader>
           <CardTitle className="text-foreground font-jersey-10 text-2xl">
             Analysis
@@ -68,16 +87,21 @@ export function VideoSummary({ video }: { video: YoutubeVideo }) {
             </ReactMarkdown>
           </div>
         </CardContent>
-      </Card>
-    </div>
+      </InnerContainer>
+    </OuterContainer>
   );
 }
 
-export function VideoSummarySkeleton() {
+export function VideoSummarySkeleton({
+  surface = "default",
+}: {
+  surface?: SurfaceType;
+}) {
+  const isDialog = surface === "dialog";
   return (
     <div className="grid gap-4 md:grid-cols-2">
       <div className="space-y-4">
-        <Card className="bg-background/40">
+        <Card className={cn(!isDialog && "bg-background/40")}>
           <CardHeader>
             <CardTitle className="font-jersey-10 text-xl">
               The Promise
@@ -88,7 +112,7 @@ export function VideoSummarySkeleton() {
             <Skeleton className="h-4 w-4/5" />
           </CardContent>
         </Card>
-        <Card className="bg-background/40">
+        <Card className={cn(!isDialog && "bg-background/40")}>
           <CardHeader>
             <CardTitle className="font-jersey-10 text-xl">Structure</CardTitle>
           </CardHeader>
@@ -99,7 +123,7 @@ export function VideoSummarySkeleton() {
           </CardContent>
         </Card>
       </div>
-      <Card className="bg-background/40">
+      <Card className={cn(!isDialog && "bg-background/40")}>
         <CardHeader>
           <CardTitle className="font-jersey-10 text-xl">Analysis</CardTitle>
         </CardHeader>
