@@ -12,6 +12,7 @@ import {
   AnalysisResults,
   SkeletonResults,
 } from "./_components/analysis-results";
+import { VideoList } from "./_components/video-list";
 
 import { PasskeyInput } from "../_components/passkey-input";
 import { usePasskey } from "../_hooks/usePasskey";
@@ -30,7 +31,12 @@ export default function YoutubePayoffPage() {
     encryptError,
   } = usePasskey();
 
-  const analyze = api.tools.youtubePayoff.analyze.useMutation();
+  const utils = api.useUtils();
+  const analyze = api.tools.youtubePayoff.analyze.useMutation({
+    onSuccess: () => {
+      void utils.tools.youtubePayoff.selectVideos.invalidate();
+    },
+  });
 
   const handleSubmit = useCallback(() => {
     if (!url.trim() || !hasPasskey || analyze.isPending) return;
@@ -77,6 +83,8 @@ export default function YoutubePayoffPage() {
           {analyze.isPending && <SkeletonResults />}
 
           {analyze.isSuccess && <AnalysisResults result={analyze.data} />}
+
+          <VideoList />
         </div>
       </div>
     </main>

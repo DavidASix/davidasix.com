@@ -1,13 +1,17 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { createTRPCRouter, passkeyProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  passkeyProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 import {
   fetchTranscript,
   TranscriptFetchError,
 } from "~/lib/youtube-transcript";
 import { generateText, Output } from "ai";
 import { openai } from "@ai-sdk/openai";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 
 import { db } from "~/db";
 import { youtubeVideos } from "~/db/schema";
@@ -75,6 +79,13 @@ const promiseSchema = z.object({
 });
 
 export const youtubePayoffRouter = createTRPCRouter({
+  selectVideos: publicProcedure.query(() =>
+    db
+      .select()
+      .from(youtubeVideos)
+      .orderBy(desc(youtubeVideos.createdAt))
+      .limit(20),
+  ),
   analyze: passkeyProcedure
     .input(
       z.object({
