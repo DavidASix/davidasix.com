@@ -62,6 +62,7 @@ src/
 
 **UI Components:**
 - Uses shadcn/ui component system built on Radix UI primitives
+- Never manually create or edit shadcn component files. Add new shadcn components using the shadcn installation command.
 - Components use `class-variance-authority` for variant management
 - Styling utilities: `clsx`, `tailwind-merge`, and `tw-animate-css`
 - Icons provided by `lucide-react`
