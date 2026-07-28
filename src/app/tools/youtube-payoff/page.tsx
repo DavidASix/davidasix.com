@@ -129,7 +129,7 @@ function YoutubePayoffContent() {
           if (!open) handleSelectedVideoChange(null);
         }}
       >
-        <DialogContent className="max-h-[calc(100vh-2rem)] overflow-y-auto sm:max-w-6xl">
+        <DialogContent className="border-dialog-border bg-dialog text-dialog-foreground max-h-[calc(100vh-2rem)] overflow-y-auto backdrop-blur-md sm:max-w-6xl">
           <DialogTitle className="sr-only">
             {selectedVideo.data?.title ?? "Video analysis"}
           </DialogTitle>
