@@ -98,9 +98,11 @@ function ThumbnailAnalysis({
 export function VideoHeader({
   video,
   className,
+  showCopyTranscriptButton = true,
 }: {
   video: YoutubeVideo;
   className?: string;
+  showCopyTranscriptButton?: boolean;
 }) {
   return (
     <Card className={cn("bg-background/40", className)}>
@@ -125,7 +127,9 @@ export function VideoHeader({
             <p className="text-muted-foreground mt-1 text-xs">{video.author}</p>
             {!video.transcriptUnavailable && (
               <>
-                <CopyTranscriptButton transcript={video.transcript ?? ""} />
+                {showCopyTranscriptButton && (
+                  <CopyTranscriptButton transcript={video.transcript ?? ""} />
+                )}
                 <p className="text-foreground/90 mt-2 hidden text-sm leading-relaxed sm:block">
                   {video.shortSummary}
                 </p>
@@ -158,33 +162,5 @@ export function VideoHeaderSkeleton() {
         </div>
       </CardContent>
     </Card>
-  );
-}
-
-export function VideoListItem({
-  video,
-  onSelect,
-}: {
-  video: YoutubeVideo;
-  onSelect: (uuid: string) => void;
-}) {
-  return (
-    <div
-      role="button"
-      tabIndex={0}
-      onClick={() => onSelect(video.id)}
-      onKeyDown={(event) => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          onSelect(video.id);
-        }
-      }}
-      className="focus-visible:ring-ring cursor-pointer rounded-xl focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
-    >
-      <VideoHeader
-        video={video}
-        className="hover:bg-accent/40 transition-colors"
-      />
-    </div>
   );
 }

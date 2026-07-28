@@ -1,8 +1,40 @@
 "use client";
 
-import { api } from "~/trpc/react";
+import { api, type RouterOutputs } from "~/trpc/react";
 
-import { VideoListItem } from "./video-header";
+import { VideoHeader } from "./video-header";
+
+type YoutubeVideo =
+  RouterOutputs["tools"]["youtubePayoff"]["selectVideos"][number];
+
+function VideoListItem({
+  video,
+  onSelect,
+}: {
+  video: YoutubeVideo;
+  onSelect: (uuid: string) => void;
+}) {
+  return (
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={() => onSelect(video.id)}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          onSelect(video.id);
+        }
+      }}
+      className="focus-visible:ring-ring cursor-pointer rounded-xl focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+    >
+      <VideoHeader
+        video={video}
+        showCopyTranscriptButton={false}
+        className="hover:bg-accent/40 transition-colors"
+      />
+    </div>
+  );
+}
 
 export function VideoList({
   onVideoSelect,
