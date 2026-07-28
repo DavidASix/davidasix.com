@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { Suspense, useCallback, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -17,8 +18,11 @@ import { VideoList } from "./_components/video-list";
 import { PasskeyInput } from "../_components/passkey-input";
 import { usePasskey } from "../_hooks/usePasskey";
 
-export default function YoutubePayoffPage() {
+function YoutubePayoffContent() {
   const [url, setUrl] = useState("");
+  const searchParams = useSearchParams();
+  const selectedVideoUuid = searchParams.get("uuid");
+  void selectedVideoUuid;
 
   const {
     hasPasskey,
@@ -88,5 +92,13 @@ export default function YoutubePayoffPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function YoutubePayoffPage() {
+  return (
+    <Suspense>
+      <YoutubePayoffContent />
+    </Suspense>
   );
 }
