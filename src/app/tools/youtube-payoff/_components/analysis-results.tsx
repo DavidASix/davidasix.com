@@ -7,8 +7,6 @@ import { type RouterOutputs } from "~/trpc/react";
 import { VideoHeader } from "./video-header";
 import { VideoSummary } from "./video-summary";
 
-export { VideoHeader as VideoOverviewCard } from "./video-header";
-
 export function AnalysisResults({
   result,
 }: {

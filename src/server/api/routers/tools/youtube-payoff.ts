@@ -86,6 +86,24 @@ export const youtubePayoffRouter = createTRPCRouter({
       .orderBy(desc(youtubeVideos.createdAt))
       .limit(20),
   ),
+  selectVideo: publicProcedure
+    .input(z.object({ uuid: z.string().uuid() }))
+    .query(async ({ input }) => {
+      const [video] = await db
+        .select()
+        .from(youtubeVideos)
+        .where(eq(youtubeVideos.id, input.uuid))
+        .limit(1);
+
+      if (!video) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Video analysis not found",
+        });
+      }
+
+      return video;
+    }),
   analyze: passkeyProcedure
     .input(
       z.object({

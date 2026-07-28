@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, useCallback, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -20,9 +20,10 @@ import { usePasskey } from "../_hooks/usePasskey";
 
 function YoutubePayoffContent() {
   const [url, setUrl] = useState("");
+  const pathname = usePathname();
+  const router = useRouter();
   const searchParams = useSearchParams();
   const selectedVideoUuid = searchParams.get("uuid");
-  void selectedVideoUuid;
 
   const {
     hasPasskey,
@@ -46,6 +47,22 @@ function YoutubePayoffContent() {
     if (!url.trim() || !hasPasskey || analyze.isPending) return;
     analyze.mutate({ url: url.trim(), passkey: encryptedPasskey });
   }, [url, hasPasskey, encryptedPasskey, analyze]);
+
+  const handleSelectedVideoChange = useCallback(
+    (uuid: string | null) => {
+      const nextSearchParams = new URLSearchParams(searchParams.toString());
+
+      if (uuid) {
+        nextSearchParams.set("uuid", uuid);
+      } else {
+        nextSearchParams.delete("uuid");
+      }
+
+      const query = nextSearchParams.toString();
+      router.push(query ? `${pathname}?${query}` : pathname, { scroll: false });
+    },
+    [pathname, router, searchParams],
+  );
 
   const error =
     encryptError ?? (analyze.isError ? analyze.error.message : null);
@@ -88,7 +105,10 @@ function YoutubePayoffContent() {
 
           {analyze.isSuccess && <AnalysisResults result={analyze.data} />}
 
-          <VideoList />
+          <VideoList
+            selectedVideoUuid={selectedVideoUuid}
+            onSelectedVideoChange={handleSelectedVideoChange}
+          />
         </div>
       </div>
     </main>
