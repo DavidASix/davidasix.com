@@ -12,6 +12,7 @@ export const env = createEnv({
     PASSKEY: z.string().min(16),
     PASSKEY_ENCRYPTION_KEY: z.string().min(1),
     RAPIDAPI_KEY: z.string().min(1),
+    DATABASE_URL: z.string().min(1),
   },
 
   /**
@@ -34,6 +35,7 @@ export const env = createEnv({
     PASSKEY: process.env.PASSKEY,
     PASSKEY_ENCRYPTION_KEY: process.env.PASSKEY_ENCRYPTION_KEY,
     RAPIDAPI_KEY: process.env.RAPIDAPI_KEY,
+    DATABASE_URL: process.env.DATABASE_URL,
     NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
     NEXT_PUBLIC_POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,
   },
