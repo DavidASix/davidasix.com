@@ -7,9 +7,39 @@ import {
 } from "~/lib/youtube-transcript";
 import { generateText, Output } from "ai";
 import { openai } from "@ai-sdk/openai";
+import { eq } from "drizzle-orm";
+
+import { db } from "~/db";
+import { youtubeVideos } from "~/db/schema";
 import { extractVideoId } from "~/lib/youtube-payoff";
 
 const MAX_TRANSCRIPT_WORDS = 6000;
+
+type YoutubeVideo = typeof youtubeVideos.$inferSelect;
+type NewYoutubeVideo = typeof youtubeVideos.$inferInsert;
+
+async function saveVideo(video: NewYoutubeVideo): Promise<YoutubeVideo> {
+  const [insertedVideo] = await db
+    .insert(youtubeVideos)
+    .values(video)
+    .onConflictDoNothing({ target: youtubeVideos.videoId })
+    .returning();
+
+  if (insertedVideo) return insertedVideo;
+
+  const [existingVideo] = await db
+    .select()
+    .from(youtubeVideos)
+    .where(eq(youtubeVideos.videoId, video.videoId))
+    .limit(1);
+
+  if (existingVideo) return existingVideo;
+
+  throw new TRPCError({
+    code: "INTERNAL_SERVER_ERROR",
+    message: "Failed to save video analysis",
+  });
+}
 
 const systemPrompt = [
   "You are a critical video analyst. You are tired of click-bait videos and you're responsible for saving users from wasting their precious time. Take an aggressive and very critical but fair approach when analyzing Youtube videos.",
@@ -51,7 +81,7 @@ export const youtubePayoffRouter = createTRPCRouter({
         url: z.string().min(11, "Please enter a YouTube URL or video ID"),
       }),
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input }): Promise<YoutubeVideo> => {
       const videoId = extractVideoId(input.url);
       if (!videoId) {
         throw new TRPCError({
@@ -59,6 +89,14 @@ export const youtubePayoffRouter = createTRPCRouter({
           message: "Please enter a valid YouTube URL",
         });
       }
+
+      const [existingVideo] = await db
+        .select()
+        .from(youtubeVideos)
+        .where(eq(youtubeVideos.videoId, videoId))
+        .limit(1);
+
+      if (existingVideo) return existingVideo;
 
       const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
@@ -159,20 +197,17 @@ export const youtubePayoffRouter = createTRPCRouter({
             videoId,
             e.message,
           );
-          return {
+          return saveVideo({
+            videoId,
             title: oEmbed.title,
             author: oEmbed.author_name,
-            link: videoUrl,
-            thumbnail_url: oEmbed.thumbnail_url,
-            short_summary: "",
-            analysis: "",
-            structure: "",
-            transcript: "",
-            thumbnail_description: thumbnailAnalysis.description,
-            thumbnail_text: thumbnailAnalysis.text,
+            url: videoUrl,
+            thumbnailUrl: oEmbed.thumbnail_url,
+            thumbnailAnalysis: thumbnailAnalysis.description,
+            thumbnailText: thumbnailAnalysis.text,
             promise: videoPromise,
-            transcript_unavailable: true,
-          };
+            transcriptUnavailable: true,
+          });
         }
         console.error(
           "Unexpected error fetching transcript for video ID:",
@@ -211,20 +246,21 @@ export const youtubePayoffRouter = createTRPCRouter({
           ].join("\n"),
         });
 
-        return {
+        return saveVideo({
+          videoId,
           title: oEmbed.title,
           author: oEmbed.author_name,
-          link: videoUrl,
-          thumbnail_url: oEmbed.thumbnail_url,
-          short_summary: output.short_summary,
+          url: videoUrl,
+          thumbnailUrl: oEmbed.thumbnail_url,
+          shortSummary: output.short_summary,
           analysis: output.analysis,
           structure: output.structure,
           transcript: transcriptText,
-          thumbnail_description: thumbnailAnalysis.description,
-          thumbnail_text: thumbnailAnalysis.text,
+          thumbnailAnalysis: thumbnailAnalysis.description,
+          thumbnailText: thumbnailAnalysis.text,
           promise: videoPromise,
-          transcript_unavailable: false,
-        };
+          transcriptUnavailable: false,
+        });
       } catch {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",

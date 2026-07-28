@@ -97,20 +97,20 @@ export function AnalysisResults({
 }: {
   result: RouterOutputs["tools"]["youtubePayoff"]["analyze"];
 }) {
-  if (result.transcript_unavailable) {
+  if (result.transcriptUnavailable) {
     return (
       <div className="space-y-4">
         <Card className="bg-background/40">
           <CardContent className="flex gap-4 pt-0">
             <ThumbnailAnalysis
-              thumbnailUrl={result.thumbnail_url}
+              thumbnailUrl={result.thumbnailUrl}
               title={result.title}
-              description={result.thumbnail_description}
-              text={result.thumbnail_text}
+              description={result.thumbnailAnalysis ?? ""}
+              text={result.thumbnailText ?? ""}
             />
             <div className="min-w-0">
               <a
-                href={result.link}
+                href={result.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-foreground hover:text-primary line-clamp-2 text-sm font-medium transition-colors hover:underline"
@@ -147,14 +147,14 @@ export function AnalysisResults({
         <CardContent className="pt-0">
           <div className="flex gap-4">
             <ThumbnailAnalysis
-              thumbnailUrl={result.thumbnail_url}
+              thumbnailUrl={result.thumbnailUrl}
               title={result.title}
-              description={result.thumbnail_description}
-              text={result.thumbnail_text}
+              description={result.thumbnailAnalysis ?? ""}
+              text={result.thumbnailText ?? ""}
             />
             <div className="flex min-w-0 flex-col justify-center sm:justify-start">
               <a
-                href={result.link}
+                href={result.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-foreground hover:text-primary line-clamp-2 text-sm font-medium transition-colors hover:underline"
@@ -164,14 +164,14 @@ export function AnalysisResults({
               <p className="text-muted-foreground mt-1 text-xs">
                 {result.author}
               </p>
-              <CopyTranscriptButton transcript={result.transcript} />
+              <CopyTranscriptButton transcript={result.transcript ?? ""} />
               <p className="text-foreground/90 mt-2 hidden text-sm leading-relaxed sm:block">
-                {result.short_summary}
+                {result.shortSummary}
               </p>
             </div>
           </div>
           <p className="text-foreground/90 mt-4 block text-sm leading-relaxed sm:hidden">
-            {result.short_summary}
+            {result.shortSummary}
           </p>
         </CardContent>
       </Card>
