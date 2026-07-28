@@ -41,7 +41,7 @@ src/
 │   └── trpc.ts           # tRPC setup and context
 ├── trpc/                  # Client-side tRPC configuration
 ├── styles/                # Global styles
-└── env.js                 # Environment variable validation
+└── env.ts                 # Environment variable validation
 ```
 
 ### Key Architecture Patterns
@@ -53,7 +53,7 @@ src/
 - Client configuration in `src/trpc/`
 
 **Environment Variables:**
-- Managed through `@t3-oss/env-nextjs` in `src/env.js`
+- Managed through `@t3-oss/env-nextjs` in `src/env.ts`
 - Server and client variables with Zod validation
 - Add new env vars to the schema before using
 
