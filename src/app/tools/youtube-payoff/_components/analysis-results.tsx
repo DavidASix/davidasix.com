@@ -13,6 +13,7 @@ import {
   HoverCardTrigger,
 } from "~/components/ui/hover-card";
 import { Skeleton } from "~/components/ui/skeleton";
+import { cn } from "~/lib/utils";
 import { type RouterOutputs } from "~/trpc/react";
 
 const markdownComponents = createMarkdownComponents({
@@ -92,6 +93,56 @@ function ThumbnailAnalysis({
   );
 }
 
+type YoutubeVideo =
+  RouterOutputs["tools"]["youtubePayoff"]["selectVideos"][number];
+
+export function VideoOverviewCard({
+  video,
+  className,
+}: {
+  video: YoutubeVideo;
+  className?: string;
+}) {
+  return (
+    <Card className={cn("bg-background/40", className)}>
+      <CardContent className="pt-0">
+        <div className="flex gap-4">
+          <ThumbnailAnalysis
+            thumbnailUrl={video.thumbnailUrl}
+            title={video.title}
+            description={video.thumbnailAnalysis ?? ""}
+            text={video.thumbnailText ?? ""}
+          />
+          <div className="flex min-w-0 flex-col justify-center sm:justify-start">
+            <a
+              href={video.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-foreground hover:text-primary line-clamp-2 text-sm font-medium transition-colors hover:underline"
+            >
+              {video.title}
+            </a>
+            <p className="text-muted-foreground mt-1 text-xs">{video.author}</p>
+            {!video.transcriptUnavailable && (
+              <>
+                <CopyTranscriptButton transcript={video.transcript ?? ""} />
+                <p className="text-foreground/90 mt-2 hidden text-sm leading-relaxed sm:block">
+                  {video.shortSummary}
+                </p>
+              </>
+            )}
+          </div>
+        </div>
+        {!video.transcriptUnavailable && (
+          <p className="text-foreground/90 mt-4 block text-sm leading-relaxed sm:hidden">
+            {video.shortSummary}
+          </p>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
 export function AnalysisResults({
   result,
 }: {
@@ -100,29 +151,7 @@ export function AnalysisResults({
   if (result.transcriptUnavailable) {
     return (
       <div className="space-y-4">
-        <Card className="bg-background/40">
-          <CardContent className="flex gap-4 pt-0">
-            <ThumbnailAnalysis
-              thumbnailUrl={result.thumbnailUrl}
-              title={result.title}
-              description={result.thumbnailAnalysis ?? ""}
-              text={result.thumbnailText ?? ""}
-            />
-            <div className="min-w-0">
-              <a
-                href={result.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-foreground hover:text-primary line-clamp-2 text-sm font-medium transition-colors hover:underline"
-              >
-                {result.title}
-              </a>
-              <p className="text-muted-foreground mt-1 text-xs">
-                {result.author}
-              </p>
-            </div>
-          </CardContent>
-        </Card>
+        <VideoOverviewCard video={result} />
         <Card className="bg-background/40">
           <CardContent className="flex items-start gap-3 pt-0">
             <AlertCircle className="text-muted-foreground mt-0.5 size-5 shrink-0" />
@@ -143,38 +172,7 @@ export function AnalysisResults({
 
   return (
     <div className="grid gap-4 md:grid-cols-2">
-      <Card className="bg-background/40 md:col-span-2">
-        <CardContent className="pt-0">
-          <div className="flex gap-4">
-            <ThumbnailAnalysis
-              thumbnailUrl={result.thumbnailUrl}
-              title={result.title}
-              description={result.thumbnailAnalysis ?? ""}
-              text={result.thumbnailText ?? ""}
-            />
-            <div className="flex min-w-0 flex-col justify-center sm:justify-start">
-              <a
-                href={result.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-foreground hover:text-primary line-clamp-2 text-sm font-medium transition-colors hover:underline"
-              >
-                {result.title}
-              </a>
-              <p className="text-muted-foreground mt-1 text-xs">
-                {result.author}
-              </p>
-              <CopyTranscriptButton transcript={result.transcript ?? ""} />
-              <p className="text-foreground/90 mt-2 hidden text-sm leading-relaxed sm:block">
-                {result.shortSummary}
-              </p>
-            </div>
-          </div>
-          <p className="text-foreground/90 mt-4 block text-sm leading-relaxed sm:hidden">
-            {result.shortSummary}
-          </p>
-        </CardContent>
-      </Card>
+      <VideoOverviewCard video={result} className="md:col-span-2" />
 
       <div className="space-y-4">
         <Card className="bg-background/40 h-min">
