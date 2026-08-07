@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import {
@@ -43,6 +44,33 @@ async function saveVideo(video: NewYoutubeVideo): Promise<YoutubeVideo> {
     code: "INTERNAL_SERVER_ERROR",
     message: "Failed to save video analysis",
   });
+}
+
+async function returnVideo(
+  video: NewYoutubeVideo,
+  ghost: boolean,
+): Promise<YoutubeVideo> {
+  if (!ghost) return saveVideo(video);
+
+  const now = new Date();
+  return {
+    id: randomUUID(),
+    videoId: video.videoId,
+    title: video.title,
+    author: video.author,
+    url: video.url,
+    thumbnailUrl: video.thumbnailUrl,
+    transcript: video.transcript ?? null,
+    transcriptUnavailable: video.transcriptUnavailable ?? false,
+    thumbnailAnalysis: video.thumbnailAnalysis ?? null,
+    thumbnailText: video.thumbnailText ?? null,
+    shortSummary: video.shortSummary ?? null,
+    analysis: video.analysis ?? null,
+    structure: video.structure ?? null,
+    promise: video.promise ?? null,
+    createdAt: now,
+    updatedAt: now,
+  };
 }
 
 const systemPrompt = [
@@ -108,6 +136,7 @@ export const youtubePayoffRouter = createTRPCRouter({
     .input(
       z.object({
         url: z.string().min(11, "Please enter a YouTube URL or video ID"),
+        ghost: z.boolean().default(false),
       }),
     )
     .mutation(async ({ input }): Promise<YoutubeVideo> => {
@@ -226,17 +255,20 @@ export const youtubePayoffRouter = createTRPCRouter({
             videoId,
             e.message,
           );
-          return saveVideo({
-            videoId,
-            title: oEmbed.title,
-            author: oEmbed.author_name,
-            url: videoUrl,
-            thumbnailUrl: oEmbed.thumbnail_url,
-            thumbnailAnalysis: thumbnailAnalysis.description,
-            thumbnailText: thumbnailAnalysis.text,
-            promise: videoPromise,
-            transcriptUnavailable: true,
-          });
+          return returnVideo(
+            {
+              videoId,
+              title: oEmbed.title,
+              author: oEmbed.author_name,
+              url: videoUrl,
+              thumbnailUrl: oEmbed.thumbnail_url,
+              thumbnailAnalysis: thumbnailAnalysis.description,
+              thumbnailText: thumbnailAnalysis.text,
+              promise: videoPromise,
+              transcriptUnavailable: true,
+            },
+            input.ghost,
+          );
         }
         console.error(
           "Unexpected error fetching transcript for video ID:",
@@ -275,21 +307,24 @@ export const youtubePayoffRouter = createTRPCRouter({
           ].join("\n"),
         });
 
-        return saveVideo({
-          videoId,
-          title: oEmbed.title,
-          author: oEmbed.author_name,
-          url: videoUrl,
-          thumbnailUrl: oEmbed.thumbnail_url,
-          shortSummary: output.short_summary,
-          analysis: output.analysis,
-          structure: output.structure,
-          transcript: transcriptText,
-          thumbnailAnalysis: thumbnailAnalysis.description,
-          thumbnailText: thumbnailAnalysis.text,
-          promise: videoPromise,
-          transcriptUnavailable: false,
-        });
+        return returnVideo(
+          {
+            videoId,
+            title: oEmbed.title,
+            author: oEmbed.author_name,
+            url: videoUrl,
+            thumbnailUrl: oEmbed.thumbnail_url,
+            shortSummary: output.short_summary,
+            analysis: output.analysis,
+            structure: output.structure,
+            transcript: transcriptText,
+            thumbnailAnalysis: thumbnailAnalysis.description,
+            thumbnailText: thumbnailAnalysis.text,
+            promise: videoPromise,
+            transcriptUnavailable: false,
+          },
+          input.ghost,
+        );
       } catch {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",

@@ -30,6 +30,7 @@ import { usePasskey } from "../_hooks/usePasskey";
 
 function YoutubePayoffContent() {
   const [url, setUrl] = useState("");
+  const [ghostMode, setGhostMode] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -48,8 +49,10 @@ function YoutubePayoffContent() {
 
   const utils = api.useUtils();
   const analyze = api.tools.youtubePayoff.analyze.useMutation({
-    onSuccess: () => {
-      void utils.tools.youtubePayoff.selectVideos.invalidate();
+    onSuccess: (_data, variables) => {
+      if (!variables.ghost) {
+        void utils.tools.youtubePayoff.selectVideos.invalidate();
+      }
     },
   });
   const selectedVideo = api.tools.youtubePayoff.selectVideo.useQuery(
@@ -59,8 +62,12 @@ function YoutubePayoffContent() {
 
   const handleSubmit = useCallback(() => {
     if (!url.trim() || !hasPasskey || analyze.isPending) return;
-    analyze.mutate({ url: url.trim(), passkey: encryptedPasskey });
-  }, [url, hasPasskey, encryptedPasskey, analyze]);
+    analyze.mutate({
+      url: url.trim(),
+      passkey: encryptedPasskey,
+      ...(ghostMode && { ghost: true }),
+    });
+  }, [url, hasPasskey, encryptedPasskey, ghostMode, analyze]);
 
   const handleSelectedVideoChange = useCallback(
     (uuid: string | null) => {
@@ -112,6 +119,8 @@ function YoutubePayoffContent() {
                 onSubmit={handleSubmit}
                 isLoading={analyze.isPending}
                 hasPasskey={hasPasskey}
+                ghostMode={ghostMode}
+                onGhostModeChange={setGhostMode}
               />
               {error && <p className="text-destructive text-sm">{error}</p>}
             </div>

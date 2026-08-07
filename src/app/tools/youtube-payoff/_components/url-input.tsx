@@ -2,7 +2,7 @@
 
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
-import { Search, Loader2, X } from "lucide-react";
+import { Ghost, Search, Loader2, X } from "lucide-react";
 
 export function UrlInput({
   url,
@@ -10,12 +10,16 @@ export function UrlInput({
   onSubmit,
   isLoading,
   hasPasskey,
+  ghostMode,
+  onGhostModeChange,
 }: {
   url: string;
   onUrlChange: (url: string) => void;
   onSubmit: () => void;
   isLoading: boolean;
   hasPasskey: boolean;
+  ghostMode: boolean;
+  onGhostModeChange: (enabled: boolean) => void;
 }) {
   return (
     <div className="flex gap-2">
@@ -42,6 +46,18 @@ export function UrlInput({
           </button>
         )}
       </div>
+      <Button
+        type="button"
+        variant={ghostMode ? "default" : "secondary"}
+        size="icon"
+        onClick={() => onGhostModeChange(!ghostMode)}
+        disabled={isLoading}
+        aria-label="Ghost mode"
+        aria-pressed={ghostMode}
+        title="Ghost mode: don't save this analysis"
+      >
+        <Ghost className="size-4" />
+      </Button>
       <Button
         onClick={onSubmit}
         disabled={!url.trim() || !hasPasskey || isLoading}
