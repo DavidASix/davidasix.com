@@ -1,11 +1,14 @@
 "use client";
 
-import { Suspense, useCallback, useState } from "react";
+import { Suspense, useCallback, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+import { getQueryKey } from "@trpc/react-query";
 import { X } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
+import { DeleteButton } from "~/components/custom/delete-button";
 import { Button } from "~/components/ui/button";
 import {
   Dialog,
@@ -34,7 +37,10 @@ function YoutubePayoffContent() {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const queryClient = useQueryClient();
   const selectedVideoUuid = searchParams.get("uuid");
+  const selectedVideoUuidRef = useRef(selectedVideoUuid);
+  selectedVideoUuidRef.current = selectedVideoUuid;
 
   const {
     hasPasskey,
@@ -84,6 +90,35 @@ function YoutubePayoffContent() {
     },
     [pathname, router, searchParams],
   );
+
+  const deleteVideo = api.tools.youtubePayoff.deleteVideo.useMutation({
+    /** Evicts the deleted analysis and closes the dialog only if that analysis is still selected. */
+    onSuccess: (_deletedVideo, variables) => {
+      queryClient.removeQueries({
+        queryKey: getQueryKey(
+          api.tools.youtubePayoff.selectVideo,
+          { uuid: variables.uuid },
+          "query",
+        ),
+        exact: true,
+      });
+      void utils.tools.youtubePayoff.selectVideos.invalidate();
+
+      if (selectedVideoUuidRef.current === variables.uuid) {
+        handleSelectedVideoChange(null);
+      }
+    },
+  });
+
+  /** Deletes the selected video analysis after the button confirms the action. */
+  const handleDelete = useCallback(async () => {
+    if (!selectedVideoUuid) return;
+
+    await deleteVideo.mutateAsync({
+      uuid: selectedVideoUuid,
+      passkey: encryptedPasskey,
+    });
+  }, [deleteVideo, encryptedPasskey, selectedVideoUuid]);
 
   const error =
     encryptError ?? (analyze.isError ? analyze.error.message : null);
@@ -142,7 +177,10 @@ function YoutubePayoffContent() {
       <Dialog
         open={selectedVideoUuid !== null}
         onOpenChange={(open) => {
-          if (!open) handleSelectedVideoChange(null);
+          if (!open) {
+            deleteVideo.reset();
+            handleSelectedVideoChange(null);
+          }
         }}
       >
         <DialogContent
@@ -153,6 +191,11 @@ function YoutubePayoffContent() {
             <DialogTitle className="min-w-0 flex-1 truncate text-sm font-bold sm:text-base">
               {selectedVideo.data?.title ?? "Video analysis"}
             </DialogTitle>
+            <DeleteButton
+              key={selectedVideoUuid ?? "no-video"}
+              disabled={!hasPasskey || selectedVideoUuid === null}
+              onDelete={handleDelete}
+            />
             <DialogClose asChild>
               <Button
                 type="button"
@@ -167,6 +210,12 @@ function YoutubePayoffContent() {
           </div>
 
           <div className="min-h-0 overflow-y-auto p-4 sm:p-6">
+            {deleteVideo.isError && (
+              <p className="text-destructive mb-4 text-sm">
+                {deleteVideo.error.message}
+              </p>
+            )}
+
             {selectedVideo.isPending && (
               <div className="space-y-4">
                 <VideoHeaderSkeleton surface="dialog" />

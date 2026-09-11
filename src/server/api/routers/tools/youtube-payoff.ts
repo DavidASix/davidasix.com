@@ -133,6 +133,23 @@ export const youtubePayoffRouter = createTRPCRouter({
 
       return video;
     }),
+  deleteVideo: passkeyProcedure
+    .input(z.object({ uuid: z.string().uuid() }))
+    .mutation(async ({ input }) => {
+      const [deletedVideo] = await db
+        .delete(youtubeVideos)
+        .where(eq(youtubeVideos.id, input.uuid))
+        .returning({ id: youtubeVideos.id });
+
+      if (!deletedVideo) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Video analysis not found",
+        });
+      }
+
+      return deletedVideo;
+    }),
   analyze: passkeyProcedure
     .input(
       z.object({
