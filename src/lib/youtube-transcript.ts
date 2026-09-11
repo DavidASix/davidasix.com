@@ -29,7 +29,7 @@ export class TranscriptFetchError extends Error {
 export async function fetchTranscript(
   videoId: string,
 ): Promise<RapidApiTranscript> {
-  const url = `https://${RAPIDAPI_HOST}/api/transcript?videoId=${videoId}`;
+  const url = `https://${RAPIDAPI_HOST}/api/transcript?videoId=${videoId}&lang=en`;
 
   const res = await fetch(url, {
     method: "GET",
