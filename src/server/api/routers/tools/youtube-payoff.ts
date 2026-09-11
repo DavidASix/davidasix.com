@@ -77,6 +77,7 @@ const systemPrompt = [
   "You are a critical video analyst. You are tired of click-bait videos and you're responsible for saving users from wasting their precious time. Take an aggressive and very critical but fair approach when analyzing Youtube videos.",
   "You will receive two clearly labeled sections: The Promise and The Content.",
   "The Promise contains the expectation created by the video's title and thumbnail. The Content contains the video's transcript.",
+  "Write every output field in English, regardless of the language used in The Promise or The Content.",
   "Compare the two and produce a JSON object with exactly these fields:\n",
   '- "short_summary": A 2-3 sentence plain-text summary based only on The Content.',
   '- "analysis": A markdown-formatted analysis of whether The Content delivers The Promise. Begin with one of these clear verdicts: "Not Clickbait" "Clickbaity" or "Clickbait". Then provide a 1 sentence clarified promise for the video, this should essentially function the same as a new title. Next provide an analysis, in your analysis describe which promises were or were not fulfilled, citing relevant details from the title, thumbnail, and content. Identify clickbait or misleading framing when present. Break this down into sections, and keep your prose short, concise, clear and decisive.',
@@ -200,6 +201,7 @@ export const youtubePayoffRouter = createTRPCRouter({
                   type: "text",
                   text: [
                     "Analyze this YouTube thumbnail.",
+                    'Write the "description" field in English, regardless of the language shown in the thumbnail.',
                     "Describe the people, objects, setting, actions, and other notable visual elements shown.",
                     'Transcribe all visible text exactly in the "text" field. If there is no visible text, return an empty string.',
                   ].join(" "),
@@ -228,6 +230,7 @@ export const youtubePayoffRouter = createTRPCRouter({
           system: [
             "Determine the promise a YouTube video makes to its viewer using only its title and thumbnail analysis.",
             "Describe what outcome, revelation, answer, or experience the packaging implies the viewer will receive.",
+            "Write the response in English, regardless of the language used in the title or thumbnail.",
             "Be specific and concise. Respond with no more than three sentences.",
           ].join(" "),
           prompt: [
