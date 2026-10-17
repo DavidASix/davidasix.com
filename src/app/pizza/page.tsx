@@ -24,6 +24,9 @@ export default async function PizzaListPage() {
             Gino&apos;s on Bridgeport is the benchmark, sitting at a 7/10. All
             pizza is pretty good, so it&apos;s hard to score below a 5.5 or
             above a 8.5.
+            <br />A 10 and a 3 are basically religious experiences on the
+            opposite ends of a spectrum. A 1 would probably require being
+            physically harmed by the pizza or the shop&apos;s owner.
           </p>
         </div>
 
