@@ -1,7 +1,7 @@
 ---
 purchase-date: 2026-10-10
 pizza-shop: MJ's Gourmet Pizza
-rating: 7.7
+rating: 6.3
 better-than-ginos: false
 tldr: If LLM output were a pizza it would be MJ's; The absolute average.
 ---
