@@ -8,6 +8,12 @@ import {
   createMarkdownComponents,
   remarkGithubAlerts,
 } from "~/lib/markdown-components";
+import {
+  extractMarkdownHeadings,
+  remarkHeadingIds,
+} from "~/lib/markdown-headings";
+import { TableOfContents } from "~/components/table-of-contents";
+import { cn } from "~/lib/utils";
 import { Button } from "~/components/ui/button";
 
 const markdownComponents = createMarkdownComponents();
@@ -19,6 +25,8 @@ export default async function BlogPostPage({
 }) {
   const { post: slug } = await params;
   const post = await api.blog.getPostBySlug({ slug });
+
+  const headings = extractMarkdownHeadings(post.content);
 
   // Handle header image path
   const headerImage = post.frontMatter.header_image
@@ -43,58 +51,72 @@ export default async function BlogPostPage({
         </div>
       </div>
       {/* Post Container */}
-      <article className="border-muted-foreground bg-card/20 mx-auto max-w-5xl border-x-1">
-        {/* Header Section */}
-        <header className="border-muted-foreground border-b-2 p-8">
-          <h1
-            className="text-foreground mb-4 text-6xl"
-            style={{ fontFamily: "var(--font-jersey-10)" }}
-          >
-            {post.frontMatter.title}
-          </h1>
-
-          {post.frontMatter.subtitle && (
-            <p className="text-muted-foreground mb-4 text-xl">
-              {post.frontMatter.subtitle}
-            </p>
-          )}
-
-          <div className="mb-4 flex flex-wrap items-center gap-4">
-            <span className="text-muted-foreground text-lg">
-              {new Date(post.frontMatter.publish_date).toLocaleDateString(
-                "en-US",
-                {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                },
-              )}
-            </span>
-          </div>
-
-          {/* Header Image */}
-          {headerImage && (
-            <div className="mt-6">
-              <img
-                src={headerImage}
-                alt={post.frontMatter.title}
-                className="w-full object-contain"
-                style={{ maxHeight: "500px" }}
-              />
+      <div
+        className={cn(
+          "relative mx-auto max-w-5xl",
+          headings.length > 0 && "lg:max-w-[min(64rem,calc(100%-28rem))]",
+        )}
+      >
+        {headings.length > 0 && (
+          <div className="px-8 py-4 lg:absolute lg:top-0 lg:left-full lg:h-full lg:w-56 lg:py-8 lg:pl-8">
+            <div className="lg:sticky lg:top-8 lg:max-h-[calc(100vh-4rem)] lg:overflow-y-auto">
+              <TableOfContents headings={headings} />
             </div>
-          )}
-        </header>
+          </div>
+        )}
+        <article className="border-muted-foreground bg-card/20 mx-auto max-w-5xl border-x-1">
+          {/* Header Section */}
+          <header className="border-muted-foreground border-b-2 p-8">
+            <h1
+              className="text-foreground mb-4 text-6xl"
+              style={{ fontFamily: "var(--font-jersey-10)" }}
+            >
+              {post.frontMatter.title}
+            </h1>
 
-        {/* Markdown Content */}
-        <div className="max-w-none p-8">
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm, remarkGithubAlerts]}
-            components={markdownComponents}
-          >
-            {post.content}
-          </ReactMarkdown>
-        </div>
-      </article>
+            {post.frontMatter.subtitle && (
+              <p className="text-muted-foreground mb-4 text-xl">
+                {post.frontMatter.subtitle}
+              </p>
+            )}
+
+            <div className="mb-4 flex flex-wrap items-center gap-4">
+              <span className="text-muted-foreground text-lg">
+                {new Date(post.frontMatter.publish_date).toLocaleDateString(
+                  "en-US",
+                  {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  },
+                )}
+              </span>
+            </div>
+
+            {/* Header Image */}
+            {headerImage && (
+              <div className="mt-6">
+                <img
+                  src={headerImage}
+                  alt={post.frontMatter.title}
+                  className="w-full object-contain"
+                  style={{ maxHeight: "500px" }}
+                />
+              </div>
+            )}
+          </header>
+
+          {/* Markdown Content */}
+          <div className="max-w-none p-8">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm, remarkGithubAlerts, remarkHeadingIds]}
+              components={markdownComponents}
+            >
+              {post.content}
+            </ReactMarkdown>
+          </div>
+        </article>
+      </div>
 
       {/* Back Button (Bottom) */}
       <div className="border-muted-foreground border-t py-4 text-center">

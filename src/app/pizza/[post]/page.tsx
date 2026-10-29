@@ -3,6 +3,12 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 import { api } from "~/trpc/server";
+import {
+  extractMarkdownHeadings,
+  remarkHeadingIds,
+} from "~/lib/markdown-headings";
+import { TableOfContents } from "~/components/table-of-contents";
+import { cn } from "~/lib/utils";
 import { PizzaRating } from "../_components/pizza-rating";
 import {
   createMarkdownComponents,
@@ -13,6 +19,7 @@ import {
 const markdownComponents = createMarkdownComponents({
   h2: "text-amber-700",
   h3: "text-amber-700",
+  h4: "text-amber-700",
   a: "text-amber-700",
   aHover: "hover:text-amber-600",
   blockquoteBorder: "border-amber-700",
@@ -27,6 +34,8 @@ export default async function PizzaPostPage({
   const { post: slug } = await params;
   const post = await api.pizza.getPostBySlug({ slug });
 
+  const headings = extractMarkdownHeadings(post.content);
+
   return (
     <main className="min-h-screen">
       <div className="container mx-auto px-4 py-16">
@@ -39,66 +48,83 @@ export default async function PizzaPostPage({
         </Link>
 
         {/* Post Container */}
-        <article className="border-border bg-card/60 mx-auto max-w-4xl rounded-lg border-2 p-8 shadow-xl">
-          {/* Header Section */}
-          <header className="mb-8 border-b-2 border-amber-700/30 pb-6">
-            <h1
-              className="text-foreground mb-4 text-6xl"
-              style={{ fontFamily: "var(--font-bagel-fat-one)" }}
-            >
-              {post.frontMatter["pizza-shop"]}
-            </h1>
+        <div
+          className={cn(
+            "relative mx-auto max-w-4xl",
+            headings.length > 0 && "lg:max-w-[min(56rem,calc(100%-28rem))]",
+          )}
+        >
+          {headings.length > 0 && (
+            <div className="mb-6 lg:absolute lg:top-0 lg:left-full lg:mb-0 lg:h-full lg:w-56 lg:pl-8">
+              <div className="lg:sticky lg:top-8 lg:max-h-[calc(100vh-4rem)] lg:overflow-y-auto">
+                <TableOfContents headings={headings} color="pizza" />
+              </div>
+            </div>
+          )}
+          <article className="border-border bg-card/60 mx-auto max-w-4xl rounded-lg border-2 p-8 shadow-xl">
+            {/* Header Section */}
+            <header className="mb-8 border-b-2 border-amber-700/30 pb-6">
+              <h1
+                className="text-foreground mb-4 text-6xl"
+                style={{ fontFamily: "var(--font-bagel-fat-one)" }}
+              >
+                {post.frontMatter["pizza-shop"]}
+              </h1>
 
-            <div className="mb-4 flex flex-wrap items-center gap-4">
-              <span className="text-muted-foreground text-lg">
-                {new Date(post.frontMatter["purchase-date"]).toLocaleDateString(
-                  "en-US",
-                  {
+              <div className="mb-4 flex flex-wrap items-center gap-4">
+                <span className="text-muted-foreground text-lg">
+                  {new Date(
+                    post.frontMatter["purchase-date"],
+                  ).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
-                  },
-                )}
-              </span>
+                  })}
+                </span>
 
-              {post.frontMatter["better-than-ginos"] === true ? (
-                <div className="mb-4 inline-block rounded-full bg-green-600 px-3 py-1 text-xs font-bold text-white">
-                  ✓ Better than Gino&apos;s
-                </div>
-              ) : post.frontMatter["better-than-ginos"] === false ? (
-                <div className="mb-4 inline-block rounded-full bg-red-600 px-3 py-1 text-xs font-bold text-white">
-                  ✗ Not better than Gino&apos;s
-                </div>
-              ) : null}
+                {post.frontMatter["better-than-ginos"] === true ? (
+                  <div className="mb-4 inline-block rounded-full bg-green-600 px-3 py-1 text-xs font-bold text-white">
+                    ✓ Better than Gino&apos;s
+                  </div>
+                ) : post.frontMatter["better-than-ginos"] === false ? (
+                  <div className="mb-4 inline-block rounded-full bg-red-600 px-3 py-1 text-xs font-bold text-white">
+                    ✗ Not better than Gino&apos;s
+                  </div>
+                ) : null}
+              </div>
+
+              <div className="mb-4">
+                <PizzaRating
+                  rating={post.frontMatter.rating}
+                  className="text-3xl"
+                />
+              </div>
+
+              <div className="rounded-lg border border-amber-700/20 bg-amber-700/10 p-4">
+                <p className="text-sm font-semibold tracking-wide text-amber-700 uppercase">
+                  TL;DR
+                </p>
+                <p className="text-foreground text-lg italic">
+                  {post.frontMatter.tldr}
+                </p>
+              </div>
+            </header>
+
+            {/* Markdown Content */}
+            <div className="prose max-w-none">
+              <ReactMarkdown
+                remarkPlugins={[
+                  remarkGfm,
+                  remarkGithubAlerts,
+                  remarkHeadingIds,
+                ]}
+                components={markdownComponents}
+              >
+                {post.content}
+              </ReactMarkdown>
             </div>
-
-            <div className="mb-4">
-              <PizzaRating
-                rating={post.frontMatter.rating}
-                className="text-3xl"
-              />
-            </div>
-
-            <div className="rounded-lg border border-amber-700/20 bg-amber-700/10 p-4">
-              <p className="text-sm font-semibold tracking-wide text-amber-700 uppercase">
-                TL;DR
-              </p>
-              <p className="text-foreground text-lg italic">
-                {post.frontMatter.tldr}
-              </p>
-            </div>
-          </header>
-
-          {/* Markdown Content */}
-          <div className="prose max-w-none">
-            <ReactMarkdown
-              remarkPlugins={[remarkGfm, remarkGithubAlerts]}
-              components={markdownComponents}
-            >
-              {post.content}
-            </ReactMarkdown>
-          </div>
-        </article>
+          </article>
+        </div>
 
         {/* Back Button (Bottom) */}
         <div className="mt-8 text-center">
