@@ -1,7 +1,7 @@
-# Please Note
+## Please Note
 Data is only collected for users who have purchased an in-app purchase, like removal of ads. If you have not purchased a service in JustDogs, you have had no data collected.
 
-## Data Delete Process
+### Data Delete Process
 1. Open the app
 
    From your phone, open the JustDogs app

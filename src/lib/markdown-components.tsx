@@ -112,6 +112,7 @@ const alertConfig: Record<
 export interface MarkdownComponentOptions {
   h2?: string;
   h3?: string;
+  h4?: string;
   a?: string;
   aHover?: string;
   blockquoteBorder?: string;
@@ -124,6 +125,7 @@ export function createMarkdownComponents(
   const {
     h2: h2Color,
     h3: h3Color,
+    h4: h4Color,
     a: aColor = "text-primary",
     aHover: aHoverColor = "hover:text-primary/80",
     blockquoteBorder: blockquoteBorderColor = "border-primary",
@@ -170,6 +172,11 @@ export function createMarkdownComponents(
       <h3 className={cn("mt-6 mb-3 text-2xl font-bold", h3Color)} {...props}>
         {children}
       </h3>
+    ),
+    h4: ({ children, ...props }) => (
+      <h4 className={cn("mt-5 mb-2 text-xl font-bold", h4Color)} {...props}>
+        {children}
+      </h4>
     ),
     p: ({ children, ...props }) => (
       <p className="text-foreground mb-4 leading-relaxed" {...props}>

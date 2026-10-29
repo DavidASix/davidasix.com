@@ -10,11 +10,11 @@ I went for a really long run today. Well maybe not really long, but it was 15K a
 
 Recently my wife received two suggestions for pizza places in KW, neither of which I had heard of before. Both were described as "hole in the wall" but one of them appeared to be a convenience store, which I wasn't quite prepared to roll the dice on. The other spot is "Pizza Bite", which apparently is just 4 minutes away from us. It's really great living in a city like Waterloo where pizza is constantly available everywhere you turn.
 
-# Ordering
+## Ordering
 The ordering process for pizza bite was pretty smooth, with an online ordering PHP website and an offering for delivery service that wasn't through gig work. I ended up doing pick up despite having tired legs, because $5.99 for a delivery 4 minutes away just didn't sit right with me. I ordered one large pizza with pepperoni bacon green olives and pickles. Unfortunately they don't offer sun-dried tomatoes, so I can't do my standardized test, but green olives isn't alright substitute because they're nice and salty. I added the pickles because it's rare that you see pickles offered for a pizza, so I was curious to see how they'd come. 
 I also ordered three garlic dips for the za, and 12 wings for my wife, who wasn't quite feeling pizza. 
 
-# Pizza with a side of gasoline
+## Pizza with a side of gasoline
 When I got there I was surprised that the pizza shop was within an *Esso*.
 ![An Esso gas station, which contains Pizza Bite](local/pizza-bite-esso.webp)
 
@@ -26,7 +26,7 @@ When I got there I was surprised that the pizza shop was within an *Esso*.
 
 I got some gas and headed back with my pizza (I didn't actually get gas I just think it's cool that that was an option). 
 
-# The Pizza
+## The Pizza
 
 First impressions as opened the boxes is that everything looked very promising. The first bite had me immediately impressed. It's light on sauce and heavy on cheese, but both have notable flavor. This sauce to cheese ratio is a big hit for me (a cheese lover) but a miss for my wife (a sauce lover). The crust is thin and greasy, but not too greasy. It's the ideal "this is fast food pizza" level of crust grease. The bottom of the pie was coated in a healthy dose cornmeal, which also had surprising flavor depth.
 
