@@ -9,6 +9,7 @@ short_description: "An independent guide to Waterloo’s 2026 mayoral election."
 project_url: "https://www.waterloovotes.ca/"
 has_privacy_policy: false
 has_data_delete: false
+logo: "local/waterloo-votes-logo.svg"
 screenshots:
   - "local/waterloo-votes-overview.webp"
   - "local/waterloo-votes-candidate-comparison.webp"

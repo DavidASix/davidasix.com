@@ -8,6 +8,7 @@ short_description: "An experimental VS Code Insiders extension for exploring com
 github_url: "https://github.com/DavidASix/ts-go-full-type"
 has_privacy_policy: false
 has_data_delete: false
+logo: "local/typescript-logo.svg"
 features:
   - "Expandable type tree"
   - "Live updates from unsaved edits"
