@@ -1,7 +1,7 @@
 ---
 title: "Bugs - Orisinal Game"
 slug: "bugs-orisinal-game"
-category: "Python"
+category: "Misc Software"
 original_link: "https://davidasix.com/projects/bugs-orisinal-game"
 start_date: "2024-02-26"
 completed_date: "2024-03-05"

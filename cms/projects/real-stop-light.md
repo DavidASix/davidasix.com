@@ -1,7 +1,7 @@
 ---
 title: "Real StopLight"
 slug: "real-stop-light"
-category: "Mobile Apps"
+category: "Misc Software"
 original_link: "https://davidasix.com/projects/real-stop-light"
 start_date: "2010-06-01"
 completed_date: "2022-05-01"

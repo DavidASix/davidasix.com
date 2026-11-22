@@ -1,7 +1,7 @@
 ---
 title: "Vietnamese Language Graph"
 slug: "vietnamese-language-graph"
-category: "Python"
+category: "Misc Software"
 original_link: "https://davidasix.com/projects/vietnamese-language-graph"
 start_date: "2024-01-20"
 completed_date: "2024-02-02"

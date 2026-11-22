@@ -1,7 +1,7 @@
 ---
 title: "Etsy Messenger"
 slug: "dasix-project"
-category: "Python"
+category: "Misc Software"
 original_link: "https://davidasix.com/projects/dasix-project"
 start_date: "2024-02-20"
 completed_date: "2024-03-01"
