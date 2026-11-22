@@ -16,7 +16,7 @@ features:
 technologies:
   - "TypeScript 7 native preview"
   - "VS Code Extension API"
-  - "Literally coded with 100% vibes
+  - "Literally coded with 100% vibes"
 ---
 
 This is a project I cared very little about quality in. I took the high-level "Vibe Coder" approach as I just needed it to work. Pls don't consider this a testament to my coding skill, but to my desire to make life easier (or something)

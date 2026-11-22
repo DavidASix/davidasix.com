@@ -6,7 +6,7 @@ original_link: "https://davidasix.com/projects/red-oxford-online-com"
 start_date: "2024-03-19"
 completed_date: "2024-05-09"
 active_development: false
-short_description: "Red Oxford Online is a software & tech consulting business I founded. We serve clients in the Kitchener-Waterloo, and Niagara regions.
+short_description: "Red Oxford Online is a software & tech consulting business I founded. We serve clients in the Kitchener-Waterloo, and Niagara regions."
 project_url: "https://redoxfordonline.com"
 has_privacy_policy: false
 has_data_delete: false
